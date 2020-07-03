@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components';
 import oc from 'open-color';
-import { Link } from 'react-router-dom';
 import ConfirmButton from 'components/base/ConfirmButton';
+import ErrorAlert from 'components/ErrorAlert'
+import { ChasingDots } from 'better-react-spinkit'
 
 const Root = styled.div`
     position: absolute;
@@ -19,7 +20,7 @@ const Positioner = styled.div`
     transform: translate(-50%, -50%);
 `
 const Box = styled.div`
-    width: 300px;
+    width: 350px;
 `;
 const LogoWrapper = styled.div`
     height: 5rem;
@@ -54,20 +55,23 @@ const Input = styled.input`
     padding-left: 0.5rem;
 `;
 
-const Login = ({handleChange}) => {
+const Login = ({handleChange,error,handleSubmit}) => {
     return (
         <Root>
             <Positioner>
                 <Box>
                     <LogoWrapper>
                         <img src={process.env.PUBLIC_URL + '/images/logo.png'} />
-                    </LogoWrapper> 
+                    </LogoWrapper>
                     <Title>ログイン</Title>
                     <TitleBorder />
+                    {
+                        error && <ErrorAlert>{error}</ErrorAlert>
+                    }
                     <InputWrapper>
                         <Input name='email' placeholder="メールアドレス" onChange={ handleChange } />
                         <Input name='password' placeholder="パスワード" onChange={ handleChange } type='password'/>
-                        <ConfirmButton>ログインする</ConfirmButton>
+                        <ConfirmButton onClick={handleSubmit}>ログインする</ConfirmButton>
                     </InputWrapper>
                 </Box>
             </Positioner>
