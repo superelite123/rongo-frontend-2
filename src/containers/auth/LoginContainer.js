@@ -34,7 +34,8 @@ class LoginContainer extends Component
         });
         this.setError(null)
     }
-    handleSubmit = async () => {
+    handleSubmit = async (event) => {
+        event.preventDefault()
         const { LoginActions,UserActions,email,password,history  } = this.props
         try {
             await LoginActions.localLogin({email,password});

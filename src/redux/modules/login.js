@@ -9,10 +9,12 @@ const SET_ERROR = 'auth/SET_ERROR';
 const INITIALIZE_FORM = 'login/INITIALIZE_FORM'; // form 초기화
 const LOCAL_LOGIN = 'auth/LOCAL_LOGIN';
 const LOGOUT = 'auth/LOGOUT';
+const LOCAL_LOGIN_CONFIRM = 'login/confirm'
 
 export const changeInput = createAction(CHANGE_INPUT); //  { form, name, value }
 export const initializeForm = createAction(INITIALIZE_FORM); // form 
 export const localLogin = createAction(LOCAL_LOGIN, LoginAPI.localLogin); // { email, password }
+export const localLoginConfirm = createAction(LOCAL_LOGIN_CONFIRM,LoginAPI.localLoginConfirm)
 export const setError = createAction(SET_ERROR);
 //export const checkUsernameExists = createAction(CHECK_USERNAME_EXISTS, LoginAPI.checkUsernameExists); // username
 

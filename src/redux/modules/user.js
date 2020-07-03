@@ -24,6 +24,7 @@ const initialState = Map({
         username: null,
         email:null,
         id:null,
+        token:null,
     }),
     firstloggedin:-1, //passes login step 1?
     logged: false, // 현재 로그인중인지 알려준다
