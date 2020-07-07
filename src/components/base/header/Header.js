@@ -6,27 +6,25 @@ import oc from 'open-color';
 const Positioner = styled.div`
     display: flex;
     flex-direction: column;
-    position: fixed;
     top: 0px;
     width: 100%;
 `;
 
 // 흰 배경, 내용 중간 정렬
 const WhiteBackground = styled.div`
-    background: white;
+    background: black;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     height: auto;
 `;
 
 // 해더의 내용
 const HeaderContents = styled.div`
-    width: 1200px;
-    height: 55px;
+    width: 100%;
+    height: 50px;
     display: flex;
     flex-direction: row;
     align-items: center;
-
     padding-right: 1rem;
     padding-left: 1rem;
 `;
@@ -41,17 +39,16 @@ const Logo = styled.div`
 
 // 중간 여백
 const Spacer = styled.div`
-    flex-grow: 1;
+    flex-grow: 0.05;
 `;
 
-const Header = ({children}) => {
+const Header = ({children,height}) => {
     return (
         <Positioner>
             <WhiteBackground>
                 <HeaderContents>
-                    <Logo>Rongo</Logo>
                     <Spacer/>
-                    {children}
+                    <Logo><img width='150' height='28' src={process.env.PUBLIC_URL + '/images/header_logo.png'} /></Logo>
                 </HeaderContents>
             </WhiteBackground>
         </Positioner>

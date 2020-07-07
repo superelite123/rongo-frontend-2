@@ -5,40 +5,61 @@ import * as LoginAPI from 'lib/api/login';
 import { pender } from 'redux-pender';
 
 const SET_FIRST_LOGGEDIN = 'user/SET_FIRST_LOGGEDIN'; // 로그인 정보 설정
-const SET_LOGGED_INFO = 'user/SET_LOGGED_INFO'; // 로그인 정보 설정
-const SET_VALIDATED = 'user/SET_VALIDATED'; // validated 값 설정
+const SET_USER_INFO = 'user/SET_LOGGED_INFO'; // 로그인 정보 설정
 const LOGOUT = 'user/LOGOUT'; // 로그아웃
-const CHECK_STATUS = 'user/CHECK_STATUS'; // 현재 로그인상태 확인
 const SET_EMAIL = 'user/SET_EMAIL'; // 로그인 정보 설정
+const LOCAL_LOGIN_CONFIRM = 'login/confirm'
 
 export const setEmail = createAction(SET_EMAIL); // loggedInfo
 export const setFirstLoggedin = createAction(SET_FIRST_LOGGEDIN); // loggedInfo
-export const setLoggedInfo = createAction(SET_LOGGED_INFO); // loggedInfo
-export const setValidated = createAction(SET_VALIDATED); // validated
-export const logout = createAction(LOGOUT, LoginAPI.logout);
-export const checkStatus = createAction(CHECK_STATUS, LoginAPI.checkStatus);
+export const setUserInfo = createAction(SET_USER_INFO); // loggedInfo
+export const localLoginConfirm = createAction(LOCAL_LOGIN_CONFIRM,LoginAPI.localLoginConfirm)
+export const logout = createAction(LOGOUT, LoginAPI.logout)
 
 const initialState = Map({
-    loggedInfo: Map({ // 현재 로그인중인 유저의 정보
+    userInfo: Map({
         thumbnail: null,
-        username: null,
+        nickname: null,
         email:null,
         id:null,
-        token:null,
     }),
-    firstloggedin:-1, //passes login step 1?
-    logged: false, // 현재 로그인중인지 알려준다
-    validated: false // 이 값은 현재 로그인중인지 아닌지 한번 서버측에 검증했음을 의미
+    token:null,
+    firstloggedin:-1, //pass login step 1?
+    result:-1,
+    logged: false, //isLogged?
 });
 
 export default handleActions({
     [SET_EMAIL]:(state,action) => state.setIn(['loggedInfo','email'],action.payload),
     [SET_FIRST_LOGGEDIN]:(state,action) => state.set('firstloggedin',action.payload),
-    [SET_LOGGED_INFO]: (state, action) => state.set('loggedInfo', Map(action.payload)),
-    [SET_VALIDATED]: (state, action) => state.set('validated', action.payload),
+    [SET_USER_INFO]: (state, action) => state.set('loggedInfo', Map(action.payload)),
     ...pender({
-        type: CHECK_STATUS,
-        onSuccess: (state, action) => state.set('loggedInfo', Map(action.payload.data)).set('validated', true), 
-        onFailure: (state, action) => initialState
-    })
+        type: LOCAL_LOGIN_CONFIRM,
+        onSuccess: (state, action) => 
+        {
+            //confirm successed
+            const { result, userInfo,token} = action.payload.data
+            state.set('result',result)
+            if(result === 0)
+            {
+                state.set('userInfo',userInfo)
+                state.set('token',token)
+            }
+            else
+            {
+                state.set('userInfo',null)
+                state.set('token',null)
+            }
+            return Map(
+                {
+                    ...state,
+                    result:result,
+                    userInfo:userInfo,
+                    token:token,
+                    logged:true
+                }
+
+            )
+        }
+    }),
 }, initialState);

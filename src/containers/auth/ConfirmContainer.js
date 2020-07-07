@@ -12,27 +12,45 @@ class ConfirmContainer extends Component
     componentWillMount() 
     {
         this.props.baseActions.setHeaderVisibility(false)
-        const { LoginActions,firstloggedin } = this.props;
-        console.log(firstloggedin)
+        const { LoginActions } = this.props
         LoginActions.initializeForm()
     }
     componentWillUnmount() {
         this.props.baseActions.setHeaderVisibility(true);
     }
-
+    setError = (message) => {
+        const { LoginActions } = this.props;
+        LoginActions.setError({
+            message
+        });
+    }
     handleComplete = async (value,index) => {
         try {
-            const { LoginActions,password,userID,history  } = this.props
-            await LoginActions.localLoginConfirm({password,userID});
-            const result = this.props.result;
-            if(result === 0)
+            const { UserActions,userID,history  } = this.props
+            await UserActions.localLoginConfirm({pwd:value,id:userID});
+            const {result,userInfo,token} = this.props
+            storage.set('userInfo',userInfo)
+            storage.set('logged',true)
+            storage.set('token',token)
+            switch(result)
             {
-                //store jwt token
-                //store user info to storage
-            }
-            else
-            {
-                this.setError('メールアドレスまたはパスワードが違います')
+                //success
+                case 0:
+                    history.push('/home');
+                    //store user info and token to storage
+                    storage.set('userInfo',userInfo)
+                    storage.set('token',token)
+                    break;
+                //expired
+                case 409:
+                    this.setError('メールアドレスまたはパスワードが違います1');
+                    break;
+                //invalide code
+                case 501:
+                    this.setError('メールアドレスまたはパスワードが違います2');
+                    break;
+                default:
+                    break;
             }
         } catch (e) {
             this.setError('メールアドレスまたはパスワードが違います')
@@ -51,8 +69,10 @@ export default connect(
     (state) => ({
         email:state.user.getIn(['loggedInfo','email']),
         error:state.login.get('error'),
-        result:state.login.get('login2'),
+        result:state.user.get('result'),
         userID:state.user.get('firstloggedin'),
+        token:state.user.get('token'),
+        userInfo:state.user.get('userInfo'),
     }),
     (dispatch) => ({
         LoginActions: bindActionCreators(loginActions, dispatch),

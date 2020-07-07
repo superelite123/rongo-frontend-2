@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles'
+import { blue, indigo } from '@material-ui/core/colors'
 import { Home, Auth } from 'pages';
 import { LoginContainer, ConfirmContainer } from 'containers/auth'
 import HeaderContainer from 'containers/base/HeaderContainer';
@@ -7,22 +10,54 @@ import storage from 'lib/storage';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as userActions from 'redux/modules/user';
+const theme = createMuiTheme({
+    palette: {
+      secondary: {
+        main: blue[900],
+        brown:'#BBA884'
+      },
+      primary: {
+        main: indigo[700],
+        white:'#ffffff',
+        brown:'#DEDCD4',
+        red:'#D74936',
+        background:'#DEDCD4',
+        black:'#333333',
+        arrowColor:'#BDBDBD'
+      }
+    },
+    typography: {
+      // Use the system font instead of the default Roboto font.
+      fontFamily: [
+        '"Lato"',
+        'sans-serif'
+      ].join(',')
+    }
+  });
 class App extends Component {
     initializeUserInfo = async () => {
-        const firstloggedin = storage.get('firstloggedin'); // 로그인 정보를 로컬스토리지에서 가져옵니다.
-        if(!firstloggedin) return; // 로그인 정보가 없다면 여기서 멈춥니다.
+        const {history} = this.props
+
+        const firstloggedin = storage.get('firstloggedin');
+        if(!firstloggedin)
+        {
+            history.push('/')
+            return
+        }
         const { UserActions } = this.props;
         UserActions.setFirstLoggedin(firstloggedin);
-        const loggedInfo = storage.get('loggedInfo'); // 로그인 정보를 로컬스토리지에서 가져옵니다.
-        if(!loggedInfo) return;
-        UserActions.setLoggedInfo(loggedInfo)
-        console.log(loggedInfo)
-        // try {
-        //     await UserActions.checkStatus();
-        // } catch (e) {
-        //     //storage.remove('firstloggedin');
-        //     window.location.href = '/';
-        // }
+        //when it is confirmed
+        //get logged
+        const logged = storage.get('logged');
+        if(!logged)
+        {
+            history.push('/loginconfirm')
+            return
+        }
+        // get userInfo
+        const userInfo = storage.get('userInfo');
+        if(!userInfo) return;
+        UserActions.setUserInfo(userInfo)
     }
 
     componentDidMount() {
@@ -31,10 +66,11 @@ class App extends Component {
     render() {
         return (
             <div>
-                <HeaderContainer/>
-                <Route path="/home" component={Home}/>
-                <Route exact path="/" component={LoginContainer}/>
-                <Route path="/loginconfirm" component={ConfirmContainer}/>
+                <ThemeProvider theme={theme}>
+                    <Route exact path="/" component={LoginContainer}/>
+                    <Route path="/loginconfirm" component={ConfirmContainer}/>
+                    <Route path="/home" component={Home}/>
+                </ThemeProvider>
             </div>
         );
     }
