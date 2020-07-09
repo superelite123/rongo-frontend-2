@@ -1,20 +1,25 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/styles/withStyles";
-import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import HomeFooter from './base/footer/HomeFooter'
 import ListCard from './base/ListCard'
 import PanelTemplate from './base/PanelTemplate'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
+import * as homeActions from 'redux/modules/homePage';
+import { connect } from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {
+  SHOW_HOMEPANEL,
+  SHOW_PPROUCTSPANEL,
+  SHOW_TRANSACTIONSPANEL,
+  SHOW_PADDLINK,
+  SHOW_PFORM,
+  SHOW_PDETAIL,
+  SHOW_TRANSACTIONDETAIL
+} from 'lib/constant'
 const styles = theme => ({
   root: {
     height: '100%',
@@ -55,11 +60,29 @@ const styles = theme => ({
     margin:'auto'
   }
 });
-
 class HomePanel extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes,HomeActions } = this.props;
 
+    const handleClick = (panelNumber,panelType) => 
+    {
+      console.log(panelNumber + ',' + panelType)
+      switch(panelType)
+      {
+        case 1:
+          HomeActions.changeFirstStatus(panelNumber)
+        break;
+        case 2:
+          HomeActions.changeSecondStatus(panelNumber)
+        break;
+        case 3:
+          HomeActions.changeThirdStatus(panelNumber)
+        break;
+        default:
+          break;
+      }
+      
+    }
     return (
       <PanelTemplate >
           {/* Avatar */}
@@ -76,7 +99,11 @@ class HomePanel extends Component {
           
           {/* Link to Follow List */}
           <Grid item style={{marginTop:'40px'}} xs={12} >
-            <ListCard text={'商品管理'} number={'1,000'} />
+            <ListCard text={'商品管理'} 
+                      number={'1,000'} 
+                      panelNumber={SHOW_PPROUCTSPANEL} 
+                      panelLocation={2} 
+                      handleClick={handleClick} />
           </Grid>
           {/* Link to Follow List */}
           {/* Follow Detail */}
@@ -115,7 +142,10 @@ class HomePanel extends Component {
             </Grid>
           {/* Follow Detail */}
           <Grid item xs={12} >
-            <ListCard text={'商品管理'} />
+            <ListCard text={'商品管理'} 
+                      panelNumber={SHOW_PPROUCTSPANEL} 
+                      panelLocation={2} 
+                      handleClick={handleClick} />
           </Grid>
           <Grid item xs={12} >
             <ListCard text={'取引管理'} />
@@ -137,5 +167,13 @@ class HomePanel extends Component {
     );
   }
 }
-
-export default withStyles(styles)(HomePanel);
+export default connect(
+  (state) => ({
+      firstPanelVisible:state.homePage.get('firstPanel'),
+      secondPanelVisible:state.homePage.get('seconPanel'),
+      thirdPanelVisible:state.homePage.get('thirdPanel'),
+  }),
+  (dispatch) => ({
+      HomeActions: bindActionCreators(homeActions, dispatch),
+  })
+)(withStyles(styles)(HomePanel));

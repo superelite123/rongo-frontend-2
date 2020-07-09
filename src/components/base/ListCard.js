@@ -8,6 +8,15 @@ import Typography from '@material-ui/core/Typography';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import {
+  SHOW_HOMEPANEL,
+  SHOW_PPROUCTSPANEL,
+  SHOW_TRANSACTIONSPANEL,
+  SHOW_PADDLINK,
+  SHOW_PFORM,
+  SHOW_PDETAIL,
+  SHOW_TRANSACTIONDETAIL
+} from 'lib/constant'
 const useStyles = makeStyles((theme) => ({
     card:{
       borderTopWidth: '0px',
@@ -21,10 +30,10 @@ const useStyles = makeStyles((theme) => ({
     selected:{
     }
 }))
-const ListCard = ({ text, link,isBottomBorder,number,isSelected }) => {
+const ListCard = ({ text, link,isBottomBorder,number,isSelected,handleClick,panelNumber,panelLocation }) => {
     const classes = useStyles();
     return (
-        <CardActionArea component="a" href="">
+        <CardActionArea component="a" onClick={() => handleClick(panelNumber,panelLocation)}>
           <Card variant="outlined" square className={classes.card} style={{background:isSelected?'rgb(93, 184, 61, 0.2)':''}}>
             <CardContent style={{paddingBottom: '16px',paddingLeft:'0px'}} className={classes.cardContent}>
               <Grid container >

@@ -38,8 +38,8 @@ const PageTemplate = ({ first,second,third }) => {
                     <Box className={classes.PanelWrapper}>
                     <Grid className={isMobile?'':classes.panelGridWrapper} container align="center">
                         <Grid key={0} xs={12} sm={12} md={4} item>{first}</Grid>
-                        <Grid key={0} xs={12} sm={12} md={4} item>{second}</Grid>
-                        <Grid key={0} xs={12} sm={12} md={4} item>{third}</Grid>
+                        <Grid key={1} xs={12} sm={12} md={4} item>{second}</Grid>
+                        <Grid key={2} xs={12} sm={12} md={4} item>{third}</Grid>
                     </Grid>
                     </Box>
                 </Grid>

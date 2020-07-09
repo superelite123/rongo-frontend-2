@@ -1,9 +1,9 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
+import SectionHeader from './typo/SectionHeader'
 import PanelTemplate from './base/PanelTemplate'
-import {Box, Button} from "@material-ui/core"
-import ContainerDimensions from 'react-container-dimensions'
-import LocalMallIcon from '@material-ui/icons/LocalMall';
+import {Box, Button,Grid,Typography, Paper,TextField } from "@material-ui/core"
+import {TakePhoto, CustomTextField, TagButton, CustomTextArea } from './typo'
 const useStyles = makeStyles((theme) => ({
     root:{
       height: '750px',
@@ -22,20 +22,174 @@ const useStyles = makeStyles((theme) => ({
         left:'calc(50% - 63px/2)',
         top:'calc(50% - 63px/2)',
         margin:'auto',
+    },
+    label:{
+        color:'#A5A5A5',
+        fontSize:'13px',
+        position:'absolute',
+        bottom:0,
+        textAlign:'center',
+        marginLeft:'17px'
+    },
+    topLabelPanel:{
+        height:'70px',
+        position:'relative',
+        marginBottom:'10px'
+    },
+    labelPanel:{
+        height:'50px',
+        position:'relative',
+        marginBottom:'10px'
+    },
+    takePhotoWrapper: {
+        padding:'21px'
+    },
+    tagPanel:{
+        width:'90%',
+        display: 'flex',
+        flexWrap: 'wrap',
+        paddingTop:'20px',
+        paddingBottom:'20px'
+    },
+    tagPanelLabel: {
+        textAlign:'left',
+        marginTop:'20px',
+        marginLeft:'10px',
+        fontSize:'11px',
+        fontWeight:500,
+        color:'#333333'
+    },
+    blank20:{
+        height:'20px',
+    },
+    qtyWrapper:{
+        marginLeft:'17px',
+        marginRight:'17px',
+        display:'flex',
+
+    },
+    qtyLabel:{
+        fontSize:'13px',
+        fontFamily:'Noto Sans JP',
+        textAlign:'left',
+        paddingTop:'17px',
+        paddingBottom:'17px',
+        width:'30%',
+    },
+    qtyNumber:{
+        fontSize:'13px',
+        fontFamily:'Roboto',
+        textAlign:'right',
+        paddingTop:'17px',
+        paddingBottom:'17px',
+        width:'70%',
     }
   }));
 const handleClick = () => {
     console.log('a')
 }
+const handleTagClick = () => {
+
+}
 const ProductFormPanel = () => {
     const classes = useStyles();
+    const takePhotos = [];
+    for(let i = 0; i < 8; i ++)
+    {
+        takePhotos[i] = <TakePhoto />
+    }
     return (
-            <Box borderColor="primary.white" border={2} className={classes.root}>
-                <Button className={classes.addButton} onClick={handleClick}>
-                    <LocalMallIcon />
-                    登録
-                </Button>
-            </Box>
+        <PanelTemplate>
+            <SectionHeader title={'商品登録'} />
+            <Grid container>
+                <Grid item xs={12}>
+                    <div className={classes.topLabelPanel}>
+                        <Typography className={classes.label}>商品写真</Typography>
+                    </div>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper variant="outlined" square className={classes.takePhotoWrapper}>
+                    <Grid container spacing={1}>
+                        {
+                            takePhotos.map((value,key) => {
+                                return <Grid item key={key} md={3} xs={6}>{value}</Grid>
+                            })
+                        }
+                    </Grid>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <div className={classes.labelPanel}>
+                        <Typography className={classes.label}>商品名</Typography>
+                    </div>
+                </Grid>
+                <Grid item xs={12}>
+                    <CustomTextField />
+                </Grid>
+                <Grid item xs={12}>
+                    <div className={classes.labelPanel}>
+                        <Typography className={classes.label}>品番</Typography>
+                    </div>
+                </Grid>
+                <Grid item xs={12}>
+                    <CustomTextField />
+                </Grid>
+                <Grid item xs={12}>
+                    <div className={classes.labelPanel}>
+                        <Typography className={classes.label}>商品タグ</Typography>
+                    </div>
+                </Grid>
+                <Grid item xs={12}>
+                    <CustomTextField />
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper variant="outlined" square>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <Typography className={classes.tagPanelLabel}>商品タグを候補から選択</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <div className={classes.tagPanel}>
+                                    <TagButton label={'ファッション'} handleClick={handleTagClick}/>
+                                    <TagButton label={'パンツ'}/>
+                                    <TagButton label={'小物'}/>
+                                    <TagButton label={'小物'}/>
+                                    <TagButton label={'パンツ'}/>
+                                    <TagButton label={'ファッション'}/>
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <div className={classes.labelPanel}>
+                        <Typography className={classes.label}>商品説明</Typography>
+                    </div>
+                </Grid>
+                <Grid item xs={12}>
+                    <CustomTextArea />
+                </Grid>
+                <Grid item xs={12}>
+                    <div className={classes.blank20}></div>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper variant="outlined" square>
+                        <div className={classes.qtyWrapper} >
+                            <Typography className={classes.qtyLabel}>在庫</Typography>
+                            <Typography className={classes.qtyNumber}>100</Typography>
+                        </div>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper variant="outlined" square>
+                        <div className={classes.qtyWrapper} >
+                            <Typography className={classes.qtyLabel}>発送までの日数</Typography>
+                            <Typography className={classes.qtyNumber}>100</Typography>
+                        </div>
+                    </Paper>
+                </Grid>
+            </Grid>
+        </PanelTemplate>
       )
 }
 

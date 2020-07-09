@@ -1,0 +1,11 @@
+.ProductFormDescInput{
+    font-size: 13px;
+    color: #333333;
+    border: 0px solid white;
+    width:100%;
+    background-color:white;
+    font-family:Noto Sans JP;
+}
+.ProductFormDescInput:focus{
+    border: 0px solid white;
+}

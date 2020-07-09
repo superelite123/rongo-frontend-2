@@ -4,6 +4,7 @@ import * as serviceWorker from './serviceWorker';
 import Root from './Root';
 import configureStore from 'redux/configureStore';
 import './index.css'
+import 'lib/font.css'
 const store = configureStore();
 ReactDOM.render(
   <React.StrictMode>
