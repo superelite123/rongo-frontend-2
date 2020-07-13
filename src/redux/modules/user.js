@@ -21,7 +21,13 @@ const initialState = Map({
         thumbnail: null,
         nickname: null,
         email:null,
+        numFollowers: 0,
         id:null,
+        evaluation: Map({
+            like: 0,
+            notBad: 0,
+            dislike: 0
+        })
     }),
     token:null,
     firstloggedin:-1, //pass login step 1?

@@ -1,9 +1,9 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
-import SectionHeader from './typo/SectionHeader'
-import PanelTemplate from './base/PanelTemplate'
+import SectionHeader from '../typo/SectionHeader'
+import PanelTemplate from '../base/PanelTemplate'
 import {Box, Button,Grid,Typography, Paper,TextField } from "@material-ui/core"
-import {TakePhoto, CustomTextField, TagButton, CustomTextArea } from './typo'
+import {TakePhoto, CustomTextField, TagButton, CustomTextArea } from '../typo'
 const useStyles = makeStyles((theme) => ({
     root:{
       height: '750px',
@@ -23,33 +23,39 @@ const useStyles = makeStyles((theme) => ({
         top:'calc(50% - 63px/2)',
         margin:'auto',
     },
+    headerLabel: {
+        fontFamily: 'Noto Sans JP',
+        fontStyle: 'normal',
+        fontWeight: 500,
+        fontSize: '17px',
+    },
     label:{
         color:'#A5A5A5',
         fontSize:'13px',
         position:'absolute',
-        bottom:0,
+        bottom: '12px',
         textAlign:'center',
-        marginLeft:'17px'
+        marginLeft:'17px',
+        fontFamily: 'Noto Sans JP',
+        fontStyle: 'normal',
+        fontWeight: 'normal'
     },
     topLabelPanel:{
         height:'70px',
-        position:'relative',
-        marginBottom:'10px'
+        position:'relative'
     },
     labelPanel:{
         height:'50px',
-        position:'relative',
-        marginBottom:'10px'
+        position:'relative'
     },
     takePhotoWrapper: {
         padding:'21px'
     },
     tagPanel:{
-        width:'90%',
         display: 'flex',
         flexWrap: 'wrap',
-        paddingTop:'20px',
-        paddingBottom:'20px'
+        paddingBottom:'20px',
+        margin: 'auto 16px'
     },
     tagPanelLabel: {
         textAlign:'left',
@@ -57,7 +63,10 @@ const useStyles = makeStyles((theme) => ({
         marginLeft:'10px',
         fontSize:'11px',
         fontWeight:500,
-        color:'#333333'
+        color:'#333333',
+        fontFamily: 'Noto Sans JP',
+        fontStyle: 'normal',
+        fontWeight: 'normal'
     },
     blank20:{
         height:'20px',
@@ -176,6 +185,30 @@ const ProductFormPanel = () => {
                     <Paper variant="outlined" square>
                         <div className={classes.qtyWrapper} >
                             <Typography className={classes.qtyLabel}>在庫</Typography>
+                            <Typography className={classes.qtyNumber}>100</Typography>
+                        </div>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper variant="outlined" square>
+                        <div className={classes.qtyWrapper} >
+                            <Typography className={classes.qtyLabel}>発送までの日数</Typography>
+                            <Typography className={classes.qtyNumber}>100</Typography>
+                        </div>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper variant="outlined" square>
+                        <div className={classes.qtyWrapper} >
+                            <Typography className={classes.qtyLabel}>発送までの日数</Typography>
+                            <Typography className={classes.qtyNumber}>100</Typography>
+                        </div>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper variant="outlined" square>
+                        <div className={classes.qtyWrapper} >
+                            <Typography className={classes.qtyLabel}>発送までの日数</Typography>
                             <Typography className={classes.qtyNumber}>100</Typography>
                         </div>
                     </Paper>

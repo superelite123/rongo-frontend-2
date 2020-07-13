@@ -7,7 +7,8 @@ import {Grid, Paper, CardMedia, Checkbox, Typography,
 import TextTruncate from 'react-text-truncate';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import StarRateIcon from '@material-ui/icons/StarRate';
-import SoldMark from './typo/SoldMark'
+import FavoriteStarIcon from '../base/icons/FavoriteStarIcon'
+import SoldMark from '../typo/SoldMark'
 const useStyles = makeStyles((theme) => ({
     root:{
         backgrodund:'red',
@@ -32,26 +33,44 @@ const useStyles = makeStyles((theme) => ({
         width:'100%'
     },
     descriptionContent: {
-        padding:5
+        padding: '6px 0 0 16px'
     },
     productLabel: {
         width:'100%',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        fontSize:'12px',
         color:'#333333',
+        fontFamily: 'Noto Sans JP',
         fontStyle: 'normal',
-        fontWeight: 'normal',
+        fontWeight: '500',
+        fontSize: '12px',
     },
     arrrowWrapper: {
-        width:'80px',
-        margin:'auto',
-        color:'#BDBDBD'
+        width:'16px',
+        margin: 'auto 16px auto 0',
+        color: '#DEDCD4'
+    },
+    forwardArrow: {
+        verticalAlign: 'text-top',
+        fontSize: '1em',
+        color: '#DEDCD4'
     },
     productNumber:{
-        fontSize:'10px',
+        margin: '2px auto',
         color:'#A5A5A5',
         textAlign:'left'
+    },
+    productNumberTitle: {
+        fontFamily: 'Noto Sans JP',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: '10px',
+    },
+    productNumberContent: {
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: '11px',
     },
     productPrice:{
         color:'#333333',
@@ -70,31 +89,65 @@ const useStyles = makeStyles((theme) => ({
         fontSize:'12px',
     },
     rateWrapper:{
-        display:'flex'
+        display:'flex',
+        marginBottom: '2px'
     },
     starRateIcon:{
         color:'#BBA884',
-        fontSize:'9px'
+        fontSize:'13px',
+        verticalAlign: 'middle'
     },
     rateCounter:{
-        margin:'auto',
-        fontSize:'11px',
+        margin:'auto 2px',
+        textAlign: 'left',
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: '11px',
         color:'#333333'
     },
     centering:{
-        margin:'auto'
+        margin:'auto 0 4px auto',
+        textAlign: 'left',
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: '500',
+        fontSize: '15px',
+    },
+    remainProduct:{
+        margin:'auto auto 6px auto',
+        textAlign: 'left',
+    },
+    remainProductTitle: {
+        textAlign: 'left',
+        fontFamily: 'Noto Sans JP',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: '10px',
+    },
+    remainProductCount: {
+        marginLeft: '2px',
+        textAlign: 'left',
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: '11px',
     },
     statusDraft:{
         width:'60px',
-        height:'20px',
+        height:'26px',
         background:'white',
         color:'#BDBDBD',
         borderRadius: '5px',
         textAlign:'center',
+        fontFamily: 'Noto Sans JP',
+        fontStyle: 'normal',
         fontWeight: '500',
-        fontSize:'12px',
+        fontSize: '12px',
         border: '1px solid #BDBDBD',
+        lineHeight: '200%'
     },
+
 }))
 
 const handleCheck = (id) => {
@@ -115,7 +168,7 @@ const ProductListItem = ({ text, link,isBottomBorder,number }) => {
         
         linkArrow = 
         <Box className={classes.arrrowWrapper} component='div'>
-                <ArrowForwardIosIcon />
+                <ArrowForwardIosIcon className={classes.forwardArrow}/>
         </Box>
     }
     checkbox = 
@@ -133,6 +186,7 @@ const ProductListItem = ({ text, link,isBottomBorder,number }) => {
                 <Grid className={classes.descriptionContent} container>
                     <Grid item xs={12} style={{textAlign:'left'}}>
                         <TextTruncate
+                            className={classes.productLabel}
                             line={1} 
                             element="span"
                             truncateText="…"
@@ -142,32 +196,29 @@ const ProductListItem = ({ text, link,isBottomBorder,number }) => {
                     <Grid item xs='12'>
                         <Grid container>
                             <Grid item xs={9}>
-                                <Grid container className={classes.productNumber}>
-                                    <Grid item xs={12}>
-                                        <span>
-                                            品番：0000
-                                        </span>
+                                <Grid container>
+                                    <Grid item xs={12} className={classes.productNumber}>
+                                        <span className={classes.productNumberTitle}>品番：</span>
+                                        <span className={classes.productNumberContent}>0000</span>
                                     </Grid>
                                     <Grid item xs={5} md={4} sm={4} className={classes.centering}>
                                         <span className={classes.productPrice}>
                                             ¥10,000
                                         </span>
                                     </Grid>
-                                    <Grid item xs={3} md={3} sm={4} className={classes.centering}>
-                                        <span>
-                                            在庫
-                                        </span>
-                                        <span>10</span>
+                                    <Grid item xs={3} md={3} sm={4} className={classes.remainProduct}>
+                                        <span className={classes.remainProductTitle}>在庫</span>
+                                        <span className={classes.remainProductCount}>10</span>
                                     </Grid>
                                     
                                     <Grid className={classes.rateWrapper} item xs={3}>
-                                        <Box component='span' className={classes.starRateIcon}><StarRateIcon /></Box>
+                                        <Box component='span'><FavoriteStarIcon className={classes.starRateIcon} /></Box>
                                         <Box component='span' className={classes.rateCounter}>10000</Box>
                                     </Grid>
                                     <Grid item xs={1} md={2} sm={2}></Grid>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={3}>
+                            <Grid item xs={3} style={{marginTop: '10px'}}>
                                 <Box className={classes.statusDraft}>
                                     出品中
                                 </Box>

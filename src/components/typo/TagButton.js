@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight:'5px',
     marginTop:'10px',
     cursor:'pointer',
+    fontFamily: 'Noto Sans JP',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
     hover:{
         backgroundColor:'#BBA884',
         color:'white'

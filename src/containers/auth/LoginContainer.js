@@ -34,9 +34,21 @@ class LoginContainer extends Component
         });
         this.setError(null)
     }
+
     handleSubmit = async (event) => {
         event.preventDefault()
         const { LoginActions,UserActions,email,password,history  } = this.props
+
+        if(!email) {
+            this.setError('メールアドレスを入力してください。');
+            return
+        }
+
+        if(!password) {
+            this.setError('パスワードを入力してください。');
+            return
+        }
+
         try {
             await LoginActions.localLogin({email,password});
             const result = this.props.login1;

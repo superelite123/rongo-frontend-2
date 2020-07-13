@@ -8,11 +8,18 @@ const Wrapper = styled.div`
     margin-top: 1rem;
     margin-bottom: 1rem;
     color: white;
-    font-weight: 500;
-    padding: 1rem 0.5rem;
     text-align: center;
     animation: ${transitions.shake} 0.3s ease-in;
     animation-fill-mode: forwards;
+
+    padding-top: 11px;
+    padding-bottom: 12px;
+
+    font-family: Noto Sans JP;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 100%;
 `;
 
 const ErrorAlert = ({children}) => (

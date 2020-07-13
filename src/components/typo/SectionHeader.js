@@ -20,6 +20,12 @@ const styles = theme => ({
     borderRightWidth: '0px',
     borderColor: '#BBA884'
   },
+  headerLabel: {
+    fontFamily: 'Noto Sans JP',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: '17px',
+  },
   arrow: {
     margin:'auto',
     color:'#BBA884'
@@ -38,7 +44,7 @@ class SectionHeader extends Component {
                 <ArrowBackIcon />
               </Grid>
               <Grid item xs={8}>
-                <p variant='h5' component="h5" className={classes.title}>
+                <p variant='h5' component="h5" className={classes.headerLabel}>
                   {title}
                 </p>
               </Grid>

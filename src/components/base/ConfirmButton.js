@@ -5,19 +5,23 @@ import { shadow } from 'lib/styleUtil';
 
 const Wrapper = styled.div`
     margin-top: 1rem;
-    padding-top: 0.6rem;
-    padding-bottom: 0.5rem;
+    padding-top: 16px;
+    padding-bottom: 17px;
 
     background: #BBA884;
     color: white;
 
     text-align: center;
-    font-size: 1.25rem;
-    font-weight: 500;
-
+    
     cursor: pointer;
     user-select: none;
     transition: .2s all;
+
+    font-family: Noto Sans JP;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 100%;
 
     &:hover {
         background: ${oc.teal[5]};

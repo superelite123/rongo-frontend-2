@@ -25,33 +25,54 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom:'16px',
     },
     childToCenter: {
-      margin:'auto'
+      margin: 'auto 0'
     },
     selected:{
+    },
+    cardTitle: {
+      fontFamily: 'Noto Sans JP',
+      fontStyle: 'normal',
+      fontWeight: 'normal',
+      fontSize: '13px',
+      lineHeight: '100%',
+      color: '#333333'
+    },
+    cardDetail: {
+      fontFamily: 'Roboto',
+      fontStyle: 'normal',
+      fontWeight: '500',
+      fontSize: '15px',
+      lineHeight: '100%',
+      textAlign: 'center',
+      color: '#333333',
+      textAlign: 'right'
+    },
+    forwardArrow: {
+      verticalAlign: 'text-top',
+      fontSize: '1em',
+      color: '#DEDCD4'
     }
 }))
+
 const ListCard = ({ text, link,isBottomBorder,number,isSelected,handleClick,panelNumber,panelLocation }) => {
     const classes = useStyles();
     return (
-        <CardActionArea component="a" onClick={() => handleClick(panelNumber,panelLocation)}>
+        <CardActionArea component="a" onClick={() => handleClick(panelNumber, panelLocation)}>
           <Card variant="outlined" square className={classes.card} style={{background:isSelected?'rgb(93, 184, 61, 0.2)':''}}>
-            <CardContent style={{paddingBottom: '16px',paddingLeft:'0px'}} className={classes.cardContent}>
-              <Grid container >
-                <Grid xs={4} item className={classes.childToCenter}>
-                  <Typography component="h4">
-                    <Box textAlign="center">{text}</Box>
+            <CardContent style={{paddingBottom: '15px'}} className={classes.cardContent}>
+              <Grid container>
+                <Grid xs={9} item className={classes.childToCenter}>
+                  <Typography component="h4" className={classes.cardTitle}>
+                    <Box textAlign="left">{text}</Box>
                   </Typography>
                 </Grid>
-                <Grid xs={5} item>
-                  <Box textAlign="center"></Box>
-                </Grid>
-                <Grid xs={2} item>
-                <Typography component="p">{number}
+                <Grid xs={2} style={{margin: 'auto'}} item>
+                <Typography component="p" className={classes.cardDetail}>{number}
                   </Typography>
                 </Grid>
-                <Grid xs={1} item>
+                <Grid xs={1} style={{margin: 'auto', maxWidth: '16px'}} item>
                   <Typography component="p">
-                    <ArrowForwardIosIcon />
+                    <ArrowForwardIosIcon className={classes.forwardArrow}/>
                   </Typography>
                 </Grid>
               </Grid>

@@ -7,6 +7,10 @@ const useStyles = makeStyles((theme) => ({
     color:'white',
     width:'82px',
     height:'82px',
+    display: 'flex'
+  },
+  cameraIcon: {
+    margin: 'auto'
   }
 }));
 
@@ -14,7 +18,7 @@ const TakePhoto = () => {
     const classes = useStyles();
     return (
       <div className={classes.root}>
-        <PhotoCameraIcon />
+        <PhotoCameraIcon className={classes.cameraIcon}/>
       </div>
     )
 }

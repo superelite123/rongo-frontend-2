@@ -5,6 +5,7 @@ import {isMobile} from "react-device-detect";
 import {
     SHOW_HOMEPANEL,
     SHOW_PPROUCTSPANEL,
+    SHOW_LIVELISTPANEL,
     SHOW_PADDLINK,
     SHOW_TRANSACTIONSPANEL,
     SHOW_PFORM,
@@ -20,9 +21,9 @@ export const changeSecondStatus = createAction(CHANGE_SECOND_STATUS); // form
 export const changeThirdStatus = createAction(CHANGE_THIRD_STATUS);
 
 const initialState = Map({
-    firstPanel:isMobile?11:SHOW_HOMEPANEL,
-    seconPanel:isMobile?0:SHOW_PPROUCTSPANEL,
-    thirdPanel:isMobile?0:SHOW_PFORM
+    firstPanel:isMobile? 11:SHOW_HOMEPANEL,
+    seconPanel:isMobile? 0:SHOW_LIVELISTPANEL,
+    thirdPanel:isMobile? 0:SHOW_PFORM
 })
 
 export default handleActions({

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:regular,bold,medium&subset=latin,latin-ext');
+
 html,body {
     height: 100%;
     margin: 0px;
@@ -12,3 +14,4 @@ html,body {
 ::-webkit-scrollbar {
     display: none;
 }
+

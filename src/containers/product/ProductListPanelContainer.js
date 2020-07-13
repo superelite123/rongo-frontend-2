@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import ProductListPanel from 'components/ProductListPanel'
+import ProductListPanel from 'components/product/ProductListPanel'
 class ProductListPanelContainer extends Component
 {
     render()

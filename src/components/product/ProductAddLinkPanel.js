@@ -1,6 +1,6 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
-import PanelTemplate from './base/PanelTemplate'
+import PanelTemplate from '../base/PanelTemplate'
 import {Box, Button} from "@material-ui/core"
 import ContainerDimensions from 'react-container-dimensions'
 import LocalMallIcon from '@material-ui/icons/LocalMall';

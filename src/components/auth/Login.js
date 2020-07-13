@@ -34,25 +34,45 @@ const Title = styled.p`
     justify-content: center;
     margin: 0 0;
     color: white;
+
+    font-family: Noto Sans JP;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 100%;
 `
-// 하단 그래디언트 테두리
 const TitleBorder = styled.div`
-    height: 2px;
+    margin-top: 8px;
+    height: 3px;
     width: 100%;
-    background: linear-gradient(to right, ${oc.teal[6]}, ${oc.cyan[5]});
+    background: #BBA884;
 `;
 const InputWrapper = styled.div`
     width:100%;
 `;
 const Input = styled.input`
     width: 96%;
+    height: 45px;
     border: 1px solid ${oc.gray[3]};
     outline: none;
     border-radius: 0px;
-    line-height: 2.5rem;
-    font-size: 1.2rem;
     margin-top: 1rem;
     padding-left: 0.5rem;
+    color: #333333;
+
+    font-family: Noto Sans JP;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 100%;
+
+    &::placeholder {
+        color: #BDBDBD;
+    }
+
+    &:-ms-input-placeholder {
+        color: #BDBDBD;
+    }
 `;
 
 const Login = ({handleChange,error,handleSubmit}) => {

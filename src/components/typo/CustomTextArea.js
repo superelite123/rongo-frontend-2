@@ -3,6 +3,9 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import './CustomTextArea.css'
 
 const useStyles = makeStyles((theme) => ({
+  base: {
+    margin: '16px'
+  }
 }));
 
 const CustomTextArea = () => {
