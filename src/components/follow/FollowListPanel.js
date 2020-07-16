@@ -7,7 +7,7 @@ import FollowListItem from '../follow/FollowListItem'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
-import * as followListAction from 'redux/modules/follow/followList';
+import * as followAction from 'redux/modules/follow/follow';
 import * as homeActions from 'redux/modules/homePage';
 import { SHOW_FOLLOWPANEL } from 'lib/constant'
 
@@ -45,9 +45,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const FollowListPanel = ({ handleClick }) => {
+const FollowListPanel = ({ handleClick, followList }) => {
     const classes = useStyles();
 
+    let count = 0
+    let followListItems = []
+    for (const key in followList) {
+        let followItem = followList[key]
+        followListItems.push(<FollowListItem follow={followItem} handleClick={handleClick} panelNumber={SHOW_FOLLOWPANEL} panelLocation={3} />)
+    }
+    
     return (
         <PanelTemplate>
             <Grid xs={12} item>
@@ -62,7 +69,7 @@ const FollowListPanel = ({ handleClick }) => {
                                 </Grid>
                                 <Grid item xs={8}>
                                     <p variant='h5' component="h5" className={classes.headerLabel}>
-                                        フォロワー（1000）
+                                        フォロワー（{followListItems.length}）
                                     </p>
                                 </Grid>
                                 <Grid item xs={2} className={classes.leftTopButton}>
@@ -80,10 +87,8 @@ const FollowListPanel = ({ handleClick }) => {
             </Grid>
 
             <Grid xs={12} item>
-                <GridList style={{marginTop: '20px'}} className={classes.gridList} cols={3}>
-                    <FollowListItem text={'配信管理'} handleClick={handleClick} panelNumber={SHOW_FOLLOWPANEL} panelLocation={3} />
-                    <FollowListItem text={'配信管理'} handleClick={handleClick} panelNumber={SHOW_FOLLOWPANEL} panelLocation={3} />
-                    <FollowListItem text={'配信管理'} handleClick={handleClick} panelNumber={SHOW_FOLLOWPANEL} panelLocation={3} />
+                <GridList style={{marginTop: '20px'}} className={classes.gridList} cols={followListItems.length}>
+                    {followListItems}                    
                 </GridList>
             </Grid>
         </PanelTemplate>

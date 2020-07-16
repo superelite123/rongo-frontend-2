@@ -40,8 +40,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const TransactionListPanel = ({ handleClick }) => {
+const TransactionListPanel = ({ handleClick, transactionList }) => {
     const classes = useStyles();
+
+    let transactionListItems = []
+    for (const key in transactionList) {
+      let transaction = transactionList[key]
+      transactionListItems.push(<TransactionListItem handleClick={ handleClick } transaction={ transaction } panelNumber={SHOW_TRANSACTIONDETAIL} panelLocation={3} />)
+    }
 
     return (
         <PanelTemplate>
@@ -75,10 +81,8 @@ const TransactionListPanel = ({ handleClick }) => {
             </Grid>
 
             <Grid xs={12} item>
-                <GridList style={{marginTop: '20px'}} className={classes.gridList} cols={3}>
-                    <TransactionListItem text={'配信管理'} handleClick={handleClick} panelNumber={SHOW_TRANSACTIONDETAIL} panelLocation={3} />
-                    <TransactionListItem text={'配信管理'} handleClick={handleClick} panelNumber={SHOW_TRANSACTIONDETAIL} panelLocation={3} />
-                    <TransactionListItem text={'配信管理'} handleClick={handleClick} panelNumber={SHOW_TRANSACTIONDETAIL} panelLocation={3} />
+                <GridList style={{marginTop: '20px'}} className={classes.gridList} cols={transactionListItems.length}>
+                    {transactionListItems}
                 </GridList>
             </Grid>
         </PanelTemplate>
@@ -86,11 +90,3 @@ const TransactionListPanel = ({ handleClick }) => {
 }
 
 export default TransactionListPanel
-// export default connect(
-//     (state) => ({
-//         firstPanelVisible:state.homePage.get('firstPanel'),
-//     }),
-//     (dispatch) => ({
-//         HomeActions: bindActionCreators(homeActions, dispatch),
-//     })
-// )(TransactionListPanel);

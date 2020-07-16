@@ -3,15 +3,33 @@ import TransactionListPanel from '../../components/transaction/TransactionListPa
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
+import * as transactionActions from 'redux/modules/transaction/transaction';
 
 class TransactionListPanelContainer extends Component
 {
+
+    getTransactionList = async () => {
+        const { TransactionActions,  transactionList} = this.props;
+
+        try {
+            await TransactionActions.getTransactions();
+            console.log(transactionList)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    componentWillMount() {
+        this.getTransactionList()
+    }
+
     render() {
 
-        const { HomeActions } = this.props;
+        const { HomeActions, TransactionActions, transactionList } = this.props;
+        console.log(transactionList)
 
-        const handleClick = (panelNumber, panelType) => {
-            console.log(panelNumber + ',' + panelType)
+        const handleClick = (panelNumber, panelType, transaction) => {
+            console.log(panelNumber + panelType)
             switch (panelType) {
                 case 1:
                     HomeActions.changeFirstStatus(panelNumber)
@@ -24,6 +42,8 @@ class TransactionListPanelContainer extends Component
                     break;
                 case 3:
                     HomeActions.changeThirdStatus(panelNumber)
+                    TransactionActions.showTransactionDetail(transaction)
+                    console.log(transaction);
                     break;
                 default:
                     break;
@@ -31,7 +51,7 @@ class TransactionListPanelContainer extends Component
         }
 
         return (
-            <TransactionListPanel handleClick={handleClick} />
+            <TransactionListPanel handleClick={handleClick} transactionList={transactionList} />
         )
     }
 }
@@ -41,8 +61,10 @@ export default connect(
         firstPanelVisible:state.homePage.get('firstPanel'),
         secondPanelVisible:state.homePage.get('seconPanel'),
         thirdPanelVisible:state.homePage.get('thirdPanel'),
+        transactionList:state.transaction.get('transactionList'),
     }),
     (dispatch) => ({
         HomeActions: bindActionCreators(homeActions, dispatch),
+        TransactionActions: bindActionCreators(transactionActions, dispatch),
     })
 )((TransactionListPanelContainer));

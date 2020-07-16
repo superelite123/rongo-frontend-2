@@ -6,6 +6,7 @@ import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@mate
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ConfirmButton from 'components/base/ConfirmButton';
+import { convertCurrencyString } from 'helper/helper'
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -142,9 +143,33 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const TransactionDetailPanel = ({ handleClick }) => {
+const TransactionDetailPanel = ({ handleClick, transaction }) => {
 
     const classes = useStyles();
+
+    let statusView, statusButton
+    if (transaction.status == 0) {
+        statusView =
+            <Box className={classes.topSeperate} component='div'>
+                <span>
+                    <ScheduleIcon className={classes.scheduleActive} />
+                </span>
+                <span className={classes.statusLabelActive}>発送準備をしてください</span>
+            </Box>
+        statusButton =
+            <Grid xs={12} item className={classes.bottomBtnWrapper}>
+                <ConfirmButton >取引完了する</ConfirmButton>
+            </Grid>
+    } else {
+        statusView =
+            <Box className={classes.topSeperate} component='div'>
+                <span>
+                    <ThumbUpAltIcon className={classes.scheduleActive} />
+                </span>
+                <span className={classes.statusLabelActive}>取引完了しました</span>
+            </Box>
+        statusButton = null
+    }
 
     return (
         <PanelTemplate>
@@ -170,18 +195,13 @@ const TransactionDetailPanel = ({ handleClick }) => {
                         </Paper>
                     </Grid>
                     <Grid xs={12} style={{ display: 'flex', height: '70px', background: '#BBA884' }} item>
-                        <Box className={classes.topSeperate} component='div'>
-                            <span>
-                                <ScheduleIcon className={classes.scheduleActive} />
-                            </span>
-                            <span className={classes.statusLabelActive}>発送準備をしてください</span>
-                        </Box>
+                        {statusView}
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item xs={12}>
                 <div className={classes.labelPanel}>
-                    <Typography className={classes.label}>商品名</Typography>
+                    <Typography className={classes.label}>取引情報</Typography>
                 </div>
             </Grid>
             <Grid item xs={12} style={{ background: '#ffffff' }}>
@@ -189,16 +209,16 @@ const TransactionDetailPanel = ({ handleClick }) => {
                     <Grid item xs={12} >
                         <Paper style={{ display: 'flex' }} className={classes.infoContainer}>
                             <Box className={classes.thumbnail} component='div'>
-                                <img className={classes.thumbnail} src='/images/2.png' />
+                                <img className={classes.thumbnail} src={transaction.product.thumbnail} />
                             </Box>
                             <Box component='div'>
                                 <Grid className={classes.descriptionContent} container>
                                     <Grid item xs={12} style={{ display: 'flex', padding: '0 16px', margin: 'auto', height: '65%' }}>
-                                        <span className={classes.userNameLabel}>ユーザー名が入ります sdfas asdfa sdf asda asdfa sdfa sdfa sdf</span>
+                                        <span className={classes.userNameLabel}>{transaction.product.title}</span>
                                     </Grid>
                                     <Grid item xs={12} style={{ display: 'flex', padding: '0 16px', height: '20px' }}>
                                         <span className={classes.productNoLabel}>品番：</span>
-                                        <span className={classes.noLabel}>12222</span>
+                                        <span className={classes.noLabel}>{transaction.product.number}</span>
                                     </Grid>
                                 </Grid>
                             </Box>
@@ -210,7 +230,7 @@ const TransactionDetailPanel = ({ handleClick }) => {
                                 <span className={classes.detailTitle}>売上総額</span>
                             </Box>
                             <Box component='div'>
-                                <span className={classes.noLabel}>¥100,000</span>
+                                <span className={classes.noLabel}>¥{convertCurrencyString(transaction.price)}</span>
                             </Box>
                         </Paper>
                     </Grid>
@@ -230,7 +250,7 @@ const TransactionDetailPanel = ({ handleClick }) => {
                                 <span className={classes.detailTitle}>取引ID</span>
                             </Box>
                             <Box component='div'>
-                                <span className={classes.noLabel}>r0000000000</span>
+                                <span className={classes.noLabel}>{transaction.number}</span>
                             </Box>
                         </Paper>
                     </Grid>
@@ -240,7 +260,7 @@ const TransactionDetailPanel = ({ handleClick }) => {
                                 <span className={classes.detailTitle}>購入者</span>
                             </Box>
                             <Box component='div'>
-                                <span className={classes.userNameLabel}>レイン</span>
+                                <span className={classes.userNameLabel}>{transaction.user.nickname}</span>
                             </Box>
                         </Paper>
                     </Grid>
@@ -249,21 +269,19 @@ const TransactionDetailPanel = ({ handleClick }) => {
                             <Box className={classes.descriptionWrapper} component='div'>
                                 <span className={classes.detailTitle}>お届け先</span>
                             </Box>
-                            <Box component='div' style={{textAlign: 'left', maxWidth: '120px'}}>
+                            <Box component='div' style={{ textAlign: 'left' }}>
                                 <span className={classes.userNameLabel}>
-                                    〒107-0062
-                                    東京都港区南青山7-13-28
-                                    CAPRICE201
-                                    北本 浩一郎
+                                    〒{transaction.address.postalCode} <br />
+                                    {transaction.address.state + transaction.address.county + transaction.address.street + transaction.address.houseNo} <br />
+                                    {transaction.address.company} <br />
+                                    {transaction.address.firstname + " " + transaction.address.lastname}
                                 </span>
                             </Box>
                         </Paper>
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid xs={12} item className={classes.bottomBtnWrapper}>
-                <ConfirmButton >取引完了する</ConfirmButton>
-            </Grid>
+            { statusButton }
         </PanelTemplate>
     )
 }

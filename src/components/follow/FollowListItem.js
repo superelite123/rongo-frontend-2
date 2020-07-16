@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Checkbox, Typography, Box, } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import TextTruncate from 'react-text-truncate';
 import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import BlockButton from '../base/BlockButton'
 
 const useStyles = makeStyles((theme) => ({
     card: {
-        borderTopWidth: '0px',
-        boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
+        borderTopWidth: '0px'
     },
     cardContent: {
         padding: 0,
@@ -61,21 +60,29 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const FollowListItem = ({ text, link, isSelected, handleClick, panelNumber, panelLocation }) => {
+const FollowListItem = ({ follow, isSelected, handleClick, panelNumber, panelLocation }) => {
     const classes = useStyles();
 
+    let blockButton
+    if(follow.isBlock == true) {
+        blockButton = <BlockButton />
+    }
+
     return (
-        <CardActionArea component="a" onClick={() => handleClick(panelNumber, panelLocation)}>
+        <CardActionArea component="a" onClick={() => handleClick(panelNumber, panelLocation, follow)}>
             <Card variant="outlined" square className={classes.card} style={{ background: isSelected ? 'rgb(93, 184, 61, 0.2)' : '' }}>
                 <CardContent style={{ paddingBottom: 0 }} className={classes.cardContent}>
                     <Paper className={classes.root}>
                         <Box className={classes.thumbnail} component='div'>
-                            <img className={classes.thumbnail} src='/images/2.png' />
+                            <img className={classes.thumbnail} src={follow.thumbnail} />
                         </Box>
                         <Box className={classes.descriptionWrapper} component='div'>
                             <Grid className={classes.descriptionContent} container>
-                                <Grid item xs={11} style={{ display: 'flex', padding: '0 16px' }}>
-                                    <span className={classes.userNameLabel}>ユーザー名が入ります</span>
+                                <Grid item xs={7} style={{ display: 'flex', padding: '0 16px' }}>
+                                    <span className={classes.userNameLabel}>{follow.nickname}</span>
+                                </Grid>
+                                <Grid item xs={4} style={{ margin: 'auto', alignItems: 'left'}}>
+                                    {blockButton}
                                 </Grid>
                                 <Grid item xs={1} style={{ display: 'flex' }}>
                                     <Box className={classes.arrrowWrapper} component='div'>

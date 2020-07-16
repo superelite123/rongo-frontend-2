@@ -64,7 +64,15 @@ const styles = theme => ({
 
 class ProductListPanel extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, productList } = this.props;
+    console.log(productList);
+
+    let productListItems = []
+    for (const key in productList) {
+      let product = productList[key]
+      productListItems.push(<ProductListItem product={product} />)
+    }
+
     return (
       <PanelTemplate>
         <Grid xs={12} item>
@@ -74,7 +82,7 @@ class ProductListPanel extends Component {
                 <Grid container className={classes.card}>
                   <Grid item xs={2} className={classes.childToCenter}>
                     <Button style={{ color: '#BBA884', paddingBottom: '3px' }}>
-                      削除
+                      編集
                       </Button>
                   </Grid>
                   <Grid item xs={8}>
@@ -103,10 +111,8 @@ class ProductListPanel extends Component {
           </Grid>
         </Grid>
         <Grid xs={12} item>
-          <GridList className={classes.gridList} cols={3}>
-            <ProductListItem text={'配信管理'} />
-            <ProductListItem text={'配信管理'} />
-            <ProductListItem text={'配信管理'} />
+          <GridList className={classes.gridList} cols={productListItems.length}>
+            {productListItems}
           </GridList>
         </Grid>
       </PanelTemplate>

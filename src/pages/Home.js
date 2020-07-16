@@ -9,6 +9,9 @@ import TransactionDetailPanelContainer from '../containers/transaction/Transacti
 import FollowListPanelContainer from '../containers/follow/FollowListPanelContainer'
 import FollowDetailPanelContainer from '../containers/follow/FollowDetailPanelContainer'
 import LiveListPanelContainer from '../containers/live/LiveListPanelContainer'
+import SellHistoryListPanelContainer from '../containers/sellHistory/SellHistoryListPanelContainer'
+import SellHistoryDetailPanelContainer from '../containers/sellHistory/SellHistoryDetailPanelContainer'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
@@ -21,6 +24,8 @@ import {
     SHOW_PFORM,
     SHOW_PDETAIL,
     SHOW_TRANSACTIONDETAIL,
+    SHOW_SELLHISTORYLISTPANEL,
+    SHOW_SELLHISTORYDETAILPANEL,
     SHOW_LIVELISTPANEL
 } from 'lib/constant'
 class Home extends Component {
@@ -45,6 +50,9 @@ class Home extends Component {
             case SHOW_LIVELISTPANEL:
                 secondPanel = <LiveListPanelContainer />;
                 break
+            case SHOW_SELLHISTORYLISTPANEL:
+                secondPanel = <SellHistoryListPanelContainer />;
+                break
             default:
                 secondPanel = null;
                 break;
@@ -67,6 +75,9 @@ class Home extends Component {
                 break;
             case SHOW_PDETAIL:
                 thirdPanel = <ProductListPanelContainer />;
+                break;
+            case SHOW_SELLHISTORYDETAILPANEL:
+                thirdPanel = <SellHistoryDetailPanelContainer />;
                 break;
             default:
                 thirdPanel = <ProductFormPanel />;

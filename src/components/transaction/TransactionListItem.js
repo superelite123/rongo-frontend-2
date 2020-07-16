@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: 'Noto Sans JP',
         fontStyle: 'normal',
         fontWeight: '500',
-        fontSize: '12px',
+        fontSize: '13px',
         textAlign: 'left',
         margin: 'auto'
     },
@@ -67,39 +67,68 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: '500',
         fontSize: '12px',
         textAlign: 'left',
-        margin: 'auto 3px'
+        margin: '1px 3px'
+    },
+    statusLabelFinish: {
+        width: '100%',
+        color: '#BDBDBD',
+        fontFamily: 'Noto Sans JP',
+        fontStyle: 'normal',
+        fontWeight: '500',
+        fontSize: '12px',
+        textAlign: 'left',
+        margin: '1px 3px'
     },
     scheduleActive: {
         verticalAlign: 'text-bottom',
         color: '#BBA884',
         fontSize: '1em',
+    },
+    scheduleFinish: {
+        verticalAlign: 'text-bottom',
+        color: '#BDBDBD',
+        fontSize: '1em',
     }
 }))
 
-const TransactionListItem = ({ text, link, isSelected, handleClick, panelNumber, panelLocation }) => {
+const TransactionListItem = ({ transaction, isSelected, handleClick, panelNumber, panelLocation }) => {
     const classes = useStyles();
 
+    let statusView
+    if (transaction.status == 0) {
+        statusView =
+            <Grid item xs={12} style={{ display: 'flex', padding: '0 16px' }}>
+                <span>
+                    <ScheduleIcon className={classes.scheduleActive} />
+                </span>
+                <span className={classes.statusLabelActive}>発送準備</span>
+            </Grid>
+    } else {
+        statusView =
+            <Grid item xs={12} style={{ display: 'flex', padding: '0 16px' }}>
+                <span>
+                    <ThumbUpAltIcon className={classes.scheduleFinish} />
+                </span>
+                <span className={classes.statusLabelFinish}>取引完了</span>
+            </Grid>
+    }
+
     return (
-        <CardActionArea component="a" onClick={() => handleClick(panelNumber, panelLocation)}>
+        <CardActionArea component="a" onClick={() => handleClick(panelNumber, panelLocation, transaction)}>
             <Card variant="outlined" square className={classes.card} style={{ background: isSelected ? 'rgb(93, 184, 61, 0.2)' : '' }}>
                 <CardContent style={{ paddingBottom: 0 }} className={classes.cardContent}>
                     <Paper className={classes.root}>
                         <Box className={classes.thumbnail} component='div'>
-                            <img className={classes.thumbnail} src='/images/2.png' />
+                            <img className={classes.thumbnail} src={transaction.product.thumbnail} />
                         </Box>
                         <Box className={classes.descriptionWrapper} component='div'>
                             <Grid className={classes.descriptionContent} container>
-                                <Grid item xs={11} style={{ display: 'flex', padding: '14px 0px' }}>
+                                <Grid item xs={11} style={{ display: 'flex', padding: '10px 0px 8px 0px' }}>
                                     <Grid container>
                                         <Grid item xs={12} style={{ display: 'flex', padding: '0 16px' }}>
-                                            <span className={classes.userNameLabel}>ユーザー名が入ります</span>
+                                            <span className={classes.userNameLabel}>{transaction.product.title}</span>
                                         </Grid>
-                                        <Grid item xs={12} style={{ display: 'flex', padding: '0 16px' }}>
-                                            <span>
-                                                <ScheduleIcon className={classes.scheduleActive} />
-                                            </span>
-                                            <span className={classes.statusLabelActive}>発送準備</span>
-                                        </Grid>
+                                        {statusView}
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={1} style={{ display: 'flex' }}>

@@ -1,3 +1,3 @@
-import axios from 'lib/defaultClient'
+import axios from 'lib/clientWithAuth'
 
-export const getProducts =  ({email, password}) => axios.post('/api/auth/login/seller', { email, password });
+export const getProducts =  ({type}) => axios.get('/api/store/products/' + type);

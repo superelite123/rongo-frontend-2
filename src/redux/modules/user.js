@@ -36,9 +36,9 @@ const initialState = Map({
 });
 
 export default handleActions({
-    [SET_EMAIL]:(state,action) => state.setIn(['loggedInfo','email'],action.payload),
+    [SET_EMAIL]:(state,action) => state.setIn(['userInfo','email'],action.payload),
     [SET_FIRST_LOGGEDIN]:(state,action) => state.set('firstloggedin',action.payload),
-    [SET_USER_INFO]: (state, action) => state.set('loggedInfo', Map(action.payload)),
+    [SET_USER_INFO]: (state, action) => state.set('userInfo', Map(action.payload)),
     ...pender({
         type: LOCAL_LOGIN_CONFIRM,
         onSuccess: (state, action) => 

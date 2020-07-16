@@ -3,15 +3,30 @@ import FollowListPanel from '../../components/follow/FollowListPanel'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
+import * as followActions from 'redux/modules/follow/follow';
 
 class FollowListPanelContainer extends Component
 {
+    getFollowList = async () => {
+        const { HomeActions, FollowActions } = this.props;
+        console.log('hi')
+        try {
+            await FollowActions.getFollows();
+            console.log(this.props.followList)
+        } catch (e) {
+            console.log(e)
+        }
+        
+    }
+    
+    componentDidMount() {
+        this.getFollowList();
+    }
+
     render() {
 
-        const { HomeActions } = this.props;
-
-        const handleClick = (panelNumber, panelType) => {
-            console.log(panelNumber + ',' + panelType)
+        const { HomeActions, FollowActions, followList } = this.props;
+        const handleClick = (panelNumber, panelType, follow) => {
             switch (panelType) {
                 case 1:
                     HomeActions.changeFirstStatus(panelNumber)
@@ -24,6 +39,8 @@ class FollowListPanelContainer extends Component
                     break;
                 case 3:
                     HomeActions.changeThirdStatus(panelNumber)
+                    FollowActions.showFollowerDetail(follow)
+                    console.log(follow);
                     break;
                 default:
                     break;
@@ -31,7 +48,7 @@ class FollowListPanelContainer extends Component
         }
 
         return (
-            <FollowListPanel handleClick={handleClick} />
+            <FollowListPanel handleClick={handleClick} followList={followList} />
         )
     }
 }
@@ -41,8 +58,11 @@ export default connect(
         firstPanelVisible:state.homePage.get('firstPanel'),
         secondPanelVisible:state.homePage.get('seconPanel'),
         thirdPanelVisible:state.homePage.get('thirdPanel'),
+        followList:state.follow.get('followList'),
+        showFollow:state.follow.get('showFollow'),
     }),
     (dispatch) => ({
         HomeActions: bindActionCreators(homeActions, dispatch),
+        FollowActions: bindActionCreators(followActions, dispatch)
     })
 )((FollowListPanelContainer));

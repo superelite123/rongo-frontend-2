@@ -101,8 +101,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const FollowDetailPanel = ({ handleClick }) => {
+const FollowDetailPanel = ({ showFollow }) => {
     const classes = useStyles();
+
+    let blockButton
+    if(showFollow.isBlock == true) {
+        blockButton = <BlockButton />
+    }
 
     return (
         <PanelTemplate>
@@ -118,7 +123,7 @@ const FollowDetailPanel = ({ handleClick }) => {
                                 </Grid>
                                 <Grid item xs={8}>
                                     <p variant='h5' component="h5" className={classes.headerLabel}>
-                                        フォロワー（1000）
+                                        ユーザー情報
                                     </p>
                                 </Grid>
                                 <Grid item xs={2} className={classes.leftTopButton}>
@@ -135,22 +140,22 @@ const FollowDetailPanel = ({ handleClick }) => {
             <Grid xs={12} item>
                 <Paper className={classes.root}>
                     <Box className={classes.thumbnail} component='div'>
-                        <img className={classes.thumbnail} src='/images/2.png' />
+                        <img className={classes.thumbnail} src={showFollow.thumbnail} />
                     </Box>
                     <Box className={classes.descriptionWrapper} component='div'>
                         <Grid className={classes.descriptionContent} container>
                             <Grid item xs={7} style={{ display: 'flex', padding: '16px 0' }}>
                                 <Grid container>
                                     <Grid item xs={12} style={{ display: 'flex', padding: '0 16px' }}>
-                                        <span className={classes.userNameLabel}>青葉 一郎</span>
+                                        <span className={classes.userNameLabel}>{ showFollow.nickname }</span>
                                     </Grid>
                                     <Grid item xs={12} style={{ display: 'flex', padding: '0 16px' }}>
-                                        <span className={classes.followCountLabel}>(1000)</span>
+                                        <span className={classes.followCountLabel}>({showFollow.nTotalFollows})</span>
                                     </Grid>
                                 </Grid>
                             </Grid>
                             <Grid item xs={5} style={{ margin: 'auto', alignItems: 'left', paddingRight: '16px' }}>
-                                <BlockButton />
+                                {blockButton}
                             </Grid>
                         </Grid>
                     </Box>
@@ -161,7 +166,7 @@ const FollowDetailPanel = ({ handleClick }) => {
                     <Paper variant="outlined" square>
                         <div className={classes.qtyWrapper} >
                             <Typography className={classes.qtyLabel}>ストアブロック数</Typography>
-                            <Typography className={classes.qtyNumber}>100</Typography>
+                            <Typography className={classes.qtyNumber}>{showFollow.nTotalBlocks}</Typography>
                         </div>
                     </Paper>
                 </Grid>
@@ -169,7 +174,7 @@ const FollowDetailPanel = ({ handleClick }) => {
                     <Paper variant="outlined" square>
                         <div className={classes.qtyWrapper} >
                             <Typography className={classes.qtyLabel}>ユーザーブロック数</Typography>
-                            <Typography className={classes.qtyNumber}>100</Typography>
+                            <Typography className={classes.qtyNumber}>0</Typography>
                         </div>
                     </Paper>
                 </Grid>
@@ -177,7 +182,7 @@ const FollowDetailPanel = ({ handleClick }) => {
                     <Paper variant="outlined" square>
                         <div className={classes.qtyWrapper} >
                             <Typography className={classes.qtyLabel}>キャンセル数</Typography>
-                            <Typography className={classes.qtyNumber}>100</Typography>
+                            <Typography className={classes.qtyNumber}>0</Typography>
                         </div>
                     </Paper>
                 </Grid>

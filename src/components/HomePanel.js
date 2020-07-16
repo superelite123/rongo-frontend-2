@@ -22,7 +22,8 @@ import {
   SHOW_PADDLINK,
   SHOW_PFORM,
   SHOW_PDETAIL,
-  SHOW_TRANSACTIONDETAIL
+  SHOW_TRANSACTIONDETAIL,
+  SHOW_SELLHISTORYLISTPANEL
 } from 'lib/constant'
 
 const styles = theme => ({
@@ -176,21 +177,21 @@ class HomePanel extends Component {
                 <Typography component="div">
                   <Box lineHeight={1} mt={1.5}><EmojiEmotionsIcon style={{ verticalAlign: 'text-top', color: '#4BD458' }} /></Box>
                   <Box lineHeight={1} mt={0.2} className={classes.emotion}>良い</Box>
-                  <Box lineHeight={1} mt={0.75} mb={1.5} className={classes.emotionCount}>{userInfo.evaluation.like}</Box>
+                  <Box lineHeight={1} mt={0.75} mb={1.5} className={classes.emotionCount}>1</Box>
                 </Typography>
               </Grid>
               <Grid xs={2} item>
                 <Typography component="div">
                   <Box lineHeight={1} mt={1.5}><EmojiEmotionlessIcon style={{ verticalAlign: 'text-top', color: '#BDBDBD' }} /></Box>
                   <Box lineHeight={1} mt={0.2} className={classes.emotion}>普通</Box>
-                  <Box lineHeight={1} mt={0.75} mb={1.5} className={classes.emotionCount}>{userInfo.evaluation.notBad}</Box>
+                  <Box lineHeight={1} mt={0.75} mb={1.5} className={classes.emotionCount}></Box>
                 </Typography>
               </Grid>
               <Grid xs={2} item>
                 <Typography component="div">
                   <Box lineHeight={1} mt={1.5}><EmojiEmotionsadIcon style={{ verticalAlign: 'text-top', color: '#D74936' }} /></Box>
                   <Box lineHeight={1} mt={0.2} className={classes.emotion}>悪い</Box>
-                  <Box lineHeight={1} mt={0.75} mb={1.5} className={classes.emotionCount}>{userInfo.evaluation.dislike}</Box>
+                  <Box lineHeight={1} mt={0.75} mb={1.5} className={classes.emotionCount}></Box>
                 </Typography>
               </Grid>
             </Grid>
@@ -211,7 +212,7 @@ class HomePanel extends Component {
         </Grid>
         <Grid item xs={12} >
           <ListCard text={'売上管理'}
-            panelNumber={SHOW_LIVELISTPANEL}
+            panelNumber={SHOW_SELLHISTORYLISTPANEL}
             panelLocation={2}
             handleClick={handleClick} />
         </Grid>

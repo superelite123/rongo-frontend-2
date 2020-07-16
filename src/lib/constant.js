@@ -6,4 +6,6 @@ export const SHOW_PADDLINK = 32
 export const SHOW_PFORM = 33
 export const SHOW_PDETAIL = 34
 export const SHOW_TRANSACTIONDETAIL = 42
-export const SHOW_LIVELISTPANEL = 51
+export const SHOW_LIVELISTPANEL = 61
+export const SHOW_SELLHISTORYLISTPANEL = 51
+export const SHOW_SELLHISTORYDETAILPANEL = 52
