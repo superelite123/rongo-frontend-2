@@ -23,7 +23,8 @@ import {
   SHOW_PFORM,
   SHOW_PDETAIL,
   SHOW_TRANSACTIONDETAIL,
-  SHOW_SELLHISTORYLISTPANEL
+  SHOW_SELLHISTORYLISTPANEL,
+  SHOW_STOREMANAGEMENT
 } from 'lib/constant'
 
 const styles = theme => ({
@@ -123,7 +124,6 @@ class HomePanel extends Component {
           break;
         case 2:
           HomeActions.changeSecondStatus(panelNumber)
-          HomeActions.changeThirdStatus(0)
           break;
         case 3:
           HomeActions.changeThirdStatus(panelNumber)
@@ -224,7 +224,7 @@ class HomePanel extends Component {
         </Grid>
         <Grid item xs={12} >
           <ListCard text={'ストア管理'}
-            panelNumber={SHOW_PPROUCTSPANEL}
+            panelNumber={SHOW_STOREMANAGEMENT}
             panelLocation={2}
             handleClick={handleClick} />
         </Grid>

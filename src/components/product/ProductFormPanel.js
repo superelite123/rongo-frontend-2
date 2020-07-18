@@ -1,15 +1,14 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
 import SectionHeader from '../typo/SectionHeader'
 import PanelTemplate from '../base/PanelTemplate'
-import {Box, Button,Grid,Typography, Paper,TextField } from "@material-ui/core"
+import { Grid,Typography, Paper,
+        InputLabel,MenuItem,FormControl,Select
+} from "@material-ui/core"
 import {TakePhoto, CustomTextField, TagButton, CustomTextArea } from '../typo'
 const useStyles = makeStyles((theme) => ({
     root:{
-      height: '750px',
-      width:'80%',
-      background:'#DEDCD4',
-      position:'relative'
+      marginBottom:'50px'
     },
     addButton: {
         width:'63px',
@@ -66,38 +65,37 @@ const useStyles = makeStyles((theme) => ({
         color:'#333333',
         fontFamily: 'Noto Sans JP',
         fontStyle: 'normal',
-        fontWeight: 'normal'
     },
     blank20:{
         height:'20px',
     },
-    qtyWrapper:{
-        marginLeft:'17px',
-        marginRight:'17px',
-        display:'flex',
-
-    },
-    qtyLabel:{
+    gridLabel:{
         fontSize:'13px',
         fontFamily:'Noto Sans JP',
         textAlign:'left',
-        paddingTop:'17px',
-        paddingBottom:'17px',
-        width:'30%',
+        width:'100%',
+        color:'#333333'
     },
-    qtyNumber:{
-        fontSize:'13px',
-        fontFamily:'Roboto',
-        textAlign:'right',
-        paddingTop:'17px',
-        paddingBottom:'17px',
-        width:'70%',
-    }
+    gridPaper:{
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: 'white',
+    },
+    formControl: {
+      margin: theme.spacing(0),
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(0),
+    },
   }));
-const handleClick = () => {
-    console.log('a')
-}
 const handleTagClick = () => {
+    
+}
+const handleTakePhoto = () => {
+
+}
+const handleSubmit = () => {
 
 }
 const ProductFormPanel = () => {
@@ -105,12 +103,13 @@ const ProductFormPanel = () => {
     const takePhotos = [];
     for(let i = 0; i < 8; i ++)
     {
-        takePhotos[i] = <TakePhoto />
+        takePhotos[i] = <TakePhoto handleChange={handleTakePhoto} />
     }
     return (
         <PanelTemplate>
-            <SectionHeader title={'商品登録'} />
-            <Grid container>
+            <form onSubmit={handleSubmit}>
+                <SectionHeader title={'商品登録'} />
+                <Grid container className={classes.root}>
                 <Grid item xs={12}>
                     <div className={classes.topLabelPanel}>
                         <Typography className={classes.label}>商品写真</Typography>
@@ -149,7 +148,9 @@ const ProductFormPanel = () => {
                     </div>
                 </Grid>
                 <Grid item xs={12}>
-                    <CustomTextField />
+                    <Paper variant="outlined" square className={classes.gridPaper}>
+                        <CustomTextField />
+                    </Paper>
                 </Grid>
                 <Grid item xs={12}>
                     <Paper variant="outlined" square>
@@ -181,47 +182,95 @@ const ProductFormPanel = () => {
                 <Grid item xs={12}>
                     <div className={classes.blank20}></div>
                 </Grid>
+                {/* Qty Input */}
                 <Grid item xs={12}>
-                    <Paper variant="outlined" square>
-                        <div className={classes.qtyWrapper} >
-                            <Typography className={classes.qtyLabel}>在庫</Typography>
-                            <Typography className={classes.qtyNumber}>100</Typography>
-                        </div>
+                    <Paper variant="outlined" square className={classes.gridPaper}>
+                        <Grid container>
+                            <Grid xs={8} item>
+                                <Typography className={classes.gridLabel}>在庫</Typography>
+                            </Grid>
+                            <Grid xs={4} item>
+                                <CustomTextField />
+                            </Grid>
+                        </Grid>
                     </Paper>
                 </Grid>
+                {/* DeliveryDat Input */}
                 <Grid item xs={12}>
-                    <Paper variant="outlined" square>
-                        <div className={classes.qtyWrapper} >
-                            <Typography className={classes.qtyLabel}>発送までの日数</Typography>
-                            <Typography className={classes.qtyNumber}>100</Typography>
-                        </div>
+                    <Paper variant="outlined" square className={classes.gridPaper}>
+                        <Grid container>
+                            <Grid xs={8} item style={{margin:'auto'}}>
+                                <Typography className={classes.gridLabel} style={{margin:'auto'}}>発送までの日数</Typography>
+                            </Grid>
+                            <Grid xs={4} item>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel id="demo-simple-select-label">選択してください</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                >
+                                <MenuItem value={1}>1</MenuItem>
+                                <MenuItem value={2}>2</MenuItem>
+                                <MenuItem value={3}>3</MenuItem>
+                                </Select>
+                            </FormControl>
+                            </Grid>
+                        </Grid>
                     </Paper>
                 </Grid>
+                {/* DeliveryDat Input */}
                 <Grid item xs={12}>
-                    <Paper variant="outlined" square>
-                        <div className={classes.qtyWrapper} >
-                            <Typography className={classes.qtyLabel}>発送までの日数</Typography>
-                            <Typography className={classes.qtyNumber}>100</Typography>
-                        </div>
+                    <Paper variant="outlined" square className={classes.gridPaper}>
+                        <Grid container>
+                            <Grid xs={8} item style={{margin:'auto'}}>
+                                <Typography className={classes.gridLabel} style={{margin:'auto'}}>発送業者</Typography>
+                            </Grid>
+                            <Grid xs={4} item>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel id="demo-simple-select-label">選択してください</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                >
+                                <MenuItem value={1}>1</MenuItem>
+                                <MenuItem value={2}>2</MenuItem>
+                                <MenuItem value={3}>3</MenuItem>
+                                </Select>
+                            </FormControl>
+                            </Grid>
+                        </Grid>
                     </Paper>
                 </Grid>
+                
+                {/* Price Input */}
                 <Grid item xs={12}>
-                    <Paper variant="outlined" square>
-                        <div className={classes.qtyWrapper} >
-                            <Typography className={classes.qtyLabel}>発送までの日数</Typography>
-                            <Typography className={classes.qtyNumber}>100</Typography>
-                        </div>
+                    <Paper variant="outlined" square className={classes.gridPaper}>
+                        <Grid container>
+                            <Grid xs={8} item>
+                                <Typography className={classes.gridLabel}>商品代金（税込）</Typography>
+                            </Grid>
+                            <Grid xs={4} item>
+                                <CustomTextField />
+                            </Grid>
+                        </Grid>
                     </Paper>
                 </Grid>
+                {/* Delivery Fee Input */}
                 <Grid item xs={12}>
-                    <Paper variant="outlined" square>
-                        <div className={classes.qtyWrapper} >
-                            <Typography className={classes.qtyLabel}>発送までの日数</Typography>
-                            <Typography className={classes.qtyNumber}>100</Typography>
-                        </div>
+                    <Paper variant="outlined" square className={classes.gridPaper}>
+                        <Grid container>
+                            <Grid xs={8} item>
+                                <Typography className={classes.gridLabel}>配送料</Typography>
+                            </Grid>
+                            <Grid xs={4} item>
+                                <CustomTextField />
+                            </Grid>
+                        </Grid>
                     </Paper>
                 </Grid>
+
             </Grid>
+            </form>
         </PanelTemplate>
       )
 }

@@ -11,7 +11,7 @@ import FollowDetailPanelContainer from '../containers/follow/FollowDetailPanelCo
 import LiveListPanelContainer from '../containers/live/LiveListPanelContainer'
 import SellHistoryListPanelContainer from '../containers/sellHistory/SellHistoryListPanelContainer'
 import SellHistoryDetailPanelContainer from '../containers/sellHistory/SellHistoryDetailPanelContainer'
-
+import StorePanelContainer from '../containers/store/StorePanelContainer'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
@@ -26,7 +26,8 @@ import {
     SHOW_TRANSACTIONDETAIL,
     SHOW_SELLHISTORYLISTPANEL,
     SHOW_SELLHISTORYDETAILPANEL,
-    SHOW_LIVELISTPANEL
+    SHOW_LIVELISTPANEL,
+    SHOW_STOREMANAGEMENT
 } from 'lib/constant'
 class Home extends Component {
     render() {
@@ -53,6 +54,9 @@ class Home extends Component {
             case SHOW_SELLHISTORYLISTPANEL:
                 secondPanel = <SellHistoryListPanelContainer />;
                 break
+            case SHOW_STOREMANAGEMENT:
+                secondPanel = <StorePanelContainer />
+                break;
             default:
                 secondPanel = null;
                 break;
