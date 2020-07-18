@@ -18,3 +18,5 @@ export const SHOW_LIVE_CHAT = 222
 export const FIRST_PANEL_HOME = 1
 export const FIRST_PANEL_LIVE = 2
 export const FIRST_PANEL_NOTI = 3
+
+export const SHOW_STOREMANAGEMENT = 35

@@ -3,10 +3,10 @@ import { Map } from 'immutable';
 import { pender } from 'redux-pender';
 import * as LoginAPI from 'lib/api/login';
 
-const CHANGE_INPUT = 'login/CHANGE_INPUT'; // input 값 변경
+const CHANGE_INPUT = 'login/CHANGE_INPUT'; 
 
 const SET_ERROR = 'auth/SET_ERROR';
-const INITIALIZE_FORM = 'login/INITIALIZE_FORM'; // form 초기화
+const INITIALIZE_FORM = 'login/INITIALIZE_FORM'; 
 const LOCAL_LOGIN = 'auth/LOCAL_LOGIN';
 const LOGOUT = 'auth/LOGOUT';
 

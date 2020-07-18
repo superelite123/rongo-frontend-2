@@ -18,7 +18,7 @@ import NotificationDetailPanelContainer from '../containers/notification/Notific
 import CreateLivePanelContainer from '../containers/live/CreateLivePanelContainer'
 import BroadcastLivePanelContainer from '../containers/live/BroadcastLivePanelContainer'
 import LiveChatPanelContainer from '../containers/live/LiveChatPanelContainer'
-
+import StorePanelContainer from '../containers/store/StorePanelContainer'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
@@ -42,6 +42,7 @@ import {
     FIRST_PANEL_HOME,
     FIRST_PANEL_LIVE,
     FIRST_PANEL_NOTI,
+    SHOW_STOREMANAGEMENT
 } from 'lib/constant'
 
 class Home extends Component {
@@ -100,6 +101,9 @@ class Home extends Component {
             case SHOW_BROADCAST_LIVE:
                 secondPanel = <BroadcastLivePanelContainer />
                 break
+            case SHOW_STOREMANAGEMENT:
+                secondPanel = <StorePanelContainer />
+                break;
             default:
                 secondPanel = null;
                 break;

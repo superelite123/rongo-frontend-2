@@ -1,0 +1,8 @@
+.bgImage{
+    width:100%;
+    height:300px;
+    opacity: 0.5;
+}
+.bgImageItem{
+    background: rgb(0,0,0,0,2);
+}
