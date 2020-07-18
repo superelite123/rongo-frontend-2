@@ -8,6 +8,10 @@ import follow from './follow/follow';
 import productList from './product/productList';
 import transaction from './transaction/transaction';
 import sellHistory from './sellHistory/sellHistory'
+import liveStream from './live/liveStream'
+import account from './account/account'
+import notification from './notification/notification'
+
 
 export default combineReducers({
     base,
@@ -15,8 +19,11 @@ export default combineReducers({
     user,
     follow,
     homePage,
+    account,
+    liveStream,
     sellHistory,
     productList,
     transaction,
+    notification,
     pender: penderReducer
 });

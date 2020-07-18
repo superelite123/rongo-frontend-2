@@ -23,7 +23,7 @@ class SellHistoryListPanelContainer extends Component {
     }
 
     render () {
-        const { HomeActions,  sellHistoryList} = this.props;
+        const { HomeActions, SellActions,  sellHistoryList} = this.props;
         const handleClick = (panelNumber, panelType, sellHistory) => {
 
             switch (panelType) {
@@ -38,6 +38,7 @@ class SellHistoryListPanelContainer extends Component {
                     break;
                 case 3:
                     HomeActions.changeThirdStatus(panelNumber)
+                    SellActions.showSellDateHitory(sellHistory)
                     break;
                 default:
                     break;
@@ -52,9 +53,6 @@ class SellHistoryListPanelContainer extends Component {
 
 export default connect(
     (state) => ({
-        firstPanelVisible:state.homePage.get('firstPanel'),
-        secondPanelVisible:state.homePage.get('seconPanel'),
-        thirdPanelVisible:state.homePage.get('thirdPanel'),
         sellHistoryList:state.sellHistory.get('sellHistoryList'),
         isExpand:state.sellHistory.get('isExpand')
     }),

@@ -1,13 +1,9 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
 import PanelTemplate from '../base/PanelTemplate'
-import SearchIcon from '@material-ui/icons/Search';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
-import LiveListItem from '../live/LiveListItem'
-import { SwipeableList } from '@sandstreamdev/react-swipeable-list';
-import '@sandstreamdev/react-swipeable-list/dist/styles.css';
-
-import { SHOW_TRANSACTIONDETAIL } from 'lib/constant'
+import NotificationListItem from '../notification/NotificationListItem'
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -15,7 +11,12 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: 'px',
     },
     leftTopButton: {
-        margin: 'auto'
+        margin: '10px auto 6px auto'
+    },
+    searchButton: {
+        verticalAlign: 'text-bottom',
+        color: '#BBA884',
+        fontSize: '1.5em'
     },
     headerLabel: {
         fontFamily: 'Noto Sans JP',
@@ -25,10 +26,6 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '15px',
         marginBottom: '14px',
     },
-    searchButton: {
-        verticalAlign: 'text-bottom',
-        color: '#BBA884'
-    },
     topSeperate: {
         margin: 0,
         borderTopWidth: '0px',
@@ -37,18 +34,16 @@ const useStyles = makeStyles((theme) => ({
         borderRightWidth: '0px',
         borderColor: '#BBA884'
     },
-    listContainer: {
-        marginTop: '35px'
-    }
 }))
 
-const LiveListPanel = ({ handleClick, liveStreamList }) => {
+const NotificationListPanel = ({ handleClick, notificationList }) => {
+
     const classes = useStyles();
 
-    let liveListItems = []
-    for (const key in liveStreamList) {
-      let live = liveStreamList[key]
-      liveListItems.push(<LiveListItem live={ live } handleClick={handleClick} />)
+    let notificationListItems = []
+    for (const key in notificationList) {
+      let notification = notificationList[key]
+      notificationListItems.push(<NotificationListItem notification={ notification } handleClick= { handleClick } />)
     }
 
     return (
@@ -63,13 +58,11 @@ const LiveListPanel = ({ handleClick, liveStreamList }) => {
                                 </Grid>
                                 <Grid item xs={8}>
                                     <p variant='h5' component="h5" className={classes.headerLabel}>
-                                        配信管理
+                                        ニュース
                                     </p>
                                 </Grid>
                                 <Grid item xs={2} className={classes.leftTopButton}>
-                                    <Typography variant='h5' component="h5">
-                                        <SearchIcon className={classes.searchButton} />
-                                    </Typography>
+
                                 </Grid>
                             </Grid>
                         </Paper>
@@ -79,15 +72,9 @@ const LiveListPanel = ({ handleClick, liveStreamList }) => {
                     </Grid>
                 </Grid>
             </Grid>
-
-            <Grid xs={12} className={ classes.listContainer } item>
-                <SwipeableList>
-                    {liveListItems}
-                </SwipeableList>
-            </Grid>
-
+            {notificationListItems}
         </PanelTemplate>
     )
 }
 
-export default LiveListPanel;
+export default NotificationListPanel;

@@ -22,10 +22,11 @@ const useStyles = makeStyles((theme) => ({
     },
     panelGridWrapper:{
         position:'absolute',
-        bottom:0
+        bottom:0,
+        height: '100%'
     }
 }))
-const PageTemplate = ({ first,second,third }) => {
+const PageTemplate = ({ first, second, third, handleAction }) => {
     const classes = useStyles();
     const columns = isMobile?12:4
     const spacing=0
@@ -37,14 +38,14 @@ const PageTemplate = ({ first,second,third }) => {
                 <Grid item xs={12}>
                     <Box className={classes.PanelWrapper}>
                     <Grid className={isMobile?'':classes.panelGridWrapper} container align="center">
-                        <Grid key={0} xs={12} sm={12} md={4} item>{first}</Grid>
-                        <Grid key={1} xs={12} sm={12} md={4} item>{second}</Grid>
-                        <Grid key={2} xs={12} sm={12} md={4} item>{third}</Grid>
+                        <Grid key={0} xs={12} sm={12} md={4} item style={{display: 'flex'}}>{first}</Grid>
+                        <Grid key={1} xs={12} sm={12} md={4} item style={{display: 'flex'}}>{second}</Grid>
+                        <Grid key={2} xs={12} sm={12} md={4} item style={{display: 'flex'}}>{third}</Grid>
                     </Grid>
                     </Box>
                 </Grid>
-                <Grid item xs={12}>
-                    <HomeFooter />
+                <Grid item xs={12} style={{background: '#333333'}}>
+                    <HomeFooter handleAction={ handleAction } />
                 </Grid>
             </Grid>
     );

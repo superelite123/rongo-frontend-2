@@ -9,6 +9,7 @@ const EXPAND_MONTH = 'sell/EXPAND_MONTH';
 const SHOW_HISTORY_DETAIL = 'sell/SHOW_HISTORY_DETAIL'
 
 export const getSellHistory = createAction(GET_SELLHISTORY, SellHistoryAPI.getSellHistory);
+export const showSellDateHitory = createAction(SHOW_HISTORY_DETAIL);
 export const expandDateHistory = createAction(EXPAND_MONTH);
 
 const initialState = Map({

@@ -24,3 +24,9 @@ export function convertDateStringToDay(dateString, seperator) {
     var res = dateString.split(seperator);
     return res[1] + "月" + res[2] + "日"
 }
+
+export function convertDateString(dateString, seperator) {
+
+    var res = dateString.split("-");
+    return res[0] + "/" + res[1] + "/" + res[2]
+}

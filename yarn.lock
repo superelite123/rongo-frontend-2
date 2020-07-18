@@ -1427,6 +1427,11 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
+"@sandstreamdev/react-swipeable-list@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@sandstreamdev/react-swipeable-list/-/react-swipeable-list-0.6.0.tgz#bb154eaf104ef74413e336f6cbbd1ab9d45367e4"
+  integrity sha512-YqvCLpEnf/1r6FYQYCZPOGCKg5JVBy/LeICS0LCByVPqinkVmbam/JohwSwwArBywrQ20dh06UAZqVlbRFew4A==
+
 "@sheerun/mutationobserver-shim@^0.3.2":
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"

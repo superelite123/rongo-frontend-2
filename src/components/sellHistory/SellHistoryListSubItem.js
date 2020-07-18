@@ -58,7 +58,7 @@ const SellHistoryListSubItem = ({ sellHistory, title, handleClick }) => {
     const classes = useStyles();
 
     return (
-        <CardActionArea component="a" onClick={() => handleClick(SHOW_SELLHISTORYDETAILPANEL, 3)}>
+        <CardActionArea component="a" onClick={() => handleClick(SHOW_SELLHISTORYDETAILPANEL, 3, sellHistory)}>
             <Card variant="outlined" square className={classes.card} style={{ background: '#EBE7DE' }}>
                 <CardContent style={{ paddingBottom: 0 }} className={classes.cardContent}>
                     <Box className={classes.root} component='div'>

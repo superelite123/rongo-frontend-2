@@ -11,6 +11,13 @@ import FollowDetailPanelContainer from '../containers/follow/FollowDetailPanelCo
 import LiveListPanelContainer from '../containers/live/LiveListPanelContainer'
 import SellHistoryListPanelContainer from '../containers/sellHistory/SellHistoryListPanelContainer'
 import SellHistoryDetailPanelContainer from '../containers/sellHistory/SellHistoryDetailPanelContainer'
+import ChangeEmailAddressContainer from '../containers/account/ChangeEmailAddressContainer'
+import ChangePasswordContainer from '../containers/account/ChangePasswordContainer'
+import NotificationListPanelContainer from '../containers/notification/NotificationListPanelContainer'
+import NotificationDetailPanelContainer from '../containers/notification/NotificationDetailPanelContainer'
+import CreateLivePanelContainer from '../containers/live/CreateLivePanelContainer'
+import BroadcastLivePanelContainer from '../containers/live/BroadcastLivePanelContainer'
+import LiveChatPanelContainer from '../containers/live/LiveChatPanelContainer'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -26,14 +33,42 @@ import {
     SHOW_TRANSACTIONDETAIL,
     SHOW_SELLHISTORYLISTPANEL,
     SHOW_SELLHISTORYDETAILPANEL,
-    SHOW_LIVELISTPANEL
+    SHOW_LIVELISTPANEL,
+    SHOW_CHANGEEMAILPANEL,
+    SHOW_CHANGEEPASSWORDPANEL, 
+    SHOW_NOTIFICATION_DETAIL,
+    SHOW_BROADCAST_LIVE,
+    SHOW_LIVE_CHAT,
+    FIRST_PANEL_HOME,
+    FIRST_PANEL_LIVE,
+    FIRST_PANEL_NOTI,
 } from 'lib/constant'
+
 class Home extends Component {
     render() {
-        const { firstPanelVisible, secondPanelVisible, thirdPanelVisible } = this.props
-        let firstPanel = firstPanelVisible !== 0 ? <HomePanelContainer /> : null
+
+        const { HomeActions, firstPanelVisible, secondPanelVisible, thirdPanelVisible } = this.props
+        let firstPanel = null
         let secondPanel = null
         let thirdPanel = null
+        
+        switch (firstPanelVisible) {
+            case FIRST_PANEL_HOME:
+                firstPanel = <HomePanelContainer />
+                console.log("firstpanel" + firstPanelVisible)
+            
+                break
+            case FIRST_PANEL_LIVE:
+                console.log("firstpanel" + firstPanelVisible)
+                firstPanel = <CreateLivePanelContainer />
+                break
+            case FIRST_PANEL_NOTI:
+                firstPanel = <NotificationListPanelContainer />
+                console.log("firstpanel" + firstPanelVisible)
+            
+                break
+        }
+
         switch (secondPanelVisible) {
             case 0:
                 secondPanel = null;
@@ -53,10 +88,23 @@ class Home extends Component {
             case SHOW_SELLHISTORYLISTPANEL:
                 secondPanel = <SellHistoryListPanelContainer />;
                 break
+            case SHOW_CHANGEEMAILPANEL:
+                secondPanel = <ChangeEmailAddressContainer />
+                break
+            case SHOW_CHANGEEPASSWORDPANEL:
+                secondPanel = <ChangePasswordContainer />
+                break
+            case SHOW_NOTIFICATION_DETAIL:
+                secondPanel = <NotificationDetailPanelContainer />
+                break
+            case SHOW_BROADCAST_LIVE:
+                secondPanel = <BroadcastLivePanelContainer />
+                break
             default:
                 secondPanel = null;
                 break;
         }
+
         switch (thirdPanelVisible) {
             case 0:
                 thirdPanel = null;
@@ -79,15 +127,34 @@ class Home extends Component {
             case SHOW_SELLHISTORYDETAILPANEL:
                 thirdPanel = <SellHistoryDetailPanelContainer />;
                 break;
+            case SHOW_LIVE_CHAT:
+                thirdPanel = <LiveChatPanelContainer />
+                break
             default:
                 thirdPanel = <ProductFormPanel />;
                 break;
         }
+
+        const handleBottomTab = (event, newValue) => {
+
+            if (newValue == "home") {
+                HomeActions.changeFirstStatus(FIRST_PANEL_HOME)
+            } else if (newValue == "live") {
+                HomeActions.changeFirstStatus(FIRST_PANEL_LIVE)
+                HomeActions.changeSecondStatus(SHOW_BROADCAST_LIVE)
+                HomeActions.changeThirdStatus(SHOW_LIVE_CHAT)
+            } else {
+                HomeActions.changeFirstStatus(FIRST_PANEL_NOTI)
+            }
+            
+        }
+
         return (
             <PageTemplate
                 first={firstPanel}
                 second={secondPanel}
                 third={thirdPanel}
+                handleAction = {handleBottomTab}
             ></PageTemplate>
         )
     }

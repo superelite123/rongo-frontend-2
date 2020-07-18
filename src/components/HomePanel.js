@@ -23,7 +23,9 @@ import {
   SHOW_PFORM,
   SHOW_PDETAIL,
   SHOW_TRANSACTIONDETAIL,
-  SHOW_SELLHISTORYLISTPANEL
+  SHOW_SELLHISTORYLISTPANEL,
+  SHOW_CHANGEEMAILPANEL,
+  SHOW_CHANGEEPASSWORDPANEL
 } from 'lib/constant'
 
 const styles = theme => ({
@@ -230,10 +232,16 @@ class HomePanel extends Component {
         </Grid>
 
         <Grid item style={{ paddingTop: '40px' }} xs={12} >
-          <ListCard text={'メールアドレス変更'} />
+          <ListCard text={'メールアドレス変更'}
+            panelNumber={SHOW_CHANGEEMAILPANEL}
+            panelLocation={2}
+            handleClick={handleClick} />
         </Grid>
         <Grid item xs={12} >
-          <ListCard text={'パスワード変更'} />
+          <ListCard text={'パスワード変更'}
+            panelNumber={SHOW_CHANGEEPASSWORDPANEL}
+            panelLocation={2}
+            handleClick={handleClick} />
         </Grid>
       </PanelTemplate>
     );
