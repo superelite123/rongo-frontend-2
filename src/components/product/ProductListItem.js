@@ -10,6 +10,9 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import StarRateIcon from '@material-ui/icons/StarRate';
 import FavoriteStarIcon from '../base/icons/FavoriteStarIcon'
 import SoldMark from '../typo/SoldMark'
+
+import { SHOW_PDETAIL } from 'lib/constant'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         backgrodund: 'red',
@@ -180,7 +183,7 @@ const useStyles = makeStyles((theme) => ({
 const handleCheck = (id) => {
     console.log(id)
 }
-const ProductListItem = ({ product, deleteMode }) => {
+const ProductListItem = ({ product, deleteMode, handleClick }) => {
     const classes = useStyles();
 
     let checkbox, linkArrow
@@ -213,7 +216,7 @@ const ProductListItem = ({ product, deleteMode }) => {
     }
 
     return (
-        <Paper className={classes.root}>
+        <Paper className={classes.root} onClick={() => handleClick(SHOW_PDETAIL, 3, product)}>
             {checkbox}
             <Box className={classes.thumbnail} component='div'>
                 <img className={classes.thumbnail} src={product.thumbnail} />
