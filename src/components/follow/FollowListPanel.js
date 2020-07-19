@@ -64,7 +64,7 @@ const FollowListPanel = ({ handleClick, followList }) => {
                             <Grid container className={classes.card}>
                                 <Grid item xs={2} className={classes.leftTopButton}>
                                     <Button style={{ color: '#BBA884', paddingBottom: '3px' }}>
-                                        削除
+                                        
                                     </Button>
                                 </Grid>
                                 <Grid item xs={8}>

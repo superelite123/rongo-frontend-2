@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => {
             width: widthValue,
             padding: 0,
             height: heightValue,
-            overflowY: 'scroll',
+            // overflowY: 'scroll',
             margin: 'auto auto 0 auto'
         },
         childToCenter:{
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => {
         }
     }
 })
+
 const PanelTemplate = ({ children }) => {
     const classes = useStyles();
     return (

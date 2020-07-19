@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import GridList from '@material-ui/core/GridList';
 import ProductListItem from './ProductListItem'
 import { sizing } from '@material-ui/system';
+
 const styles = theme => ({
   root: {
     height: '100%',
@@ -64,13 +65,13 @@ const styles = theme => ({
 
 class ProductListPanel extends Component {
   render() {
-    const { classes, productList } = this.props;
+    const { classes, productList, handleClick, switchingType, type } = this.props;
     console.log(productList);
 
     let productListItems = []
     for (const key in productList) {
       let product = productList[key]
-      productListItems.push(<ProductListItem product={product} />)
+      productListItems.push(<ProductListItem product={product} handleClick={handleClick} />)
     }
 
     return (
@@ -105,9 +106,9 @@ class ProductListPanel extends Component {
         </Grid>
         <Grid xs={12} item>
           <Grid container style={{ paddingTop: '16px', paddingBottom: '16px' }}>
-            <Grid item xs={4}><Button className={classes.productCategoryButtonSelected}>すべて</Button></Grid>
-            <Grid item xs={4}><Button className={classes.productCategoryButtonUnSelected}>出品中</Button></Grid>
-            <Grid item xs={4}><Button className={classes.productCategoryButtonUnSelected}>下書き</Button></Grid>
+            <Grid item xs={4}><Button className={type == 0 ? classes.productCategoryButtonSelected : classes.productCategoryButtonUnSelected} onClick={() => switchingType(0)}>すべて</Button></Grid>
+            <Grid item xs={4}><Button className={type == 1 ? classes.productCategoryButtonSelected : classes.productCategoryButtonUnSelected} onClick={() => switchingType(1)}>出品中</Button></Grid>
+            <Grid item xs={4}><Button className={type == 2 ? classes.productCategoryButtonSelected : classes.productCategoryButtonUnSelected} onClick={() => switchingType(2)}>下書き</Button></Grid>
           </Grid>
         </Grid>
         <Grid xs={12} item>

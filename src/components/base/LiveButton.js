@@ -12,6 +12,7 @@ const Wrapper = styled.div`
 
     text-align: center;
     
+    min-width: 140px;
     cursor: pointer;
     user-select: none;
     transition: .2s all;

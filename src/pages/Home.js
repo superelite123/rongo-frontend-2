@@ -17,6 +17,8 @@ import NotificationListPanelContainer from '../containers/notification/Notificat
 import NotificationDetailPanelContainer from '../containers/notification/NotificationDetailPanelContainer'
 import LiveChatPanelContainer from '../containers/live/LiveChatPanelContainer'
 import StorePanelContainer from '../containers/store/StorePanelContainer'
+import ProductDetailPanelContainer from '../containers/product/ProductDetailPanelContainer'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
@@ -123,7 +125,7 @@ class Home extends Component {
                 thirdPanel = <ProductFormPanel />;
                 break;
             case SHOW_PDETAIL:
-                thirdPanel = <ProductListPanelContainer />;
+                thirdPanel = <ProductDetailPanelContainer />;
                 break;
             case SHOW_SELLHISTORYDETAILPANEL:
                 thirdPanel = <SellHistoryDetailPanelContainer />;

@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const FollowDetailPanel = ({ showFollow }) => {
+const FollowDetailPanel = ({ showFollow, goBack }) => {
     const classes = useStyles();
 
     let blockButton
@@ -118,7 +118,7 @@ const FollowDetailPanel = ({ showFollow }) => {
                             <Grid container className={classes.card}>
                                 <Grid item xs={2} className={classes.leftTopButton}>
                                     <Typography variant='h5' component="h5">
-                                        <KeyboardBackspaceIcon className={classes.searchButton} />
+                                        <KeyboardBackspaceIcon className={classes.searchButton} onClick={() => goBack()}/>
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={8}>
