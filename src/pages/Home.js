@@ -15,8 +15,6 @@ import ChangeEmailAddressContainer from '../containers/account/ChangeEmailAddres
 import ChangePasswordContainer from '../containers/account/ChangePasswordContainer'
 import NotificationListPanelContainer from '../containers/notification/NotificationListPanelContainer'
 import NotificationDetailPanelContainer from '../containers/notification/NotificationDetailPanelContainer'
-import CreateLivePanelContainer from '../containers/live/CreateLivePanelContainer'
-import BroadcastLivePanelContainer from '../containers/live/BroadcastLivePanelContainer'
 import LiveChatPanelContainer from '../containers/live/LiveChatPanelContainer'
 import StorePanelContainer from '../containers/store/StorePanelContainer'
 import { connect } from 'react-redux'
@@ -48,7 +46,7 @@ import {
 class Home extends Component {
     render() {
 
-        const { HomeActions, firstPanelVisible, secondPanelVisible, thirdPanelVisible } = this.props
+        const { HomeActions, firstPanelVisible, secondPanelVisible, thirdPanelVisible,history } = this.props
         let firstPanel = null
         let secondPanel = null
         let thirdPanel = null
@@ -61,13 +59,15 @@ class Home extends Component {
                 break
             case FIRST_PANEL_LIVE:
                 console.log("firstpanel" + firstPanelVisible)
-                firstPanel = <CreateLivePanelContainer />
+                firstPanel = <NotificationListPanelContainer />
                 break
             case FIRST_PANEL_NOTI:
                 firstPanel = <NotificationListPanelContainer />
                 console.log("firstpanel" + firstPanelVisible)
             
-                break
+                break;
+            default:
+                break;
         }
 
         switch (secondPanelVisible) {
@@ -97,10 +97,7 @@ class Home extends Component {
                 break
             case SHOW_NOTIFICATION_DETAIL:
                 secondPanel = <NotificationDetailPanelContainer />
-                break
-            case SHOW_BROADCAST_LIVE:
-                secondPanel = <BroadcastLivePanelContainer />
-                break
+                break;
             case SHOW_STOREMANAGEMENT:
                 secondPanel = <StorePanelContainer />
                 break;
@@ -144,9 +141,7 @@ class Home extends Component {
             if (newValue == "home") {
                 HomeActions.changeFirstStatus(FIRST_PANEL_HOME)
             } else if (newValue == "live") {
-                HomeActions.changeFirstStatus(FIRST_PANEL_LIVE)
-                HomeActions.changeSecondStatus(SHOW_BROADCAST_LIVE)
-                HomeActions.changeThirdStatus(SHOW_LIVE_CHAT)
+                history.push('/live')
             } else {
                 HomeActions.changeFirstStatus(FIRST_PANEL_NOTI)
             }

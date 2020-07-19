@@ -42,13 +42,17 @@ const Spacer = styled.div`
     flex-grow: 0.05;
 `;
 
-const Header = ({children,height}) => {
+const Header = ({children,height,mode}) => {
+    const logoMode = mode == 1
     return (
         <Positioner>
             <WhiteBackground>
                 <HeaderContents>
                     <Spacer/>
-                    <Logo><img width='150' height='28' src={process.env.PUBLIC_URL + '/images/header_logo.png'} /></Logo>
+                    {
+                        logoMode && 
+                        <Logo><img width='150' height='28' src={process.env.PUBLIC_URL + '/images/header_logo.png'} /></Logo>
+                    }
                 </HeaderContents>
             </WhiteBackground>
         </Positioner>

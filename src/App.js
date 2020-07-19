@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles'
 import { blue, indigo } from '@material-ui/core/colors'
-import { Home, Auth } from 'pages';
+import { Home, Auth,Live } from 'pages';
 import { LoginContainer, ConfirmContainer } from 'containers/auth'
 import HeaderContainer from 'containers/base/HeaderContainer';
 import storage from 'lib/storage';
@@ -70,6 +70,7 @@ class App extends Component {
                     <Route exact path="/" component={LoginContainer}/>
                     <Route path="/loginconfirm" component={ConfirmContainer}/>
                     <Route path="/home" component={Home}/>
+                    <Route path="/live" component={Live}/>
                 </ThemeProvider>
             </div>
         );

@@ -25,6 +25,7 @@ const styles = theme => ({
     fontStyle: 'normal',
     fontWeight: 500,
     fontSize: '17px',
+    textAlign: 'center'
   },
   arrow: {
     margin:'auto',
@@ -34,7 +35,7 @@ const styles = theme => ({
 
 class SectionHeader extends Component {
   render() {
-    const { classes, title} = this.props;
+    const { classes, title,handleReturn} = this.props;
     return (
       <Grid container>
         <Grid item xs={12}>

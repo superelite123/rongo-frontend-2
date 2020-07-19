@@ -23,13 +23,23 @@ const NavigationWrapper = withStyles({
       color: 'white',
     },
   })(BottomNavigationAction);
-const HomeFooter = ({handleAction}) => {
+const HomeFooter = ({handleAction,mode}) => {
     const classes = useStyles();
+    const navigationMode = mode != 0
     return (
-        <NavigationWrapper style={{width: "33.33%"}} showLabels={true} onChange={ handleAction }>
-            <NavigationAction label="ホーム" value="home" icon={<HomeIcon />} />
-            <NavigationAction label="配信" value="live" icon={<VideocamIcon />} />
-            <NavigationAction label="お知らせ" value="notification" icon={<NotificationsIcon />} />
+        <NavigationWrapper style={{width: "100%"}} showLabels={true} onChange={ handleAction }>
+            {
+              navigationMode && 
+              <NavigationAction label="ホーム" value="home" icon={<HomeIcon />} />
+            }
+            {
+              navigationMode && 
+              <NavigationAction label="配信" value="live" icon={<VideocamIcon />} />
+            }
+            {
+              navigationMode && 
+              <NavigationAction label="お知らせ" value="notification" icon={<NotificationsIcon />} />
+            }
         </NavigationWrapper>
     )
 }

@@ -3,28 +3,47 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import {isMobile} from "react-device-detect";
-
+import Header from './header/Header'
+import HomeFooter from './footer/HomeFooter'
+import BlankFooter from './footer/BlankFooter'
 const useStyles = makeStyles((theme) => {
-    const widthValue = isMobile?'100%':'100%'
-    const heightValue = isMobile?'100%':'100%'
     return {
         root: {
-            background:'#F5F5F5',
-            width: widthValue,
-            padding: 0,
-            height: heightValue
+            flexGrow: 1,
+            height: '100%',
         },
-        childToCenter:{
-          margin:'auto'
+        PanelWrapper: {
+            background:'#DEDCD4',
+            overflowY: 'scroll',
+            height:'calc(100vh - 106px)',
+            position:!isMobile?'relative':''
+        },
+        control: {
+            padding: theme.spacing(2),
+        },
+        panelGridWrapper:{
+            position:'absolute',
+            bottom:0,
+            height: '100%'
         }
     }
 })
-const LivePanelTemplate = ({ children }) => {
+const LivePanelTemplate = ({ children,mode }) => {
     const classes = useStyles();
     return (
-        <Box component="div" className={classes.root}>
-            {children}
-        </Box>
+        <Grid container className={classes.root} spacing={0}>
+            <Grid item xs={12}>
+                <Header mode={mode} />
+            </Grid>
+            <Grid item xs={12}>
+                <Box className={classes.PanelWrapper}>
+                    {children}
+                </Box>
+            </Grid>
+            <Grid item xs={12} style={{background: '#333333'}}>
+                <HomeFooter mode={mode}/>
+            </Grid>
+        </Grid>
     )
 }
 

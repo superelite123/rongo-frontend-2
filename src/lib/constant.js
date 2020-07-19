@@ -20,3 +20,8 @@ export const FIRST_PANEL_LIVE = 2
 export const FIRST_PANEL_NOTI = 3
 
 export const SHOW_STOREMANAGEMENT = 35
+
+export const SHOW_LIVEFORM=211
+export const SHOW_LIVEPLAYER=221
+export const SHOW_LIVESTANDBYPANEL=231
+export const SHOW_LIVEPRODUCTLIST=232

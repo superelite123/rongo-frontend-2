@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     margin:'auto',
     letterSpacing: '0.05em',
     fontFamily: 'Roboto',
+    textAlign:'center'
   }
 }));
 
