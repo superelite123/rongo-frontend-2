@@ -58,15 +58,15 @@ class LiveFormContainer extends Component {
         LiveApi.saveLive(postData).then(
             (res) => {
                 this.setState({backDrop:false})
-                const {url,appname,streamname} = res.data.liveData
+                const {application_name,sdp_url,stream_name} = res.data.liveData
                 const id = res.data.id;
                 this.props.LiveActions.updateLiveID(id)
                 this.props.LiveActions.updateStatus(1)
                 this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVECHATPANEL,panelIndex:2})
                 window.open(
-                            BASE_LIVE_URL + 'webrtc-examples/src/dev-view-publish.html?url=' + url + 
-                            '&appname=' + appname + 
-                            '&streamname=' + streamname, '_blank');
+                            BASE_LIVE_URL + 'webrtc-examples/src/dev-view-publish.html?url=' + sdp_url + 
+                            '&appname=' + application_name + 
+                            '&streamname=' + stream_name, '_blank');
             },
             (e) => {
                 this.setState({backDrop:false})
