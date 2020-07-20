@@ -9,7 +9,6 @@ class FollowListPanelContainer extends Component
 {
     getFollowList = async () => {
         const { HomeActions, FollowActions } = this.props;
-        console.log('hi')
         try {
             await FollowActions.getFollows();
             console.log(this.props.followList)

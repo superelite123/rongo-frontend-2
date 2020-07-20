@@ -7,10 +7,10 @@ import * as LiveApi from 'lib/api/live';
 class LiveChatPanelContainer extends Component {
     handleQuit = () => {
         const {LiveActions,liveID} = this.props
-        
         LiveApi.quitLive(liveID).then(
             (res) => {
                 LiveActions.updateStatus(2)
+                console.log('e')
             },
             (e) => {
 

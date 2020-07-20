@@ -66,7 +66,6 @@ const styles = theme => ({
 class ProductListPanel extends Component {
   render() {
     const { classes, productList, handleClick, switchingType, type } = this.props;
-    console.log(productList);
 
     let productListItems = []
     for (const key in productList) {

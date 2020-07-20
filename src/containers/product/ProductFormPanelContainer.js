@@ -21,23 +21,21 @@ class ProductFormPanelContainer extends Component {
             dFee:0,
         }
     }
-    loadProduct = async () => {
-        const { ProductActions, showProduct} = this.props;
-
-        try {
-            await ProductActions.getProductDetail({id:showProduct.id});
-        } catch (e) {
-            console.log(e)
-        }
-    }
     handleChangePortfolio = () => {
 
     }
     componentDidMount() {
-        const product = this.props.showProduct
+        const {product, ProductActions} = this.props
         if(product != null)
         {
+            ProductActions.getProductDetail({id:1}).then(
+                (res) => {
+                    console.log('success')
+                },
+                (e) => {
 
+                }
+            )
         }
     }
 
@@ -56,7 +54,8 @@ class ProductFormPanelContainer extends Component {
 
         return (
             <ProductFormPanel
-            handleChangePortfolio={this.handleChangePortfolio}
+                handleChangePortfolio={this.handleChangePortfolio}
+
             />
         )
     }

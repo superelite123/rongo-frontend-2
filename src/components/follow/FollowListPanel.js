@@ -52,7 +52,7 @@ const FollowListPanel = ({ handleClick, followList }) => {
     let followListItems = []
     for (const key in followList) {
         let followItem = followList[key]
-        followListItems.push(<FollowListItem follow={followItem} handleClick={handleClick} panelNumber={SHOW_FOLLOWPANEL} panelLocation={3} />)
+        followListItems.push(<FollowListItem key={key} follow={followItem} handleClick={handleClick} panelNumber={SHOW_FOLLOWPANEL} panelLocation={3} />)
     }
     
     return (

@@ -28,8 +28,6 @@ class LiveFormContainer extends Component {
         this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVEPRODUCTLIST,panelIndex:2})
     }
     componentDidMount(){
-        const isQuit = this.props.liveStatus === 2
-        this.setState({isQuit:isQuit})
     }
     handleChangeInput = (e) => {
         this.setState({
@@ -65,7 +63,6 @@ class LiveFormContainer extends Component {
                 this.props.LiveActions.updateLiveID(id)
                 this.props.LiveActions.updateStatus(1)
                 this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVECHATPANEL,panelIndex:2})
-                console.log('hi')
                 window.open(
                             BASE_LIVE_URL + 'webrtc-examples/src/dev-view-publish.html?url=' + url + 
                             '&appname=' + appname + 
@@ -78,7 +75,7 @@ class LiveFormContainer extends Component {
     }
     handleSubmit = () => {
         const {title,tag,thumbnail} = this.state
-        if(title === '' || tag === '' || thumbnail === null || this.props.products.length < 0)
+        if(title === '' || tag === '' || thumbnail === null)
         {
             this.setState({error:true})
             return
@@ -92,7 +89,7 @@ class LiveFormContainer extends Component {
     
     render() {
         
-        const quit = this.props.liveStatus === 2
+        const quit = this.props.liveStatus === 2 && this.state.isQuit
         return (
             <div>
                 <LiveForm 
@@ -148,12 +145,12 @@ class LiveFormContainer extends Component {
                 </Dialog>
 
                 <Dialog
-                    open={quit && this.state.isQuit}
+                    open={quit }
                     onClose={() => {this.setState({isQuit:false}) }}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"You have to enter all field"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"ライブ配信後の カメラの変更はできません"}</DialogTitle>
                     <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         お疲れ様でした
