@@ -7,21 +7,35 @@ import LiveFormContainer from 'containers/live/LiveFormContainer'
 import LivePlayerContainer from 'containers/live/LivePlayerContainer'
 import LiveStandByPanel from 'components/live/LiveStandByPanel'
 import LiveProductsContainer from 'containers/live/LiveProductsContainer'
+import LiveChatPanelContainer from 'containers/live/LiveChatPanelContainer'
 import * as liveActions from 'redux/modules/livePage'
 import {
     SHOW_LIVEFORM,
     SHOW_LIVEPLAYER,
     SHOW_LIVESTANDBYPANEL,
-    SHOW_LIVEPRODUCTLIST
+    SHOW_LIVEPRODUCTLIST,
+    SHOW_LIVECHATPANEL
 } from 'lib/constant'
 class Live extends Component {
+    
     render() {
         const { LiveActions, panelsInfo, } = this.props
         let panels = [null,null,null]
+        
+        const handleBottomTab = (event, newValue) => {
+            console.log(newValue)
+            if (newValue == "home") {
+                window.location.href='/home'
+            } else if (newValue == "live") {
+                window.location.href='/live'
+            } else {
+            }
+            
+        }
         panelsInfo.map((panelNumber,index) => {
             switch (panelNumber) {
                 case SHOW_LIVEFORM:
-                    panels[index] = <LiveFormContainer />
+                    panels[index] = <LiveFormContainer handleBottomTab={handleBottomTab} />
                 break;
                 case SHOW_LIVEPLAYER:
                     panels[index] = <LivePlayerContainer />
@@ -31,6 +45,9 @@ class Live extends Component {
                 break;
                 case SHOW_LIVEPRODUCTLIST:
                     panels[index] = <LiveProductsContainer />
+                break;
+                case SHOW_LIVECHATPANEL:
+                    panels[index] = <LiveChatPanelContainer />
                 break;
                 default:
                     panels[index] = <LiveStandByPanel />

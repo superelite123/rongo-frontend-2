@@ -1,9 +1,11 @@
 import axios from 'axios';
 import storage from './storage'
-const baseURL = 'https://app.live.rongoinc.com'//'http://192.168.0.101:8888'
+
+import { BASE_URL } from './constant'
+
 const token = storage.get('token');
 const clientWithAuth = axios.create({
-    baseURL: baseURL,
+    baseURL: BASE_URL,
     headers: {
       'Cache-Control': 'no-cache',
       Accept: 'application/json',

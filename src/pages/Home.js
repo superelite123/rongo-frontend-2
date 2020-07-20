@@ -141,7 +141,7 @@ class Home extends Component {
         const handleBottomTab = (event, newValue) => {
 
             if (newValue == "home") {
-                HomeActions.changeFirstStatus(FIRST_PANEL_HOME)
+                history.push('/home')
             } else if (newValue == "live") {
                 history.push('/live')
             } else {
