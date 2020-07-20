@@ -142,6 +142,13 @@ class HomePanel extends Component {
     } else {
       avatar = <img className={classes.avatar} src={userInfo.thumbnail} />
     }
+    
+    let like =  0, dislike = 0, notBad = 0
+    if (userInfo.evaluation != null) {
+        like = userInfo.evaluation.like;
+        dislike = userInfo.evaluation.dislike;
+        notBad = userInfo.evaluation.notBad;
+    }
 
     return (
       <PanelTemplate >
@@ -179,21 +186,21 @@ class HomePanel extends Component {
                 <Typography component="div">
                   <Box lineHeight={1} mt={1.5}><EmojiEmotionsIcon style={{ verticalAlign: 'text-top', color: '#4BD458' }} /></Box>
                   <Box lineHeight={1} mt={0.2} className={classes.emotion}>良い</Box>
-                  <Box lineHeight={1} mt={0.75} mb={1.5} className={classes.emotionCount}>1</Box>
+                  <Box lineHeight={1} mt={0.75} mb={1.5} className={classes.emotionCount}>{like}</Box>
                 </Typography>
               </Grid>
               <Grid xs={2} item>
                 <Typography component="div">
                   <Box lineHeight={1} mt={1.5}><EmojiEmotionlessIcon style={{ verticalAlign: 'text-top', color: '#BDBDBD' }} /></Box>
                   <Box lineHeight={1} mt={0.2} className={classes.emotion}>普通</Box>
-                  <Box lineHeight={1} mt={0.75} mb={1.5} className={classes.emotionCount}></Box>
+                  <Box lineHeight={1} mt={0.75} mb={1.5} className={classes.emotionCount}>{notBad}</Box>
                 </Typography>
               </Grid>
               <Grid xs={2} item>
                 <Typography component="div">
                   <Box lineHeight={1} mt={1.5}><EmojiEmotionsadIcon style={{ verticalAlign: 'text-top', color: '#D74936' }} /></Box>
                   <Box lineHeight={1} mt={0.2} className={classes.emotion}>悪い</Box>
-                  <Box lineHeight={1} mt={0.75} mb={1.5} className={classes.emotionCount}></Box>
+                  <Box lineHeight={1} mt={0.75} mb={1.5} className={classes.emotionCount}>{dislike}</Box>
                 </Typography>
               </Grid>
             </Grid>
