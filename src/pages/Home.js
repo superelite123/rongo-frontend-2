@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PageTemplate from 'components/base/PageTemplate'
 import HomePanelContainer from 'containers/HomePanelContainer'
 import ProductListPanelContainer from 'containers/product/ProductListPanelContainer'
+import ProductFormPanelContainer from 'containers/product/ProductFormPanelContainer'
 import ProductFormPanel from 'components/product/ProductFormPanel'
 import ProductAddLinkPanel from 'components/product/ProductAddLinkPanel'
 import TransactionListPanelContainer from '../containers/transaction/TransactionListPanelContainer'
@@ -122,7 +123,7 @@ class Home extends Component {
                 thirdPanel = <ProductAddLinkPanel />;
                 break;
             case SHOW_PFORM:
-                thirdPanel = <ProductFormPanel />;
+                thirdPanel = <ProductFormPanelContainer />;
                 break;
             case SHOW_PDETAIL:
                 thirdPanel = <ProductDetailPanelContainer />;

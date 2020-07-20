@@ -11,7 +11,6 @@ class ProductListPanelContainer extends Component {
 
         try {
             await ProductActions.getProducts({ type: type });
-            console.log(this.props.productList)
         } catch (e) {
             console.log(e)
         }

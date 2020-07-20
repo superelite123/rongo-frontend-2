@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import * as productActions from 'redux/modules/product/productList'
 import ProductDetailPanel from 'components/product/ProductDetailPanel'
 import * as homeActions from 'redux/modules/homePage';
-
+import {SHOW_PFORM,} from 'lib/constant'
 class ProductDetailPanelContainer extends Component
 {
 
@@ -13,7 +13,6 @@ class ProductDetailPanelContainer extends Component
 
         try {
             await ProductActions.getProductDetail({id:showProduct.id});
-            console.log(productDetail)
         } catch (e) {
             console.log(e)
         }
@@ -29,14 +28,21 @@ class ProductDetailPanelContainer extends Component
         this.getProduct()
     }
 
-
+    handleEdit = () => {
+        const { HomeActions,} = this.props;
+        HomeActions.changeThirdStatus(SHOW_PFORM,3)
+    }
     render()
     {
         const { showProduct, userInfo, productDetail } = this.props
-        console.log(productDetail)
 
         return (
-            <ProductDetailPanel product = { productDetail } title={ userInfo.username } goBack={this.goBack}/>
+            <ProductDetailPanel 
+            product = { productDetail } 
+            title={ userInfo.username } 
+            goBack={this.goBack}
+            handleEdit={this.handleEdit}
+            />
         )
     }
 }

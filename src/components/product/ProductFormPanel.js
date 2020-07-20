@@ -98,12 +98,12 @@ const handleTakePhoto = () => {
 const handleSubmit = () => {
 
 }
-const ProductFormPanel = () => {
+const ProductFormPanel = ({handleChangePortfolio}) => {
     const classes = useStyles();
     const takePhotos = [];
     for(let i = 0; i < 8; i ++)
     {
-        takePhotos[i] = <TakePhoto handleChange={handleTakePhoto} />
+        takePhotos[i] = <TakePhoto handleChange={handleChangePortfolio}  />
     }
     return (
         <PanelTemplate>

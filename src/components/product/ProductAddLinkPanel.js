@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const ProductAddLinkPanel = ({HomeActions}) => {
     
     const handleClick = () => {
-        HomeActions.changeFirstStatus(SHOW_PFORM,3)
+        HomeActions.changeThirdStatus(SHOW_PFORM,3)
     }
     const classes = useStyles();
     return (

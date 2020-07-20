@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const ProductDetailPanel = ({ product, title, goBack }) => {
+const ProductDetailPanel = ({ product, title, goBack,handleEdit }) => {
     const classes = useStyles();
     
     var images = []
@@ -216,7 +216,7 @@ const ProductDetailPanel = ({ product, title, goBack }) => {
                         </Grid>
                     </Grid>
                     <Grid item xs={ 5 } className={classes.bottomButton}>
-                        <LiveButton><span style={{ textAlign: 'center', margin: 'auto' }}>商品を編集する</span></LiveButton>
+                        <LiveButton onClick={handleEdit}><span style={{ textAlign: 'center', margin: 'auto' }}>商品を編集する</span></LiveButton>
                     </Grid>
                 </Grid>
             </Grid>
