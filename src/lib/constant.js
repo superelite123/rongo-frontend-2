@@ -26,5 +26,7 @@ export const SHOW_LIVEPLAYER=221
 export const SHOW_LIVESTANDBYPANEL=231
 export const SHOW_LIVEPRODUCTLIST=232
 export const SHOW_LIVECHATPANEL=233
-export const BASE_URL = 'http://192.168.0.100:8000' // 'https://app.live.rongoinc.com'
-export const BASE_LIVE_URL = 'http://localhost/'
+
+export const BASE_URL = 'https://app.live.rongoinc.com' // 'http://192.168.0.100:8000'
+
+export const BASE_LIVE_URL = 'http://app.live.rongoinc.com/'
