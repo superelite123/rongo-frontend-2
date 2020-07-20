@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import LiveForm from 'components/live/LiveForm'
 import * as liveActions from 'redux/modules/livePage'
-import { SHOW_LIVEPRODUCTLIST,SHOW_LIVECHATPANEL } from 'lib/constant'
+import { SHOW_LIVEPRODUCTLIST,SHOW_LIVECHATPANEL,BASE_LIVE_URL } from 'lib/constant'
 import * as LiveApi from 'lib/api/live';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -21,11 +21,11 @@ class LiveFormContainer extends Component {
             confirmOpen:false,
             error:false,
             backDrop:false,
-            isQuit:false
+            isQuit:true
         }
     }
     handleAddProduct = () => {
-        this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVECHATPANEL,panelIndex:2})
+        this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVEPRODUCTLIST,panelIndex:2})
     }
     componentDidMount(){
         const isQuit = this.props.liveStatus === 2
@@ -65,8 +65,9 @@ class LiveFormContainer extends Component {
                 this.props.LiveActions.updateLiveID(id)
                 this.props.LiveActions.updateStatus(1)
                 this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVECHATPANEL,panelIndex:2})
+                console.log('hi')
                 window.open(
-                            'http://localhost/webrtc-examples/src/dev-view-publish.html?url=' + url + 
+                            BASE_LIVE_URL + 'webrtc-examples/src/dev-view-publish.html?url=' + url + 
                             '&appname=' + appname + 
                             '&streamname=' + streamname, '_blank');
             },
@@ -112,19 +113,18 @@ class LiveFormContainer extends Component {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"放送を開始しますか？"}</DialogTitle>
                     <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Let Google help apps determine location. This means sending anonymous location data to
-                        Google, even when no apps are running.
+                        放送を開始しますか？
                     </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                     <Button onClick={() => { this.setState({confirmOpen:false}) }} color="primary">
-                        No
+                        キャンセル
                     </Button>
                     <Button onClick={this.handleClose} color="primary" autoFocus>
-                        Yes
+                        はい
                     </Button>
                     </DialogActions>
                 </Dialog>
@@ -134,21 +134,21 @@ class LiveFormContainer extends Component {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"You have to enter all field"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"追加する商品の数量を入力してください。"}</DialogTitle>
                     <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        This is error message
+                        
                     </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                     <Button  onClick={() => { this.setState({error:false}) }} color="primary" autoFocus>
-                        Yes
+                        はい
                     </Button>
                     </DialogActions>
                 </Dialog>
 
                 <Dialog
-                    open={quit}
+                    open={quit && this.state.isQuit}
                     onClose={() => {this.setState({isQuit:false}) }}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
@@ -162,7 +162,7 @@ class LiveFormContainer extends Component {
                     </DialogContent>
                     <DialogActions>
                     <Button  onClick={() => { this.setState({isQuit:false}) }} color="primary" autoFocus>
-                        Yes
+                        はい
                     </Button>
                     </DialogActions>
                 </Dialog>
