@@ -71,6 +71,10 @@ class App extends Component {
                     <Route path="/loginconfirm" component={ConfirmContainer}/>
                     <Route path="/home" component={Home}/>
                     <Route path="/live" component={Live}/>
+                    <Route path='/live/broadcast' component={() => {
+                      window.location.href="http://localhost:5000/src/dev-view-publish";
+                      return null
+                    }}/>
                 </ThemeProvider>
             </div>
         );

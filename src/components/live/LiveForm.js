@@ -3,18 +3,24 @@ import makeStyles from '@material-ui/styles/makeStyles'
 import { Box,Grid,
          Paper ,IconButton
          } from "@material-ui/core"
-
 import LivePanelTemplete from '../base/LivePanelTemplete'
 import LiveButton from 'components/base/LiveButton';
+import LiveConfirmButton from 'components/base/LiveConfirmButton';
 import AddIcon from '@material-ui/icons/Add';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import ProductAddedListItem from './ProductAddedListItem'
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         height: '100%',
         display: 'flex',
         alignItems: 'flex-end'
+    },
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
     },
     paperView: {
         boxShadow: '0 0 #00000000',
@@ -65,12 +71,16 @@ const useStyles = makeStyles((theme) => ({
     productListContent:{
         maxHeight:'400px',
         overflow:'scroll'
+    },
+    confirmButton:{
+
     }
 }))
 
 const LiveForm = (props) => {
     const classes = useStyles();
-    const { handleChangeInput,handleTakePhoto,handleAddProduct,thumbnail,products } = props
+    const { handleChangeInput,handleTakePhoto,handleAddProduct,handleSubmit,thumbnail,products,backDrop,handleBottomTab } = props
+    
     const thumbnailWrapperStyle = {
         border: '2px solid white',
         marginLeft: '16px',
@@ -86,10 +96,13 @@ const LiveForm = (props) => {
         color: 'white'
     }
     return (
-        <LivePanelTemplete mode={1}>
+        <LivePanelTemplete mode={1}  handleAction={handleBottomTab}>
             <Box component="div" className={classes.root}>
                 <Grid container>
+                    
                     {/**Live Form */}
+                    {
+                        props.status === 0 &&
                     <Grid xs={12} item style={{ padding: '0 20px' }}>
                         <Paper className={classes.paperView}>
                             <Box component='div' style={thumbnailWrapperStyle}>
@@ -120,7 +133,7 @@ const LiveForm = (props) => {
                             </Box>
                         </Paper>
                     </Grid>
-
+                    }
                     {/**Added Product */}
                     <Grid xs={12} item style={{ padding: '20px' }}>
                         <Grid container>
@@ -149,17 +162,33 @@ const LiveForm = (props) => {
                         </Grid>
                         
                     </Grid>
-                    <Grid xs={12} item style={{ padding: '20px' }}>
-                        <LiveButton onClick={handleAddProduct} >
-                            <div style={{ display: 'flex', margin: 'auto' }}>
-                                <AddIcon style={{ margin: 'auto 0' }} />
-                                <span style={{ margin: 'auto 0' }}>出品する商品を選択する</span>
-                            </div>
-                        </LiveButton>
-                    </Grid>
+                    {
+                        props.status === 0 && 
+                        <Grid xs={12} item style={{ padding: '20px' }}>
+                            <LiveButton onClick={() => {handleAddProduct()}} >
+                                <div style={{ display: 'flex', margin: 'auto' }}>
+                                    <AddIcon style={{ margin: 'auto 0' }} />
+                                    <span style={{ margin: 'auto 0' }}>出品する商品を選択する</span>
+                                </div>
+                            </LiveButton>
+                        </Grid>
+                    }
+                    {
+                        props.status === 0 && 
+                        <Grid xs={12} item style={{ padding: '20px' }}>
+                            <LiveConfirmButton onClick={handleSubmit} >
+                                <div style={{ display: 'flex', margin: 'auto' }}>
+                                    <span style={{ margin: 'auto 0' }}>配信確認</span>
+                                </div>
+                            </LiveConfirmButton>
+                        </Grid>
+                    }
                 </Grid>
             </Box>
             
+            <Backdrop className={classes.backdrop} open={backDrop}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </LivePanelTemplete>
     )
 }

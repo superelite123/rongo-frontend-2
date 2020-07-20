@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => {
         }
     }
 })
-const LivePanelTemplate = ({ children,mode }) => {
+const LivePanelTemplate = ({ children,mode, handleAction }) => {
     const classes = useStyles();
     return (
         <Grid container className={classes.root} spacing={0}>
@@ -41,7 +41,7 @@ const LivePanelTemplate = ({ children,mode }) => {
                 </Box>
             </Grid>
             <Grid item xs={12} style={{background: '#333333'}}>
-                <HomeFooter mode={mode}/>
+                <HomeFooter mode={mode} handleAction={handleAction}/>
             </Grid>
         </Grid>
     )

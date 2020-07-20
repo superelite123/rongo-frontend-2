@@ -3,7 +3,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import LiveForm from 'components/live/LiveForm'
 import * as liveActions from 'redux/modules/livePage'
-import { SHOW_LIVEPRODUCTLIST } from 'lib/constant'
+import { SHOW_LIVEPRODUCTLIST,SHOW_LIVECHATPANEL } from 'lib/constant'
+import * as LiveApi from 'lib/api/live';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 class LiveFormContainer extends Component {
     constructor() {
         super()
@@ -11,44 +18,164 @@ class LiveFormContainer extends Component {
             title:'',
             tag:'',
             thumbnail:null,
+            confirmOpen:false,
+            error:false,
+            backDrop:false,
+            isQuit:false
         }
     }
     handleAddProduct = () => {
-        this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVEPRODUCTLIST,panelIndex:2})
+        this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVECHATPANEL,panelIndex:2})
     }
-    
+    componentDidMount(){
+        const isQuit = this.props.liveStatus === 2
+        this.setState({isQuit:isQuit})
+    }
     handleChangeInput = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
+        this.props.LiveActions.updateForm({name:e.target.name,value:e.target.value})
     }
     handleTakePhoto = (event) => {
         event.preventDefault();
         let reader = new FileReader();
         let file = event.target.files[0];
         reader.onloadend = () => {
-        
+            
             this.setState({thumbnail:reader.result})
+            this.props.LiveActions.updateForm({name:'thumbnail',value:reader.result})
             
         }
         reader.readAsDataURL(file)
     }
+    saveLive = async () => {
+        const postData = {
+            title:this.state.title,
+            tag:this.state.tag,
+            thumbnail:this.state.thumbnail.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
+            //products:[this.props.products]
+            products:[]
+        }
+        LiveApi.saveLive(postData).then(
+            (res) => {
+                this.setState({backDrop:false})
+                const {url,appname,streamname} = res.data.liveData
+                const id = res.data.id;
+                this.props.LiveActions.updateLiveID(id)
+                this.props.LiveActions.updateStatus(1)
+                this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVECHATPANEL,panelIndex:2})
+                window.open(
+                            'http://localhost/webrtc-examples/src/dev-view-publish.html?url=' + url + 
+                            '&appname=' + appname + 
+                            '&streamname=' + streamname, '_blank');
+            },
+            (e) => {
+                this.setState({backDrop:false})
+            }
+        )
+    }
+    handleSubmit = () => {
+        const {title,tag,thumbnail} = this.state
+        if(title === '' || tag === '' || thumbnail === null || this.props.products.length < 0)
+        {
+            this.setState({error:true})
+            return
+        }
+        this.setState({confirmOpen:true})
+    }
+    handleClose = () => {
+        this.setState({confirmOpen:false,backDrop:true})
+        this.saveLive()
+    }
+    
     render() {
         
+        const quit = this.props.liveStatus === 2
         return (
-            <LiveForm 
-                products={this.props.products.toJS()}
-                handleAddProduct={this.handleAddProduct}
-                thumbnail={this.state.thumbnail}
-                handleChangeInput={this.handleChangeInput}
-                handleTakePhoto={this.handleTakePhoto}
-            />
+            <div>
+                <LiveForm 
+                    products={this.props.products}
+                    handleAddProduct={this.handleAddProduct}
+                    thumbnail={this.state.thumbnail}
+                    handleChangeInput={this.handleChangeInput}
+                    handleTakePhoto={this.handleTakePhoto}
+                    handleSubmit={this.handleSubmit}
+                    error={this.state.error}
+                    status={this.props.liveStatus}
+                    backDrop={this.state.backDrop}
+                    handleBottomTab={this.props.handleBottomTab}
+                />
+                <Dialog
+                    open={this.state.confirmOpen}
+                    onClose={this.handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+                    <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Let Google help apps determine location. This means sending anonymous location data to
+                        Google, even when no apps are running.
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={() => { this.setState({confirmOpen:false}) }} color="primary">
+                        No
+                    </Button>
+                    <Button onClick={this.handleClose} color="primary" autoFocus>
+                        Yes
+                    </Button>
+                    </DialogActions>
+                </Dialog>
+                <Dialog
+                    open={this.state.error}
+                    onClose={() => { this.setState({error:false}) }}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"You have to enter all field"}</DialogTitle>
+                    <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        This is error message
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button  onClick={() => { this.setState({error:false}) }} color="primary" autoFocus>
+                        Yes
+                    </Button>
+                    </DialogActions>
+                </Dialog>
+
+                <Dialog
+                    open={quit}
+                    onClose={() => {this.setState({isQuit:false}) }}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"You have to enter all field"}</DialogTitle>
+                    <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        お疲れ様でした
+                        このライブは終了しています
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button  onClick={() => { this.setState({isQuit:false}) }} color="primary" autoFocus>
+                        Yes
+                    </Button>
+                    </DialogActions>
+                </Dialog>
+
+            </div>
         )
     }
 }
 export default connect(
     (state) => ({
-        products:state.livePage.get('products')
+        products:state.livePage.get('products').toJS(),
+        thumbnail:state.livePage.get('thumbnail'),
+        liveStatus:state.livePage.get('status'),
     }),
     (dispatch) => ({
         LiveActions: bindActionCreators(liveActions, dispatch),

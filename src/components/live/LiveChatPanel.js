@@ -1,7 +1,7 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
-import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
-
+import { Box,IconButton, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
+import CloseIcon from '@material-ui/icons/Close';
 import LivePanelTemplete from '../base/LivePanelTemplete'
 
 const useStyles = makeStyles((theme) => ({
@@ -24,15 +24,36 @@ const useStyles = makeStyles((theme) => ({
         verticalAlign: 'text-bottom',
         color: '#BBA884'
     },
+    root:{
+        width:'100%',
+        justifyContent:'right'
+    },
+    quitButtonWrapper:{
+        display:'flex',
+    },
+    quitTimeWrapper:{
+
+    },
+    quitButton:{
+        borderRadius:'12px',
+        border:'1px solid #333333',
+        fontSize:'11px'
+    }
 }))
 
 const LiveChatPanel = ({ handleClick, liveStreamList }) => {
     const classes = useStyles();
 
     return (
-        <LivePanelTemplete>
-            
-            
+        <LivePanelTemplete mode={0}>
+            <div className={classes.root}>
+                <div className={classes.quitButtonWrapper}>
+                    <IconButton color="primary" onClick={handleClick} aria-label="upload picture" component="span">
+                        <CloseIcon />
+                    </IconButton>
+                    
+                </div>
+            </div>
         </LivePanelTemplete>
     )
 }
