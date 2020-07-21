@@ -1,38 +1,53 @@
 import React, { useState, useRef  } from 'react';
 import makeStyles from '@material-ui/styles/makeStyles';
-import { IconButton } from "@material-ui/core"
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+const useStyles = makeStyles((theme) => ({
+  root:{
+    background:'#DEDCD4',
+    color:'white',
+    width:'82px',
+    height:'82px',
+    display: 'flex',
+    cursor:'pointer'
+  },
+  cameraIcon: {
+    margin: 'auto'
+  },
+  img: {
+    width:'100%',
+    height:'100%'
+  }
+}));
 
-const TakePhoto = ({handleChangePortfolio,index,image}) => {
-  const background = image == null?'#DEDCD4':`url(${image})`
-  const useStyles = makeStyles((theme) => ({
-    root:{
-      background:background,
-      color:'white',
-      width:'82px',
-      height:'82px',
-      display: 'flex',
-      cursor:'pointer'
-    },
-    cameraIcon: {
-      margin: 'auto',
-      color:'white'
-    },
-    img: {
-      width:'100%',
-      height:'100%'
-    }
-  }));
+const TakePhoto = ({handleChange}) => {
     const classes = useStyles();
+    const inputRef = useRef();
+    const [imgBase64, setImgBase64] = useState(""); 
+    const [imgFile, setImgFile] = useState(null);
+    const handleClick = (e) => {
+      this.inputElement.click();
+    }
+    const handleChangeFile = (event) => {
+      let reader = new FileReader();
+  
+      reader.onloadend = () => {
+        // 2. 읽기가 완료되면 아래코드가 실행됩니다.
+        const base64 = reader.result;
+        if (base64) {
+          setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
+        }
+      }
+      if (event.target.files[0]) {
+        reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
+        setImgFile(event.target.files[0]); // 파일 상태 업데이트
+      }
+    }
 
     return (
-      <div className={classes.root}>
-          <input type="file" name="imgFile" id="imgFile" hidden={true} onChange={(e,index) => handleChangePortfolio(e, index)} accept="image/*" />
-          <label htmlFor="imgFile" className={classes.cameraIcon}>
-              <IconButton className={classes.cameraIcon} aria-label="upload picture" component="span">
-                <PhotoCameraIcon />
-              </IconButton>
-          </label>
+      <div className={classes.root} onClick={handleClick} >
+        { imgFile == null && <PhotoCameraIcon className={classes.cameraIcon}/> }
+        <input type="file" name="imgFile" id="imgFile" hidden={true} onChange={handleChangeFile} accept="image/*" />
+        { imgFile != null && <img className={classes.img} src={process.env.PUBLIC_URL + '/images/logo.png'} /> }
       </div>
     )
 }
