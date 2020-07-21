@@ -4,19 +4,21 @@ import { bindActionCreators } from 'redux'
 import ProductListPanel from 'components/product/ProductListPanel'
 import * as homeActions from 'redux/modules/homePage';
 import * as productListActions from 'redux/modules/product/productList';
+import storage from 'lib/storage'
 
 class ProductListPanelContainer extends Component {
     getProductList = async ({ type }) => {
         const { ProductActions, productList } = this.props;
 
         try {
-            await ProductActions.getProducts({ type: type });
+            const token = storage.get('token');
+            await ProductActions.getProducts({ type: type, token: token });
         } catch (e) {
             console.log(e)
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getProductList({ type: 0 })
     }
 

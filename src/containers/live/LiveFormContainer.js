@@ -11,6 +11,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import storage from 'lib/storage'
+
 class LiveFormContainer extends Component {
     constructor() {
         super()
@@ -48,13 +50,17 @@ class LiveFormContainer extends Component {
         reader.readAsDataURL(file)
     }
     saveLive = async () => {
+        const token = storage.get('token');
+        
         const postData = {
             title:this.state.title,
             tag:this.state.tag,
             thumbnail:this.state.thumbnail.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
             //products:[this.props.products]
+            token: token,
             products:[]
         }
+
         LiveApi.saveLive(postData).then(
             (res) => {
                 this.setState({backDrop:false})

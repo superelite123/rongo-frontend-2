@@ -1,4 +1,4 @@
 import axios from 'lib/clientWithAuth'
 
 
-export const changeEmailAddress = ({email}) => axios.post('/api/me/changeEmail', { email });
+export const changeEmailAddress = ({email, token}) => axios(token).post('/api/me/changeEmail', { email });

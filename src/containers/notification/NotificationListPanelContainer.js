@@ -5,6 +5,7 @@ import * as notiActions from 'redux/modules/notification/notification';
 import NotificationListPanel from 'components/notification/NotificationListPanel'
 import * as homeActions from 'redux/modules/homePage';
 import {SHOW_NOTIFICATION_DETAIL} from 'lib/constant' 
+import storage from 'lib/storage'
 
 class NotificationListPanelContainer extends Component
 {
@@ -12,6 +13,7 @@ class NotificationListPanelContainer extends Component
         const { NotiActions,  notificationList} = this.props;
 
         try {
+            const token = storage.get('token');
             await NotiActions.getNotifications();
             console.log(notificationList)
         } catch (e) {
@@ -19,7 +21,7 @@ class NotificationListPanelContainer extends Component
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getNotifications()
     }
     

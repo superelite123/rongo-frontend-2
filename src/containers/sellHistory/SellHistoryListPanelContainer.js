@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
 import * as sellActions from 'redux/modules/sellHistory/sellHistory';
-
+import storage from 'lib/storage'
 import SellHistoryListPanel from '../../components/sellHistory/SellHistoryListPanel';
 
 class SellHistoryListPanelContainer extends Component {
@@ -12,13 +12,14 @@ class SellHistoryListPanelContainer extends Component {
         const { SellActions,  sellHistoryList} = this.props;
 
         try {
+            const token = storage.get('token');
             await SellActions.getSellHistory();
         } catch (e) {
             console.log(e)
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getSellHistoryList()
     }
 

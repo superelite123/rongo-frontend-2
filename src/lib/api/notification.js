@@ -1,3 +1,3 @@
 import axios from 'lib/clientWithAuth'
 
-export const getNews =  () => axios.get('/api/news');
+export const getNews =  (token) => axios(token).get('/api/news');

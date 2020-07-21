@@ -24,7 +24,7 @@ class ProductDetailPanelContainer extends Component
         HomeActions.changeThirdStatus(0)
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getProduct()
     }
 
