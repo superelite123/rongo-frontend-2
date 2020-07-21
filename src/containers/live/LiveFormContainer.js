@@ -156,7 +156,7 @@ class LiveFormContainer extends Component {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"ライブ配信後の カメラの変更はできません"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"ライブ配信中はカメラの変更はできません。"}</DialogTitle>
                     <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         お疲れ様でした

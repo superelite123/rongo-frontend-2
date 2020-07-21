@@ -76,7 +76,7 @@ class LiveProductsContainer extends Component {
                         <DialogContent>
                             <DialogContentText>
                                 在庫数： { product != null?product.quantity:0}
-                                { error && <Alert severity="error">This is an error alert — check it out!</Alert>} 
+                                { error && <Alert severity="error">在庫数を確認してください。</Alert>} 
                             </DialogContentText>
                             <TextField
                                 autoFocus
