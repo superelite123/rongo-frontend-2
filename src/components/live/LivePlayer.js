@@ -1,15 +1,22 @@
 import React,{useRef, Component } from 'react'
 import { Button } from "@material-ui/core"
 import LivePanelTemplete from '../base/LivePanelTemplete'
-import ReactPlayer from 'react-player'
+import Webcam from "react-webcam";
 class LivePlayer extends Component{
   constructor() {
     super()
-    this.state = {
-        streamname:'dkxkWlQy',
-        url:'https://cdn3.wowza.com/1/NURVSXRVTzBmV1Fl/dkxkWlQy/hls/live/playlist.m3u8'
+      this.state = {
+        width:0,
+        height:0
     }
   }
+  componentDidMount() {
+    this.updateWindowDimensions();
+    
+  }
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  }  
   render() {
     const rootStyle = {
         top:0,
@@ -24,9 +31,17 @@ class LivePlayer extends Component{
       top:0,
       left:0
     }
-    const {url} = this.state.url
+    const videoConstraints = {
+      width: 1280,
+      height: 720,
+      facingMode: "user"
+    };
       return (
         <LivePanelTemplete mode={0}>
+          <Webcam 
+            videoConstraints={videoConstraints}
+            height={this.state.height}
+          />
         </LivePanelTemplete>
       )
   }
