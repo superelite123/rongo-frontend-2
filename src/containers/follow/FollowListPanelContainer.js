@@ -1,3 +1,4 @@
+import storage from 'lib/storage';
 import React,{Component} from 'react'
 import FollowListPanel from '../../components/follow/FollowListPanel'
 import { connect } from 'react-redux'
@@ -10,7 +11,8 @@ class FollowListPanelContainer extends Component
     getFollowList = async () => {
         const { HomeActions, FollowActions } = this.props;
         try {
-            await FollowActions.getFollows();
+            const token = storage.get('token');
+            await FollowActions.getFollows(token);
             console.log(this.props.followList)
         } catch (e) {
             console.log(e)

@@ -10,6 +10,8 @@ import Alert from '@material-ui/lab/Alert';
 import LiveProducts from 'components/live/LiveProducts'
 import * as liveActions from 'redux/modules/livePage'
 import * as LiveApi from 'lib/api/live';
+import storage from 'lib/storage'
+
 class LiveProductsContainer extends Component {
     constructor() {
         super()
@@ -22,7 +24,8 @@ class LiveProductsContainer extends Component {
         }
     }
     initialize = async () => {
-        LiveApi.getProducts().then((res) => {
+        const token = storage.get('token');
+        LiveApi.getProducts(token).then((res) => {
             this.setState({products:res.data})
         })
     }

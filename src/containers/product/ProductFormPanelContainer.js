@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import ProductFormPanel from 'components/product/ProductFormPanel'
 import * as homeActions from 'redux/modules/homePage';
 import * as productListActions from 'redux/modules/product/productList';
+import storage from 'lib/storage'
 
 class ProductFormPanelContainer extends Component {
     constructor() {
@@ -24,11 +25,13 @@ class ProductFormPanelContainer extends Component {
     handleChangePortfolio = () => {
 
     }
-    componentDidMount() {
+
+    getProductDetail = async () => {
         const {product, ProductActions} = this.props
         if(product != null)
         {
-            ProductActions.getProductDetail({id:1}).then(
+            const token = storage.get('token');
+            ProductActions.getProductDetail({id:1, token: token}).then(
                 (res) => {
                     console.log('success')
                 },
@@ -37,6 +40,10 @@ class ProductFormPanelContainer extends Component {
                 }
             )
         }
+    }
+
+    componentDidMount() {
+        this.getProductDetail()
     }
 
     render() {

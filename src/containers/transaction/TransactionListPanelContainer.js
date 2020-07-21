@@ -19,7 +19,7 @@ class TransactionListPanelContainer extends Component
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getTransactionList()
     }
 

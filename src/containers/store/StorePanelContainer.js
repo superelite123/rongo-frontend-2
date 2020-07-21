@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import StorePanel from 'components/store/StorePanel'
 import * as userActions from 'redux/modules/user';
-
+import storage from 'lib/storage'
 import * as StoreApi from 'lib/api/store';
+
 class StorePanelContainer extends Component {
     constructor() {
         super()
@@ -19,6 +20,7 @@ class StorePanelContainer extends Component {
         }
       }
     initialize = async () => {
+        const token = storage.get('token');
         StoreApi.getMyStore().then((res) => {
             //set description
             this.setState({description:res.data.description})
@@ -167,7 +169,9 @@ class StorePanelContainer extends Component {
             backgrounds:backgrounds,
             tags:this.state.tags
         }
-        StoreApi.setMyStore(store).then((res) => {
+
+        const token = storage.get('token');
+        StoreApi.setMyStore(store, token).then((res) => {
             
         })
     }

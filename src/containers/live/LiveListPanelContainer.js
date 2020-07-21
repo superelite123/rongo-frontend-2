@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
 import * as liveActions from 'redux/modules/live/liveStream';
+import storage from 'lib/storage'
 
 class LiveListPanelContainer extends Component
 {
@@ -12,14 +13,15 @@ class LiveListPanelContainer extends Component
         const { LiveActions,  liveStreamList} = this.props;
 
         try {
-            await LiveActions.getLiveStreams();
+            const token = storage.get('token');
+            await LiveActions.getLiveStreams(token);
             console.log(liveStreamList)
         } catch (e) {
             console.log(e)
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getLiveList()
     }
 

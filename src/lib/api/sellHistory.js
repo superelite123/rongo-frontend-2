@@ -1,3 +1,3 @@
 import axios from 'lib/clientWithAuth'
 
-export const getSellHistory =  () => axios.get('/api/payment/sellHistory');
+export const getSellHistory =  (token) => axios(token).get('/api/payment/sellHistory');
