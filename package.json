@@ -72,6 +72,7 @@
     "react-slideshow-image": "^2.0.2",
     "react-tagsinput": "^3.19.0",
     "react-text-truncate": "^0.16.0",
+    "react-webcam": "^5.2.0",
     "reactstrap": "^8.5.1",
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",

@@ -9,6 +9,7 @@ import storage from 'lib/storage'
 class LiveChatPanelContainer extends Component {
     handleQuit = async () => {
         const {LiveActions,liveID} = this.props
+
         
         const token = storage.get('token');
         LiveApi.quitLive({id: liveID, token: token}).then(

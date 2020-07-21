@@ -27,14 +27,14 @@ const HomeFooter = ({handleAction,mode}) => {
     const classes = useStyles();
     const navigationMode = mode != 0
     return (
-        <NavigationWrapper style={{width: "100%"}} showLabels={true} onChange={ handleAction }>
+        <NavigationWrapper style={{width: "100%"}} showLabels={true} >
             {
               navigationMode && 
-              <NavigationAction label="ホーム" value="home" icon={<HomeIcon />} />
+              <NavigationAction href='/home' label="ホーム" value="home" icon={<HomeIcon />} />
             }
             {
               navigationMode && 
-              <NavigationAction label="配信" value="live" icon={<VideocamIcon />} />
+              <NavigationAction href='/live' label="配信" value="live" icon={<VideocamIcon />} />
             }
             {
               navigationMode && 
