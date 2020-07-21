@@ -191,8 +191,8 @@ const BackgroundWrapper = ({ onMouseEnter, onMouseLeave, handleChange, handleRem
             {
                 isHovering &&
                 <div style={layerStyle}>
-                    <input accept="image/*" hidden={true} id="fileImage" type="file"
-                        onChange={(e) => handleChange(e, index)} />
+                    <input  accept="image/*" hidden={true} id="fileImage" type="file"
+                            onChange={(e) => handleChange(e, index)} />
                     <div style={{ margin: 'auto' }} >
                         <IconButton aria-label="upload picture" component="span" style={{ color: 'white' }}>
                             <div col>

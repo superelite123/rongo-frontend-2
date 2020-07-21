@@ -54,6 +54,13 @@ class App extends Component {
             history.push('/loginconfirm')
             return
         }
+        // const token = storage.get('token');
+        // if(!token)
+        // {
+        //     history.push('/')
+        //     return
+        // }
+        // UserActions.setToken(token)
         // get userInfo
         const userInfo = storage.get('userInfo');
         if(!userInfo) return;

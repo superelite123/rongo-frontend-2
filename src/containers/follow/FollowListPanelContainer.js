@@ -13,7 +13,6 @@ class FollowListPanelContainer extends Component
         try {
             const token = storage.get('token');
             await FollowActions.getFollows(token);
-            console.log(this.props.followList)
         } catch (e) {
             console.log(e)
         }
@@ -41,7 +40,6 @@ class FollowListPanelContainer extends Component
                 case 3:
                     HomeActions.changeThirdStatus(panelNumber)
                     FollowActions.showFollowerDetail(follow)
-                    console.log(follow);
                     break;
                 default:
                     break;

@@ -26,7 +26,6 @@ export default handleActions({
         type: GET_FOLLOWS,
         onSuccess: (state, action) => {
             const data = action.payload.data;
-            console.log(data)
             return state.set('followList', data)            
         }
     })
