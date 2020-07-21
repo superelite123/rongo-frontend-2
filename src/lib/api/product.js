@@ -1,4 +1,4 @@
-import axios from 'lib/clientWithAuth'
+import axios from 'lib/defaultClient'
 
-export const getProducts =  ({type, token}) => axios(token).get('/api/store/products/' + type);
-export const getProductDetail = ({id, token}) => axios(token).get('/api/product/' + id);
+export const getProducts =  ({type,}) => axios.get('/api/store/products/' + type);
+export const getProductDetail = ({id}) => axios.get('/api/product/' + id);

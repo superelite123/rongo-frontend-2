@@ -57,17 +57,12 @@ class Home extends Component {
         switch (firstPanelVisible) {
             case FIRST_PANEL_HOME:
                 firstPanel = <HomePanelContainer />
-                console.log("firstpanel" + firstPanelVisible)
-            
                 break
             case FIRST_PANEL_LIVE:
-                console.log("firstpanel" + firstPanelVisible)
                 firstPanel = <NotificationListPanelContainer />
                 break
             case FIRST_PANEL_NOTI:
                 firstPanel = <NotificationListPanelContainer />
-                console.log("firstpanel" + firstPanelVisible)
-            
                 break;
             default:
                 break;
