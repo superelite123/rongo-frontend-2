@@ -13,15 +13,18 @@ const useStyles = makeStyles((theme) => {
             height: '100%',
         },
         PanelWrapper: {
-            height:'calc(100vh - 106px)',
             background:'#DEDCD4',
-        },
-        Panel: {
-            height:'calc(100% - 50px)',
             overflowY: 'scroll',
-            position:!isMobile?'relative':'',
-            width:'90%',
-            margin:'auto'
+            height:'calc(100vh - 106px)',
+            position:!isMobile?'relative':''
+        },
+        control: {
+            padding: theme.spacing(2),
+        },
+        panelGridWrapper:{
+            position:'absolute',
+            bottom:0,
+            height: '100%'
         }
     }
 })
@@ -32,8 +35,8 @@ const LivePanelTemplate = ({ children,mode, handleAction }) => {
             <Grid item xs={12}>
                 <Header mode={mode} />
             </Grid>
-            <Grid item xs={12} className={classes.PanelWrapper}>
-                <Box className={classes.Panel}>
+            <Grid item xs={12}>
+                <Box className={classes.PanelWrapper}>
                     {children}
                 </Box>
             </Grid>

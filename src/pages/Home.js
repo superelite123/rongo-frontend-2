@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid} from "@material-ui/core";
+import PageTemplate from 'components/base/PageTemplate'
 import HomePanelContainer from 'containers/HomePanelContainer'
 import ProductListPanelContainer from 'containers/product/ProductListPanelContainer'
 import ProductFormPanelContainer from 'containers/product/ProductFormPanelContainer'
@@ -147,11 +147,12 @@ class Home extends Component {
         }
 
         return (
-            <Grid container>
-                <Grid item xs={4} key={1} handleAction = {handleBottomTab}>{firstPanel}</Grid>
-                <Grid item xs={4} key={2}>{secondPanel}</Grid>
-                <Grid item xs={4} key={3}>{thirdPanel}</Grid>
-            </Grid>
+            <PageTemplate
+                first={firstPanel}
+                second={secondPanel}
+                third={thirdPanel}
+                handleAction = {handleBottomTab}
+            ></PageTemplate>
         )
     }
 }
