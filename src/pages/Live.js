@@ -29,7 +29,7 @@ class Live extends Component {
             } else if (newValue == "live") {
                 window.location.href='/live'
             } else {
-            }
+        }
             
         }
         panelsInfo.map((panelNumber,index) => {

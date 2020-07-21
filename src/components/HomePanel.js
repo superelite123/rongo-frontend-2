@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/styles/withStyles";
+import LivePanelTemplete from './base/LivePanelTemplete'
 import Paper from '@material-ui/core/Paper';
 import ListCard from './base/ListCard';
 import PanelTemplate from './base/PanelTemplate';
@@ -114,7 +115,7 @@ const styles = theme => ({
 
 class HomePanel extends Component {
   render() {
-    const { classes, HomeActions, userInfo } = this.props;
+    const { classes, HomeActions, userInfo, handleAction } = this.props;
 
     const handleClick = (panelNumber, panelType) => {
       console.log(panelNumber + ',' + panelType)
@@ -151,7 +152,7 @@ class HomePanel extends Component {
     }
 
     return (
-      <PanelTemplate >
+      <LivePanelTemplete mode={1}  handleAction={handleAction}>
 
         <Grid xs={12} item>
           <Paper variant="outlined" square elevation={1} className={classes.avatarWrapper}>
@@ -250,7 +251,7 @@ class HomePanel extends Component {
             panelLocation={2}
             handleClick={handleClick} />
         </Grid>
-      </PanelTemplate>
+        </LivePanelTemplete>
     );
   }
 }
