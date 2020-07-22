@@ -3,13 +3,12 @@ import withStyles from "@material-ui/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import PanelTemplate from '../base/PanelTemplate'
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 import GridList from '@material-ui/core/GridList';
 import ProductListItem from './ProductListItem'
 import { sizing } from '@material-ui/system';
-
+import BasePanel from 'components/base/BasePanel';
 const styles = theme => ({
   root: {
     height: '100%',
@@ -65,7 +64,7 @@ const styles = theme => ({
 
 class ProductListPanel extends Component {
   render() {
-    const { classes, productList, handleClick, switchingType, type } = this.props;
+    const { classes, productList, handleClick, switchingType, type,mode } = this.props;
 
     let productListItems = []
     for (const key in productList) {
@@ -74,7 +73,7 @@ class ProductListPanel extends Component {
     }
 
     return (
-      <PanelTemplate>
+      <BasePanel mode={mode}>
         <Grid xs={12} item>
           <Grid container>
             <Grid item xs={12}>
@@ -115,7 +114,7 @@ class ProductListPanel extends Component {
             {productListItems}
           </GridList>
         </Grid>
-      </PanelTemplate>
+      </BasePanel>
     );
   }
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
-import SectionHeader from '../typo/SectionHeader'
-import PanelTemplate from '../base/PanelTemplate'
+import BasePanel from 'components/base/BasePanel';
 import SearchIcon from '@material-ui/icons/Search';
 import FollowListItem from '../follow/FollowListItem'
 import { connect } from 'react-redux'
@@ -45,9 +44,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const FollowListPanel = ({ handleClick, followList }) => {
+const FollowListPanel = ({ handleClick, followList,mode }) => {
     const classes = useStyles();
-
     let count = 0
     let followListItems = []
     for (const key in followList) {
@@ -56,7 +54,7 @@ const FollowListPanel = ({ handleClick, followList }) => {
     }
     
     return (
-        <PanelTemplate>
+        <BasePanel mode={mode}>
             <Grid xs={12} item>
                 <Grid container>
                     <Grid item xs={12}>
@@ -91,7 +89,7 @@ const FollowListPanel = ({ handleClick, followList }) => {
                     {followListItems}                    
                 </GridList>
             </Grid>
-        </PanelTemplate>
+        </BasePanel>
     )
 }
 

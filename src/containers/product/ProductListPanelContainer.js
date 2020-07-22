@@ -52,7 +52,7 @@ class ProductListPanelContainer extends Component {
         }
 
         return (
-            <ProductListPanel productList={productList} handleClick={handleClick} switchingType={switchingType} type={currentType} />
+            <ProductListPanel mode={this.props.mode} productList={productList} handleClick={handleClick} switchingType={switchingType} type={currentType} />
         )
     }
 }

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import withStyles from "@material-ui/styles/withStyles";
 import Paper from '@material-ui/core/Paper';
 import ListCard from './base/ListCard';
-import PanelTemplate from './base/PanelTemplate';
+import BasePanel from './base/BasePanel';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
@@ -114,7 +114,7 @@ const styles = theme => ({
 
 class HomePanel extends Component {
   render() {
-    const { classes, HomeActions, userInfo } = this.props;
+    const { classes, HomeActions, userInfo, mode } = this.props;
 
     const handleClick = (panelNumber, panelType) => {
       console.log(panelNumber + ',' + panelType)
@@ -151,7 +151,7 @@ class HomePanel extends Component {
     }
 
     return (
-      <PanelTemplate >
+      <BasePanel mode={mode}>
 
         <Grid xs={12} item>
           <Paper variant="outlined" square elevation={1} className={classes.avatarWrapper}>
@@ -250,7 +250,7 @@ class HomePanel extends Component {
             panelLocation={2}
             handleClick={handleClick} />
         </Grid>
-      </PanelTemplate>
+      </BasePanel>
     );
   }
 }

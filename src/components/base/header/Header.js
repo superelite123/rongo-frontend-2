@@ -12,7 +12,7 @@ const Positioner = styled.div`
 
 // 흰 배경, 내용 중간 정렬
 const WhiteBackground = styled.div`
-    background: black;
+    background: white;
     display: flex;
     justify-content: left;
     height: auto;

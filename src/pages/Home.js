@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PageTemplate from 'components/base/PageTemplate'
+import { Grid, Box,  } from "@material-ui/core";
 import HomePanelContainer from 'containers/HomePanelContainer'
 import ProductListPanelContainer from 'containers/product/ProductListPanelContainer'
 import ProductFormPanelContainer from 'containers/product/ProductFormPanelContainer'
@@ -19,7 +19,7 @@ import NotificationDetailPanelContainer from '../containers/notification/Notific
 import LiveChatPanelContainer from '../containers/live/LiveChatPanelContainer'
 import StorePanelContainer from '../containers/store/StorePanelContainer'
 import ProductDetailPanelContainer from '../containers/product/ProductDetailPanelContainer'
-
+import {isMobile} from "react-device-detect";
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
@@ -48,23 +48,24 @@ import {
 
 class Home extends Component {
     render() {
-
+        const gridColumn = isMobile?12:4
         const { HomeActions, firstPanelVisible, secondPanelVisible, thirdPanelVisible,history } = this.props
         let firstPanel = null
+        console.log(firstPanelVisible)
         let secondPanel = null
         let thirdPanel = null
-        
         switch (firstPanelVisible) {
             case FIRST_PANEL_HOME:
-                firstPanel = <HomePanelContainer />
+                firstPanel = <HomePanelContainer mode='1' />
                 break
             case FIRST_PANEL_LIVE:
-                firstPanel = <NotificationListPanelContainer />
+                firstPanel = <NotificationListPanelContainer mode='1' />
                 break
             case FIRST_PANEL_NOTI:
-                firstPanel = <NotificationListPanelContainer />
+                firstPanel = <NotificationListPanelContainer mode='1' />
                 break;
             default:
+                firstPanel = <HomePanelContainer mode='1' />
                 break;
         }
 
@@ -73,31 +74,31 @@ class Home extends Component {
                 secondPanel = null;
                 break;
             case SHOW_FOLLOWPANEL:
-                secondPanel = <FollowListPanelContainer />
+                secondPanel = <FollowListPanelContainer mode='0' />
                 break;
             case SHOW_PPROUCTSPANEL:
-                secondPanel = <ProductListPanelContainer />;
+                secondPanel = <ProductListPanelContainer mode='0' />;
                 break;
             case SHOW_TRANSACTIONSPANEL:
-                secondPanel = <TransactionListPanelContainer />;
+                secondPanel = <TransactionListPanelContainer mode='0' />;
                 break;
             case SHOW_LIVELISTPANEL:
-                secondPanel = <LiveListPanelContainer />;
+                secondPanel = <LiveListPanelContainer mode='0' />;
                 break
             case SHOW_SELLHISTORYLISTPANEL:
-                secondPanel = <SellHistoryListPanelContainer />;
+                secondPanel = <SellHistoryListPanelContainer mode='0' />;
                 break
             case SHOW_CHANGEEMAILPANEL:
-                secondPanel = <ChangeEmailAddressContainer />
+                secondPanel = <ChangeEmailAddressContainer mode='0' />
                 break
             case SHOW_CHANGEEPASSWORDPANEL:
-                secondPanel = <ChangePasswordContainer />
+                secondPanel = <ChangePasswordContainer mode='0' />
                 break
             case SHOW_NOTIFICATION_DETAIL:
-                secondPanel = <NotificationDetailPanelContainer />
+                secondPanel = <NotificationDetailPanelContainer mode='0' />
                 break;
             case SHOW_STOREMANAGEMENT:
-                secondPanel = <StorePanelContainer />
+                secondPanel = <StorePanelContainer mode='0' />
                 break;
             default:
                 secondPanel = null;
@@ -109,28 +110,28 @@ class Home extends Component {
                 thirdPanel = null;
                 break;
             case SHOW_FOLLOWPANEL:
-                thirdPanel = <FollowDetailPanelContainer />;
+                thirdPanel = <FollowDetailPanelContainer mode='0' />;
                 break
             case SHOW_TRANSACTIONDETAIL:
-                thirdPanel = <TransactionDetailPanelContainer />
+                thirdPanel = <TransactionDetailPanelContainer mode='0' />
                 break
             case SHOW_PADDLINK:
-                thirdPanel = <ProductAddLinkPanel />;
+                thirdPanel = <ProductAddLinkPanel mode='0' />;
                 break;
             case SHOW_PFORM:
-                thirdPanel = <ProductFormPanelContainer />;
+                thirdPanel = <ProductFormPanelContainer mode='0' />;
                 break;
             case SHOW_PDETAIL:
-                thirdPanel = <ProductDetailPanelContainer />;
+                thirdPanel = <ProductDetailPanelContainer mode='0' />;
                 break;
             case SHOW_SELLHISTORYDETAILPANEL:
-                thirdPanel = <SellHistoryDetailPanelContainer />;
+                thirdPanel = <SellHistoryDetailPanelContainer mode='0' />;
                 break;
             case SHOW_LIVE_CHAT:
-                thirdPanel = <LiveChatPanelContainer />
+                thirdPanel = <LiveChatPanelContainer mode='0' />
                 break
             default:
-                thirdPanel = <ProductFormPanel />;
+                thirdPanel = <ProductFormPanel mode='0' />;
                 break;
         }
 
@@ -147,12 +148,11 @@ class Home extends Component {
         }
 
         return (
-            <PageTemplate
-                first={firstPanel}
-                second={secondPanel}
-                third={thirdPanel}
-                handleAction = {handleBottomTab}
-            ></PageTemplate>
+            <Grid container>
+                <Grid item xs={gridColumn} key={1}>{firstPanel}</Grid>
+                <Grid item xs={gridColumn} key={2}>{secondPanel}</Grid>
+                <Grid item xs={gridColumn} key={3}>{thirdPanel}</Grid>
+            </Grid>
         )
     }
 }

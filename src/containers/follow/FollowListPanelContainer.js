@@ -25,7 +25,7 @@ class FollowListPanelContainer extends Component
 
     render() {
 
-        const { HomeActions, FollowActions, followList } = this.props;
+        const { HomeActions, FollowActions, followList, mode } = this.props;
         const handleClick = (panelNumber, panelType, follow) => {
             switch (panelType) {
                 case 1:
@@ -47,7 +47,7 @@ class FollowListPanelContainer extends Component
         }
 
         return (
-            <FollowListPanel handleClick={handleClick} followList={followList} />
+            <FollowListPanel mode={mode} handleClick={handleClick} followList={followList} />
         )
     }
 }
