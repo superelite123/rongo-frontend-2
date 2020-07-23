@@ -1,26 +1,25 @@
 import React,{ useState } from 'react'
-import makeStyles from '@material-ui/styles/makeStyles'
+import {makeStyles, } from '@material-ui/styles'
 import SectionHeader from '../typo/SectionHeader'
 import PanelTemplate from '../base/PanelTemplate'
-import { Grid,Typography, Paper,
-        InputLabel,MenuItem,FormControl,Select
-} from "@material-ui/core"
-import {TakePhoto, CustomTextField, TagButton, CustomTextArea } from '../typo'
+import DefaultButton from '../base/DefaultButton'
+import { Grid,Typography, Box, Paper, TextField, MenuItem} from "@material-ui/core"
+import { TakePhoto, CustomTextField, TagButton} from '../typo'
+import TagsInput from 'react-tagsinput'
+import '../store/tagInput.css'
+
+
 const useStyles = makeStyles((theme) => ({
     root:{
-      marginBottom:'50px'
+        '& .MuiTextField-root': {
+            margin: theme.spacing(1),
+            width: '95%',
+        },
     },
-    addButton: {
-        width:'63px',
-        height:'63px',
-        borderRadius:'50%',
-        color:'white',
-        background:'#BBA884',
-        position:'absolute',
-        fontSize: '13px',
-        left:'calc(50% - 63px/2)',
-        top:'calc(50% - 63px/2)',
+    buttonWrapper:{
+        width:'100%',
         margin:'auto',
+        height:'100px',
     },
     headerLabel: {
         fontFamily: 'Noto Sans JP',
@@ -88,28 +87,32 @@ const useStyles = makeStyles((theme) => ({
     selectEmpty: {
       marginTop: theme.spacing(0),
     },
-  }));
-const handleTagClick = () => {
-    
-}
-const handleTakePhoto = () => {
-
-}
-const handleSubmit = () => {
-
-}
-const ProductFormPanel = ({handleChangePortfolio}) => {
+}));
+const ProductFormPanel = (props) => {
     const classes = useStyles();
+    const { handleChangePortfolio,handleChangeInput,handleTagChange,
+            tags,portfolios,suggestTags,errors,currencies} = props
     const takePhotos = [];
+    const tagInputProps = {
+        className: 'react-tagsinput-input',
+        placeholder: ''
+    }
+    const tagProps = {
+        className: 'react-tagsinput-tag',
+        fontFamily: 'Noto Sans JP',
+        fontStyle: 'normal',
+        fontWeight: '500',
+        fontSize: '12px',
+        padding: '7px 12px'
+    }
     for(let i = 0; i < 8; i ++)
     {
-        takePhotos[i] = <TakePhoto handleChange={handleChangePortfolio}  />
+        takePhotos[i] = <TakePhoto handleChangePortfolio={handleChangePortfolio} key={i} index={i} image={null}/>
     }
     return (
         <PanelTemplate>
-            <form onSubmit={handleSubmit}>
-                <SectionHeader title={'商品登録'} />
-                <Grid container className={classes.root}>
+            <SectionHeader title={'商品登録'} />
+            <Grid container className={classes.root}>
                 <Grid item xs={12}>
                     <div className={classes.topLabelPanel}>
                         <Typography className={classes.label}>商品写真</Typography>
@@ -119,8 +122,15 @@ const ProductFormPanel = ({handleChangePortfolio}) => {
                     <Paper variant="outlined" square className={classes.takePhotoWrapper}>
                     <Grid container spacing={1}>
                         {
-                            takePhotos.map((value,key) => {
-                                return <Grid item key={key} md={3} xs={6}>{value}</Grid>
+                            portfolios.map((portfolio,index) => {
+                                return <Grid item key={index} md={3} xs={6}>
+                                            <TakePhoto 
+                                                handleChangePortfolio={handleChangePortfolio} 
+                                                key={index} 
+                                                index={index} 
+                                                image={portfolio}
+                                            />
+                                        </Grid>
                             })
                         }
                     </Grid>
@@ -131,8 +141,9 @@ const ProductFormPanel = ({handleChangePortfolio}) => {
                         <Typography className={classes.label}>商品名</Typography>
                     </div>
                 </Grid>
+                {/**Label Input */}
                 <Grid item xs={12}>
-                    <CustomTextField />
+                    <CustomTextField name='label' handleClick={handleChangeInput} />
                 </Grid>
                 <Grid item xs={12}>
                     <div className={classes.labelPanel}>
@@ -140,7 +151,7 @@ const ProductFormPanel = ({handleChangePortfolio}) => {
                     </div>
                 </Grid>
                 <Grid item xs={12}>
-                    <CustomTextField />
+                    <CustomTextField name='number' handleClick={handleChangeInput} />
                 </Grid>
                 <Grid item xs={12}>
                     <div className={classes.labelPanel}>
@@ -149,7 +160,11 @@ const ProductFormPanel = ({handleChangePortfolio}) => {
                 </Grid>
                 <Grid item xs={12}>
                     <Paper variant="outlined" square className={classes.gridPaper}>
-                        <CustomTextField />
+                        <TagsInput  value={tags} 
+                                    onChange={handleTagChange} 
+                                    inputProps={tagInputProps} 
+                                    tagProps={tagProps}
+                        />
                     </Paper>
                 </Grid>
                 <Grid item xs={12}>
@@ -160,12 +175,12 @@ const ProductFormPanel = ({handleChangePortfolio}) => {
                             </Grid>
                             <Grid item xs={12}>
                                 <div className={classes.tagPanel}>
-                                    <TagButton label={'ファッション'} handleClick={handleTagClick}/>
-                                    <TagButton label={'パンツ'}/>
-                                    <TagButton label={'小物'}/>
-                                    <TagButton label={'小物'}/>
-                                    <TagButton label={'パンツ'}/>
-                                    <TagButton label={'ファッション'}/>
+                                    {
+                                        suggestTags.map(
+                                            (tag,i) => 
+                                                <TagButton label={tag} key={i} index={i} handleClick={handleTagChange}/>
+                                            )
+                                    }
                                 </div>
                             </Grid>
                         </Grid>
@@ -176,8 +191,18 @@ const ProductFormPanel = ({handleChangePortfolio}) => {
                         <Typography className={classes.label}>商品説明</Typography>
                     </div>
                 </Grid>
-                <Grid item xs={12}>
-                    <CustomTextArea />
+                {/**Description */}
+                <Grid item xs={12} style={{background:'white'}}>
+                    <TextField
+                        error={errors.label}
+                        handleClick={handleChangeInput} 
+                        name='description'
+                        id="outlined-multiline-static"
+                        multiline
+                        margin='normal'
+                        rows={10}
+                        defaultValue=""
+                    />
                 </Grid>
                 <Grid item xs={12}>
                     <div className={classes.blank20}></div>
@@ -190,7 +215,7 @@ const ProductFormPanel = ({handleChangePortfolio}) => {
                                 <Typography className={classes.gridLabel}>在庫</Typography>
                             </Grid>
                             <Grid xs={4} item>
-                                <CustomTextField />
+                                <CustomTextField name='qty' handleClick={handleChangeInput} />
                             </Grid>
                         </Grid>
                     </Paper>
@@ -199,21 +224,22 @@ const ProductFormPanel = ({handleChangePortfolio}) => {
                 <Grid item xs={12}>
                     <Paper variant="outlined" square className={classes.gridPaper}>
                         <Grid container>
-                            <Grid xs={8} item style={{margin:'auto'}}>
+                            <Grid xs={7} item style={{margin:'auto'}}>
                                 <Typography className={classes.gridLabel} style={{margin:'auto'}}>発送までの日数</Typography>
                             </Grid>
-                            <Grid xs={4} item>
-                            <FormControl className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-label">選択してください</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                >
-                                <MenuItem value={1}>1</MenuItem>
-                                <MenuItem value={2}>2</MenuItem>
-                                <MenuItem value={3}>3</MenuItem>
-                                </Select>
-                            </FormControl>
+                            <Grid xs={5} item>
+                                <TextField
+                                        id="standard-select-currency"
+                                        select
+                                        label="選択してください"
+                                        value='EUR'
+                                        >
+                                        {currencies.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                            </MenuItem>
+                                        ))}
+                                </TextField>
                             </Grid>
                         </Grid>
                     </Paper>
@@ -222,21 +248,22 @@ const ProductFormPanel = ({handleChangePortfolio}) => {
                 <Grid item xs={12}>
                     <Paper variant="outlined" square className={classes.gridPaper}>
                         <Grid container>
-                            <Grid xs={8} item style={{margin:'auto'}}>
+                            <Grid xs={7} item style={{margin:'auto'}}>
                                 <Typography className={classes.gridLabel} style={{margin:'auto'}}>発送業者</Typography>
                             </Grid>
-                            <Grid xs={4} item>
-                            <FormControl className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-label">選択してください</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                >
-                                <MenuItem value={1}>1</MenuItem>
-                                <MenuItem value={2}>2</MenuItem>
-                                <MenuItem value={3}>3</MenuItem>
-                                </Select>
-                            </FormControl>
+                            <Grid xs={5} item>
+                                <TextField
+                                    id="standard-select-currency"
+                                    select
+                                    label="選択してください"
+                                    value='EUR'
+                                    >
+                                    {currencies.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
                             </Grid>
                         </Grid>
                     </Paper>
@@ -250,7 +277,7 @@ const ProductFormPanel = ({handleChangePortfolio}) => {
                                 <Typography className={classes.gridLabel}>商品代金（税込）</Typography>
                             </Grid>
                             <Grid xs={4} item>
-                                <CustomTextField />
+                                <CustomTextField  name='price' handleClick={handleChangeInput} />
                             </Grid>
                         </Grid>
                     </Paper>
@@ -263,14 +290,18 @@ const ProductFormPanel = ({handleChangePortfolio}) => {
                                 <Typography className={classes.gridLabel}>配送料</Typography>
                             </Grid>
                             <Grid xs={4} item>
-                                <CustomTextField />
+                                <CustomTextField name='dFee' handleClick={handleChangeInput}  />
                             </Grid>
                         </Grid>
                     </Paper>
                 </Grid>
-
+                {/**Button Group */}        
+                <Grid item xs={12}>
+                    <Box component='div' className={classes.buttonWrapper}>
+                        <DefaultButton>登録する</DefaultButton>
+                    </Box>
+                </Grid>
             </Grid>
-            </form>
         </PanelTemplate>
       )
 }

@@ -3,6 +3,7 @@ import storage from './storage'
 
 import { BASE_URL } from './constant'
 
+const token = storage.get('token');
 
 // const token=localStorage.get('token')
 const clientWithAuth = (token) => {
