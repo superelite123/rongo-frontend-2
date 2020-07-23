@@ -2,18 +2,15 @@ import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
 import PanelTemplate from '../base/PanelTemplate'
 import {Box, Button} from "@material-ui/core"
-import ContainerDimensions from 'react-container-dimensions'
+import BasePanel from 'components/base/BasePanel';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import { connect } from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as homeActions from 'redux/modules/homePage';
-import {
-    SHOW_PFORM,
-} from 'lib/constant'
+import {SHOW_PFORM,} from 'lib/constant'
 const useStyles = makeStyles((theme) => ({
     root:{
-      height: '750px',
-      width:'80%',
+      height: '95%',
       background:'#DEDCD4',
       position:'relative'
     },
@@ -37,12 +34,14 @@ const ProductAddLinkPanel = ({HomeActions}) => {
     }
     const classes = useStyles();
     return (
-            <Box borderColor="primary.white" border={2} className={classes.root}>
-                <Button className={classes.addButton} onClick={handleClick}>
-                    <LocalMallIcon />
-                    登録
-                </Button>
-            </Box>
+            <BasePanel mode='1' bgColor='1'>
+                <Box borderColor="primary.white" border={2} className={classes.root}>
+                    <Button className={classes.addButton} onClick={handleClick}>
+                        <LocalMallIcon />
+                        登録
+                    </Button>
+                </Box>
+            </BasePanel>
       )
 }
 

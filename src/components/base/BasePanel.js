@@ -36,8 +36,9 @@ const useStyles = makeStyles((theme) => {
         }
     }
 })
-const BasePanel = ({ children,mode, handleAction }) => {
+const BasePanel = ({ children,mode, handleAction,bgColor }) => {
     const classes = useStyles();
+    const PanelWrapperColor = bgColor === '1'?'#DEDCD4':'#F5F5F5'
     return (
         <Grid container className={classes.root} spacing={0}>
             <Grid item xs={12}>
@@ -45,8 +46,10 @@ const BasePanel = ({ children,mode, handleAction }) => {
             </Grid>
             <Grid item xs={12}>
                 <Box className={classes.Parent}>
-                    <Box className={classes.PanelWrapper}>
-                        {children}
+                    <Box className={classes.PanelWrapper} style={{background:PanelWrapperColor}}>
+                        <Grid container>
+                            {children}
+                        </Grid>
                     </Box>
                 </Box>
             </Grid>

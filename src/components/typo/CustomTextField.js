@@ -25,10 +25,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CustomTextField = ({ placeholder, style,name,value,handleClick }) => {
+const CustomTextField = ({ placeholder, style,defaultValue,name,value,handleClick,ref }) => {
   const classes = useStyles();
   return (
-    <input style={ style } className={classes.root} value={value} name={name} onChange={handleClick} placeholder={placeholder}></input>
+    <input  style={ style } 
+            className={classes.root} 
+            defaultValue={defaultValue}
+            value={value} 
+            name={name} 
+            onChange={handleClick} 
+            placeholder={placeholder}
+            ref={ref}
+    />
   )
 }
 

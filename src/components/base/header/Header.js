@@ -51,7 +51,7 @@ const Header = ({children,height,mode}) => {
                     <Spacer/>
                     {
                         logoMode && 
-                        <Logo><img width='150' height='28' src={process.env.PUBLIC_URL + '/images/header_logo.png'} /></Logo>
+                        <Logo><img width='150' height='28' src={process.env.PUBLIC_URL + '/images/logo.png'} /></Logo>
                     }
                 </HeaderContents>
             </WhiteBackground>

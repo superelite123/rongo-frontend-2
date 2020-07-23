@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import withStyles from "@material-ui/styles/withStyles";
 import Paper from '@material-ui/core/Paper';
 import ListCard from './base/ListCard';
-import BasePanel from './base/BasePanel';
+import BasePanel from 'components/base/BasePanel';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';

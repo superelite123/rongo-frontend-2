@@ -18,7 +18,7 @@ class StorePanelContainer extends Component {
             selectedExplantion:null,
             description:''
         }
-      }
+    }
     initialize = async () => {
         const token = storage.get('token');
         StoreApi.getMyStore().then((res) => {

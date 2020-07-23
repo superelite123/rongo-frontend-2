@@ -1,6 +1,6 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
-import PanelTemplate from '../base/PanelTemplate'
+import BasePanel from 'components/base/BasePanel';
 import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import PhotoSlider from '../base/PhotoSlider'
@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const ProductDetailPanel = ({ product, title, goBack,handleEdit }) => {
+const ProductDetailPanel = ({ product, title, goBack,handleEdit, mode }) => {
     const classes = useStyles();
     
     var images = []
@@ -152,7 +152,7 @@ const ProductDetailPanel = ({ product, title, goBack,handleEdit }) => {
     }
 
     return (
-        <PanelTemplate>
+        <BasePanel mode={mode}>
             <Grid xs={12} item>
                 <Grid container>
                     <Grid item xs={12}>
@@ -220,7 +220,7 @@ const ProductDetailPanel = ({ product, title, goBack,handleEdit }) => {
                     </Grid>
                 </Grid>
             </Grid>
-        </PanelTemplate>
+        </BasePanel>
     )
 }
 

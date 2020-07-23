@@ -8,23 +8,30 @@ const GET_PRODUCTS = 'product/GET_PRODUCTS';
 const GET_PRODUCT_DETAIL = 'product/GET_PRODUCT_DETAIL'
 const SHOW_PRODUCT_DETAIL = 'product/SHOW_PRODUCT_DETAIL'
 const SHOW_PRODUCT_TYPE = 'product/SHOW_PRODUCT_TYPE'
-
+const TOGGEL_LOADING_STATE = 'product/TOGGEL_LOADING_STATE'
 export const getProducts = createAction(GET_PRODUCTS, ProductAPI.getProducts);
 export const showProduct = createAction(SHOW_PRODUCT_DETAIL);
 export const getProductDetail = createAction(GET_PRODUCT_DETAIL, ProductAPI.getProductDetail); // { email, password }
 export const changeCurrentType = createAction(SHOW_PRODUCT_TYPE);
-
+export const toggleLoadingState = createAction(TOGGEL_LOADING_STATE)
 const initialState = Map({
     productList: null,
     showProduct: null,
     productDetail: null,
-    currentType: 0
+    currentType: 0,
+    isLoading:true,
 })
 
 export default handleActions({
     [SHOW_PRODUCT_DETAIL]: (state, action) => {
         const product = action.payload
         state = state.set('showProduct',product)
+        
+        return state
+    },
+    [TOGGEL_LOADING_STATE]: (state, action) => {
+        const isLoading = action.payload
+        state = state.set('isLoading',isLoading)
         
         return state
     },

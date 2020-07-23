@@ -26,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TagButton = ({label,handleClick}) => {
+const TagButton = ({label,index,handleClick}) => {
     const classes = useStyles();
     return (
       <div className={classes.root} onClick={() => {
-        handleClick()
+        handleClick(index)
       }}>
             {label}
       </div>

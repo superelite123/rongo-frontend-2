@@ -3,7 +3,7 @@ const storageAsync = {
         if(!localStorage) return;
         localStorage[key] = (typeof object) === 'string' ? object : JSON.stringify(object);
     },
-    get: async (key) => {
+    get: (key) => {
         
         if(!localStorage) {
             return null;

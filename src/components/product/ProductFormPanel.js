@@ -6,8 +6,8 @@ import DefaultButton from '../base/DefaultButton'
 import { Grid,Typography, Box, Paper, TextField, MenuItem} from "@material-ui/core"
 import { TakePhoto, CustomTextField, TagButton} from '../typo'
 import TagsInput from 'react-tagsinput'
+import { useForm, Controller  } from 'react-hook-form';
 import '../store/tagInput.css'
-
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -15,6 +15,27 @@ const useStyles = makeStyles((theme) => ({
             margin: theme.spacing(1),
             width: '95%',
         },
+    },
+    inputField:{
+        flex: 1,
+        fontSize: '15px',
+        outline: 'none',
+        border: '1px',
+        width:'100%',
+        height:'35px',
+        background:'white',
+        fontFamily: 'Noto Sans JP',
+        fontStyle: 'normal',
+        fontWeight: '500',
+        color: '#333333',
+    
+        '&::placeholder': {
+            color: '#BDBDBD'
+        },
+    
+        '&:-ms-input-placeholder': {
+            color: '#BDBDBD'
+        }
     },
     buttonWrapper:{
         width:'100%',
@@ -95,10 +116,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ProductFormPanel = (props) => {
     const classes = useStyles();
-    const { handleChangePortfolio,handleChangeInput,handleTagChange,handleSubmit,initData} = props
+    const { handleChangePortfolio,handleTagChange,handleSuggestTagChange,initData,mode} = props
     const { tags,portfolios,suggestTags,formErrors,
             description,currencies,label,number,
-            qty,shipDays,shipper,price,dFee,mode} = initData
+            qty,shipDays,shipper,price,dFee} = initData
     const takePhotos = [];
     const tagInputProps = {
         className: 'react-tagsinput-input',
@@ -116,10 +137,26 @@ const ProductFormPanel = (props) => {
     {
         takePhotos[i] = <TakePhoto handleChangePortfolio={handleChangePortfolio} key={i} index={i} image={null}/>
     }
+
+    //make Product Form
+    const { register, control, handleSubmit,errors } = useForm({
+        defaultValues: {
+            label:label,
+            number:number,
+            qty:qty,
+            shipDays:3,
+            shipper:3,
+            price:'¥' + price,
+            dFee:'¥' + dFee
+        },
+    });
+    const onSubmit = data => {
+    }
+    //End Product Form making
     return (
         <BasePanel mode={mode}>
             <SectionHeader title={'商品登録'} />
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container className={classes.root}>
                 <Grid item xs={12}>
                     <div className={classes.topLabelPanel}>
@@ -155,28 +192,30 @@ const ProductFormPanel = (props) => {
                         <Typography className={classes.label}>商品名</Typography>
                     </div>
                 </Grid>
-                {/**Label Input */}
+                {/**Label */}
                 <Grid item xs={12}>
-                    <CustomTextField name='label' value={label} handleClick={handleChangeInput} />
-                    {formErrors.label.length > 0 && (
+                    <input type="text" className={classes.inputField} name="label" ref={register({required:true})}/>
+                    {errors.label && 
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *{formErrors.label}
+                        *This Field is required
                         </Typography>
-                    )}
+                    }
                 </Grid>
+                {/**Number */}
                 <Grid item xs={12}>
                     <div className={classes.labelPanel}>
                         <Typography className={classes.label}>品番</Typography>
                     </div>
                 </Grid>
                 <Grid item xs={12}>
-                    <CustomTextField name='number' value={number} handleClick={handleChangeInput} />
-                    {formErrors.number.length > 0 && (
+                    <input type="text" className={classes.inputField} name="number" ref={register({required:true})}/>
+                    {errors.number && 
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *{formErrors.number}
+                        *This Field is required
                         </Typography>
-                    )}
+                    }
                 </Grid>
+                {/** Tags */}
                 <Grid item xs={12}>
                     <div className={classes.labelPanel}>
                         <Typography className={classes.label}>商品タグ</Typography>
@@ -184,19 +223,22 @@ const ProductFormPanel = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                     <Paper variant="outlined" square className={classes.gridPaper}>
-                        <TagsInput  value={tags} 
+                        <TagsInput  
+                                    value={tags} 
                                     onChange={handleTagChange} 
                                     inputProps={tagInputProps} 
                                     tagProps={tagProps}
+                                    onlyUnique={true}
                         />
                     </Paper>
-                    
+
                     {formErrors.tags.length > 0 && (
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
                         *{formErrors.tags}
                         </Typography>
                     )}
                 </Grid>
+                {/**Suggested Tags */}
                 <Grid item xs={12}>
                     <Paper variant="outlined" square>
                         <Grid container>
@@ -208,7 +250,7 @@ const ProductFormPanel = (props) => {
                                     {
                                         suggestTags.map(
                                             (tag,i) => 
-                                                <TagButton label={tag} key={i} index={i} handleClick={handleTagChange}/>
+                                                <TagButton label={tag} key={i} index={i} handleClick={handleSuggestTagChange}/>
                                             )
                                     }
                                 </div>
@@ -216,26 +258,21 @@ const ProductFormPanel = (props) => {
                         </Grid>
                     </Paper>
                 </Grid>
-                <Grid item xs={12}>
-                    <div className={classes.labelPanel}>
-                        <Typography className={classes.label}>商品説明</Typography>
-                    </div>
-                </Grid>
                 {/**Description */}
                 <Grid item xs={12} style={{background:'white'}}>
-                    <TextField
-                        error={formErrors.label}
-                        onChange={handleChangeInput} 
-                        name='description'
-                        id="outlined-multiline-static"
+                    <Controller
+                        as={TextField}
+                        name="description"
+                        control={control}
                         multiline
                         margin='normal'
                         rows={10}
                         defaultValue={description}
+                        rules={{ required: true }}
                     />
-                    {formErrors.description.length > 0 && (
+                    {errors.description&& (
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *{formErrors.description}
+                        *This field is required
                         </Typography>
                     )}
                 </Grid>
@@ -250,18 +287,18 @@ const ProductFormPanel = (props) => {
                                 <Typography className={classes.gridLabel}>在庫</Typography>
                             </Grid>
                             <Grid xs={4} item>
-                                <CustomTextField name='qty' value={qty} handleClick={handleChangeInput} />
+                                <input type="number" className={classes.inputField} name="qty" ref={register({required:true})}/>
                             </Grid>
                         </Grid>
                     </Paper>
-                    
-                    {formErrors.qty.length > 0 && (
+
+                    {errors.qty && 
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *{formErrors.qty}
+                        *This Field is required
                         </Typography>
-                    )}
+                    }
                 </Grid>
-                {/* DeliveryDat Input */}
+                {/* DeliveryDate Input */}
                 <Grid item xs={12}>
                     <Paper variant="outlined" square className={classes.gridPaper}>
                         <Grid container>
@@ -269,25 +306,36 @@ const ProductFormPanel = (props) => {
                                 <Typography className={classes.gridLabel} style={{margin:'auto'}}>発送までの日数</Typography>
                             </Grid>
                             <Grid xs={5} item>
-                                <TextField
+
+                            <Controller
+                                name="shipDays"
+                                control={control}
+                                rules={{ required: true }}
+                                as={
+                                    <TextField
                                         id="standard-select-currency"
                                         select
                                         label="選択してください"
-                                        name='shipDays'
                                         value={shipDays}
-                                        onChange={handleChangeInput}
                                         >
-                                        {currencies.map((option) => (
-                                            <MenuItem key={option.value} value={option.value}>
+                                        {currencies.map((option,index) => (
+                                            <MenuItem key={1} value={option.value}>
                                             {option.label}
                                             </MenuItem>
                                         ))}
                                 </TextField>
+                                }
+                            />
                             </Grid>
                         </Grid>
                     </Paper>
+                    {errors.shipDays&& (
+                        <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
+                        *This field is required
+                        </Typography>
+                    )}
                 </Grid>
-                {/* DeliveryDat Input */}
+                {/* Shipper */}
                 <Grid item xs={12}>
                     <Paper variant="outlined" square className={classes.gridPaper}>
                         <Grid container>
@@ -295,31 +343,34 @@ const ProductFormPanel = (props) => {
                                 <Typography className={classes.gridLabel} style={{margin:'auto'}}>発送業者</Typography>
                             </Grid>
                             <Grid xs={5} item>
-                                <TextField
-                                    id="standard-select-currency"
-                                    select
-                                    label="選択してください"
-                                    value={shipper}
-                                    name='shipper'
-                                    onChange={handleChangeInput}
-                                    >
-                                    {currencies.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                        {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                                <Controller
+                                    name="shipper"
+                                    control={control}
+                                    rules={{ required: true }}
+                                    as={
+                                        <TextField
+                                            id="standard-select-currency"
+                                            select
+                                            label="選択してください"
+                                            value={shipper}
+                                            >
+                                            {currencies.map((option,index) => (
+                                                <MenuItem key={1} value={option.value}>
+                                                {option.label}
+                                                </MenuItem>
+                                            ))}
+                                    </TextField>
+                                    }
+                                />
                             </Grid>
                         </Grid>
                     </Paper>
-                    
-                    {formErrors.qty.length > 0 && (
+                    {errors.shipDays&& (
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *{formErrors.qty}
+                        *This field is required
                         </Typography>
                     )}
                 </Grid>
-                
                 {/* Price Input */}
                 <Grid item xs={12}>
                     <Paper variant="outlined" square className={classes.gridPaper}>
@@ -328,18 +379,18 @@ const ProductFormPanel = (props) => {
                                 <Typography className={classes.gridLabel}>商品代金（税込）</Typography>
                             </Grid>
                             <Grid xs={4} item>
-                                <CustomTextField  name='price' value={price} handleClick={handleChangeInput} />
+                                <input type="text" className={classes.inputField} name="price" ref={register({required:true})}/>
                             </Grid>
                         </Grid>
                     </Paper>
-                    
-                    {formErrors.qty.length > 0 && (
+
+                    {errors.price && 
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *{formErrors.qty}
+                        *This Field is required
                         </Typography>
-                    )}
+                    }
                 </Grid>
-                {/* Delivery Fee Input */}
+                {/* dFee Input */}
                 <Grid item xs={12}>
                     <Paper variant="outlined" square className={classes.gridPaper}>
                         <Grid container>
@@ -347,23 +398,19 @@ const ProductFormPanel = (props) => {
                                 <Typography className={classes.gridLabel}>配送料</Typography>
                             </Grid>
                             <Grid xs={4} item>
-                                <CustomTextField name='dFee' value={dFee} handleClick={handleChangeInput}  />
+                                <input type="text" className={classes.inputField} name="dFee" ref={register({required:true})}/>
                             </Grid>
                         </Grid>
                     </Paper>
-                    
-                    {formErrors.qty.length > 0 && (
+
+                    {errors.dFee     && 
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *{formErrors.qty}
+                        *This Field is required
                         </Typography>
-                    )}
+                    }
                 </Grid>
-                {/**Button Group */}        
-                <Grid item xs={12}>
-                    <Box component='div' className={classes.buttonWrapper}>
-                        <DefaultButton onClick={handleSubmit}>登録する</DefaultButton>
-                    </Box>
-                </Grid>
+
+                <input type="submit" />
             </Grid>
             </form>
         </BasePanel>

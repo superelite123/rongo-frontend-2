@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
         verticalAlign: 'middle',
     },
     checkBox: {
-        color: '#BBA884'
+        color: '#BBA884',
+        margin:'auto'
     },
     descriptionWrapper: {
         width: '100%'
@@ -179,18 +180,14 @@ const useStyles = makeStyles((theme) => ({
     },
 
 }))
-
-const handleCheck = (id) => {
-    console.log(id)
-}
-const ProductListItem = ({ product, deleteMode, handleClick }) => {
+const ProductListItem = ({ product, deleteMode, handleClick, handleSelectProduct }) => {
     const classes = useStyles();
 
     let checkbox, linkArrow
-    if (deleteMode == 1) {
+    if (deleteMode) {
         checkbox =
             <Box style={{ webkitWritingMode: 'vertical-rl' }} className={classes.checkBox} component='div'>
-                <Checkbox className={classes.checkBox} />
+                <Checkbox className={classes.checkBox} onClick={handleSelectProduct} value={product.id} />
             </Box>
         linkArrow = null
     } else {
@@ -219,7 +216,7 @@ const ProductListItem = ({ product, deleteMode, handleClick }) => {
         <Paper className={classes.root} onClick={() => handleClick(SHOW_PDETAIL, 3, product)}>
             {checkbox}
             <Box className={classes.thumbnail} component='div'>
-                <img className={classes.thumbnail} src={product.thumbnail} />
+                <img className={classes.thumbnail} src={product.thumbnail} alt="" />
                 { soldMark }
             </Box>
             <Box className={classes.descriptionWrapper} component='div'>
@@ -233,7 +230,7 @@ const ProductListItem = ({ product, deleteMode, handleClick }) => {
                             text={product.label}
                         />
                     </Grid>
-                    <Grid item xs='12'>
+                    <Grid item xs={12}>
                         <Grid container>
                             <Grid item xs={9}>
                                 <Grid container>

@@ -5,22 +5,23 @@ import ProductFormPanel from 'components/product/ProductFormPanel'
 import * as homeActions from 'redux/modules/homePage';
 import * as productListActions from 'redux/modules/product/productList';
 import * as ProductApi from 'lib/api/product';
+
 class ProductFormPanelContainer extends Component {
     constructor() {
         super()
         this.state = {
             id:-1,
-            label: '',
             portfolios:[null,null,null,null,null,null,null,null],
-            number:'',
+            label: 'wewewq',
+            number:'1',
             tags: [],
             suggestTags:['sadsasadas'],
-            description:'',
+            description:'1',
             qty:0,
-            shipDays:1,
-            shipper:1,
-            price:0,
-            dFee:0,
+            shipDays:2,
+            shipper:3,
+            price:30,
+            dFee:10,
             formErrors:{
                 label:'',
                 number:'',
@@ -51,9 +52,26 @@ class ProductFormPanelContainer extends Component {
                   label: '4',
                 },
             ],
+            shippers:[
+                {
+                  value: '1',
+                  label: 'sdsad',
+                },
+                {
+                  value: '2',
+                  label: 'dsadas',
+                },
+                {
+                  value: '3',
+                  label: 'asdd',
+                },
+                {
+                  value: '4',
+                  label: '4',
+                },
+            ],
         }
     }
-
     componentDidMount() {
         this.getProductDetail()
     }
@@ -104,14 +122,23 @@ class ProductFormPanelContainer extends Component {
         reader.readAsDataURL(file)
     }
 
-    handleChangeInput = (e) => {
-    }
     handleTagChange = (tags) => {
-        this.setState({tags})
+        this.setState({tags:tags})
         console.log(this.state.tags)
     }
     handleSuggestTagChange = (index) => {
-
+        const {tags,suggestTags} = this.state
+        const suggestTag = suggestTags[index]
+        let duplicate = false
+        tags.forEach(tag => {
+            if(tag === suggestTag) duplicate = true
+        })
+        if(duplicate) return
+        //add To tags
+        this.setState({
+            tags:tags.concat(suggestTags[index]),
+        })
+        //remove from suggest tags
     }
     handleSubmit = () => {
         //check portfolio validation
@@ -239,7 +266,6 @@ class ProductFormPanelContainer extends Component {
         return (
             <ProductFormPanel
                 handleChangePortfolio={this.handleChangePortfolio}
-                handleChangeInput={this.handleChangeInput}
                 handleTagChange={this.handleTagChange}
                 handleSuggestTagChange={this.handleSuggestTagChange}
                 portfolios={this.state.portfolios}
@@ -249,6 +275,7 @@ class ProductFormPanelContainer extends Component {
                 initData={this.state}
                 currencies={this.state.currencies}
                 handleSubmit={this.handleSubmit}
+                mode={this.props.mode}
             />
         )
     }
