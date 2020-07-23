@@ -12,7 +12,7 @@ const Positioner = styled.div`
 
 // 흰 배경, 내용 중간 정렬
 const WhiteBackground = styled.div`
-    background: black;
+    background: white;
     display: flex;
     justify-content: left;
     height: auto;
@@ -51,7 +51,7 @@ const Header = ({children,height,mode}) => {
                     <Spacer/>
                     {
                         logoMode && 
-                        <Logo><img width='150' height='28' src={process.env.PUBLIC_URL + '/images/header_logo.png'} /></Logo>
+                        <Logo><img width='150' height='28' src={process.env.PUBLIC_URL + '/images/logo.png'} /></Logo>
                     }
                 </HeaderContents>
             </WhiteBackground>

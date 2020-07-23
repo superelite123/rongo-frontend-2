@@ -5,7 +5,7 @@ class HomePanelContainer extends Component
     render()
     {
         return (
-            <HomePanel />
+            <HomePanel mode={this.props.mode} />
         )
     }
 }
