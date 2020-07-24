@@ -34,7 +34,6 @@ class ProductListPanelContainer extends Component {
     }
     toggleDeleteMode = () => {
         const {deleteMode} = this.state
-        
         this.setState({deleteMode:!deleteMode})
     }
     handleDelete = () => {
@@ -45,7 +44,7 @@ class ProductListPanelContainer extends Component {
         const {checked} = e.target
         const id = e.target.value
         const {selectedProducts} = this.state
-        if(checked)
+        if(!checked)
         {
             this.setState({selectedProducts:selectedProducts.concat(id)})
         }

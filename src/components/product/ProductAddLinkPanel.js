@@ -7,6 +7,7 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 import { connect } from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as homeActions from 'redux/modules/homePage';
+import * as productFormActions from 'redux/modules/product/productForm';
 import {SHOW_PFORM,} from 'lib/constant'
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -27,9 +28,10 @@ const useStyles = makeStyles((theme) => ({
         margin:'auto',
     }
   }));
-const ProductAddLinkPanel = ({HomeActions}) => {
+const ProductAddLinkPanel = ({HomeActions,ProductFormActions}) => {
     
     const handleClick = () => {
+        ProductFormActions.selectProduct(null)
         HomeActions.changeThirdStatus(SHOW_PFORM,3)
     }
     const classes = useStyles();
@@ -51,5 +53,6 @@ export default connect(
     }),
     (dispatch) => ({
         HomeActions: bindActionCreators(homeActions, dispatch),
+        ProductFormActions: bindActionCreators(productFormActions, dispatch),
     })
 )(ProductAddLinkPanel);

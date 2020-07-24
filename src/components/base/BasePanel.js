@@ -47,9 +47,7 @@ const BasePanel = ({ children,mode, handleAction,bgColor }) => {
             <Grid item xs={12}>
                 <Box className={classes.Parent}>
                     <Box className={classes.PanelWrapper} style={{background:PanelWrapperColor}}>
-                        <Grid container>
                             {children}
-                        </Grid>
                     </Box>
                 </Box>
             </Grid>

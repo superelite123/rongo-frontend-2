@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import ProductFormPanel from 'components/product/ProductFormPanel'
 import * as homeActions from 'redux/modules/homePage';
-import * as productListActions from 'redux/modules/product/productList';
+import * as productFormActions from 'redux/modules/product/productForm';
 import * as ProductApi from 'lib/api/product';
 
 class ProductFormPanelContainer extends Component {
@@ -287,6 +287,6 @@ export default connect(
     }),
     (dispatch) => ({
         HomeActions: bindActionCreators(homeActions, dispatch),
-        ProductActions: bindActionCreators(productListActions, dispatch),
+        ProductFormActions: bindActionCreators(productFormActions, dispatch),
     })
 )((ProductFormPanelContainer));

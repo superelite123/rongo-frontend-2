@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Grid, Paper, Button, Typography} from '@material-ui/core';
 import {isMobile} from "react-device-detect";
 import SearchIcon from '@material-ui/icons/Search';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 const useStyles = makeStyles((theme) => {
     return {
         root: {
@@ -44,8 +45,49 @@ const useStyles = makeStyles((theme) => {
     }
 })
 
-const PanelTemplate = ({ children,title,leftButton,deleteMode, headerButtonLabel,toggleDeleteMode }) => {
+const PanelTemplate = ({ children,title,deleteMode,handleLeftButton,leftButtonType,rightButtonType }) => {
     const classes = useStyles();
+    let headerButtonLabel = null
+    switch(leftButtonType)
+    {
+        case 1:
+            headerButtonLabel = deleteMode?'削除':'編集'
+            break;
+        case 2:
+            headerButtonLabel = deleteMode?'削除':'編集'
+            break;
+        default:
+            break;
+    }
+    let leftButton = null
+    switch(leftButtonType)
+    {
+        case 1:
+            leftButton = <Button className={deleteMode?classes.deleteButton:classes.controlButton} onClick={handleLeftButton}>
+                            {headerButtonLabel}
+                        </Button>
+        break;
+        case 2:
+            leftButton = <Button className={deleteMode?classes.deleteButton:classes.controlButton} onClick={handleLeftButton}>
+                            <KeyboardBackspaceIcon/>
+                        </Button>
+        break;
+        default:
+            leftButton = null
+        break;
+    }
+    let rightButton = null
+    switch(rightButtonType)
+    {
+        case 1:
+            rightButton =   <Button className={classes.controlButton}>
+                                <SearchIcon className={classes.searchButton} />
+                            </Button>
+        break;
+        default:
+            rightButton = null
+        break;
+    }
     return (
         <Box component="div" className={classes.root}>
             <Grid container>
@@ -53,9 +95,7 @@ const PanelTemplate = ({ children,title,leftButton,deleteMode, headerButtonLabel
                     <Paper variant="outlined" square className={classes.header}>
                         <Grid container className={classes.card}>
                         <Grid item xs={2} className={classes.childToCenter}>
-                            <Button className={deleteMode?classes.deleteButton:classes.controlButton} onClick={toggleDeleteMode}>
-                                {headerButtonLabel}
-                            </Button>
+                            {leftButton}
                         </Grid>
                         <Grid item xs={8}>
                             <p variant='h5' component="h5" className={classes.headerLabel}>
@@ -63,9 +103,7 @@ const PanelTemplate = ({ children,title,leftButton,deleteMode, headerButtonLabel
                             </p>
                         </Grid>
                         <Grid item xs={2} className={classes.childToCenter}>
-                            <Button className={classes.controlButton}>
-                                <SearchIcon className={classes.searchButton} />
-                            </Button>
+                            {rightButton}
                         </Grid>
                         </Grid>
                     </Paper>
