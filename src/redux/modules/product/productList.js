@@ -9,11 +9,13 @@ const GET_PRODUCT_DETAIL = 'product/GET_PRODUCT_DETAIL'
 const SHOW_PRODUCT_DETAIL = 'product/SHOW_PRODUCT_DETAIL'
 const SHOW_PRODUCT_TYPE = 'product/SHOW_PRODUCT_TYPE'
 const TOGGEL_LOADING_STATE = 'product/TOGGEL_LOADING_STATE'
+const DELETE_PRODUCTS = 'product/DELETE_PRODUCTS'
 export const getProducts = createAction(GET_PRODUCTS, ProductAPI.getProducts);
 export const showProduct = createAction(SHOW_PRODUCT_DETAIL);
 export const getProductDetail = createAction(GET_PRODUCT_DETAIL, ProductAPI.getProductDetail); // { email, password }
 export const changeCurrentType = createAction(SHOW_PRODUCT_TYPE);
 export const toggleLoadingState = createAction(TOGGEL_LOADING_STATE)
+export const deleteProducts = createAction(DELETE_PRODUCTS,ProductAPI.deleteProducts)
 const initialState = Map({
     productList: null,
     showProduct: null,
@@ -42,9 +44,32 @@ export default handleActions({
         return state
     },
     ...pender({
+        type: DELETE_PRODUCTS,
+        onSuccess: (state, action) => {
+            let productList = state.get('productList')
+            const {IDs} = action.payload.data
+            let updatedProducts = []
+            productList.map((product) => {
+                let isEqual = false
+                IDs.forEach(id => {
+                    if(id == product.id)
+                    {
+                        isEqual = true
+                    }
+                    
+                })
+                
+                if(!isEqual) updatedProducts.push(product)
+            })
+            state = state.set('productList',updatedProducts);
+            console.log(productList)
+            return state         
+        }
+    }),
+    ...pender({
         type: GET_PRODUCTS,
         onSuccess: (state, action) => {
-            const { products } = action.payload.data;
+            const products = action.payload.data;
             console.log(products)
             return state.set('productList', products)            
         }

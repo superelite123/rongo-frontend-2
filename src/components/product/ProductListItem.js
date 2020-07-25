@@ -3,27 +3,27 @@ import React, { useState } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
     Grid, Paper, CardMedia, Checkbox, Typography,
-    Box,
+    Box,Button
 } from '@material-ui/core';
 import TextTruncate from 'react-text-truncate';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import StarRateIcon from '@material-ui/icons/StarRate';
 import FavoriteStarIcon from '../base/icons/FavoriteStarIcon'
 import SoldMark from '../typo/SoldMark'
-
+import AddIcon from '@material-ui/icons/Add';
 import { SHOW_PDETAIL } from 'lib/constant'
-
+import {isMobile} from "react-device-detect";
 const useStyles = makeStyles((theme) => ({
     root: {
         backgrodund: 'red',
-        height: '70px',
+        height: '80px',
         width: '100%',
         display: 'flex',
         position: 'relative'
     },
     thumbnail: {
-        width: '70px',
-        height: '70px',
+        width: '80px',
+        height: '80px',
         alignContent: 'center',
         position: 'relative'
     },
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
     arrrowWrapper: {
         width: '16px',
-        margin: 'auto 16px auto 0',
+        margin: '0',
         color: '#DEDCD4'
     },
     forwardArrow: {
@@ -178,49 +178,73 @@ const useStyles = makeStyles((theme) => ({
         border: '1px solid #BDBDBD',
         lineHeight: '200%'
     },
-
+    stageButton: {
+        width: '60px',
+        height: '26px',
+        background: '#FFFFFF',
+        color: '#BBA884',
+        borderRadius: '5px',
+        textAlign: 'center',
+        fontFamily: 'Noto Sans JP',
+        fontStyle: 'normal',
+        fontWeight: '500',
+        fontSize: '11px',
+        border: '1px solid #BBA884',
+        lineHeight: '200%'
+    },
 }))
-const ProductListItem = ({ product, deleteMode, handleClick, handleSelectProduct }) => {
+const ProductListItem = ({ product, deleteMode, handleClick, handleSelectProduct,handleStageProduct }) => {
     const classes = useStyles();
 
     let checkbox, linkArrow
     if (deleteMode) {
         checkbox =
-            <Box style={{ webkitWritingMode: 'vertical-rl' }} className={classes.checkBox} component='div'>
+            <Box className={classes.checkBox} component='div'>
                 <Checkbox className={classes.checkBox} onClick={handleSelectProduct} value={product.id} />
             </Box>
         linkArrow = null
     } else {
         linkArrow =
-            <Box className={classes.arrrowWrapper} component='div'>
+            <Button className={classes.arrrowWrapper} component='div' onClick={() => handleClick(SHOW_PDETAIL, 3, product)}>
                 <ArrowForwardIosIcon className={classes.forwardArrow} />
-            </Box>
+            </Button>
     }
 
-    let statusView, soldMark
-    if (product.status == 5) {
-        statusView = <Box className={classes.statusStaging}>出品中</Box>
-        soldMark = null
-    } else if (product.status == 6) {
-        statusView = <Box className={classes.statusRestaging}>再出品</Box>
-        soldMark = null
-    } else if (product.status == 2) {
-        statusView = <Box className={classes.statusRestaging}>下書き</Box>
-        soldMark = null
-    } else {
-        statusView = null
-        soldMark = <SoldMark />
+    let statusView = null, soldMark = null
+    switch(product.status)
+    {
+        case 1:
+            statusView = <Button className={classes.stageButton} onClick={() => handleStageProduct(product.id)} startIcon={<AddIcon />}>追加</Button>
+            break;
+        case 2:
+            statusView = <Box className={classes.statusRestaging}>下書き</Box>
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            statusView = <Box className={classes.statusStaging}>出品中</Box>
+            break;
+        case 6:
+            statusView = <Box className={classes.statusRestaging}>再出品</Box>
+            break;
+        case 7:
+            soldMark = <SoldMark />
+            break;
+        default:
+            break;
     }
 
     return (
-        <Paper className={classes.root} onClick={() => handleClick(SHOW_PDETAIL, 3, product)}>
+        <Paper className={classes.root}>
             {checkbox}
             <Box className={classes.thumbnail} component='div'>
                 <img className={classes.thumbnail} src={product.thumbnail} alt="" />
                 { soldMark }
             </Box>
             <Box className={classes.descriptionWrapper} component='div'>
-                <Grid className={classes.descriptionContent} container>
+                <Grid className={classes.descriptionContent} container spacing={isMobile?0:1}>
                     <Grid item xs={12} style={{ textAlign: 'left' }}>
                         <TextTruncate
                             className={classes.productLabel}

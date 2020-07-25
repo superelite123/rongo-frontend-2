@@ -5,7 +5,6 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { blue, indigo } from '@material-ui/core/colors'
 import { Home, Auth,Live } from 'pages';
 import { LoginContainer, ConfirmContainer } from 'containers/auth'
-import HeaderContainer from 'containers/base/HeaderContainer';
 import storage from 'lib/storage';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -33,7 +32,7 @@ const theme = createMuiTheme({
         'sans-serif'
       ].join(',')
     }
-  });
+});
 class App extends Component {
     initializeUserInfo = async () => {
         const {history} = this.props
@@ -71,6 +70,7 @@ class App extends Component {
         this.initializeUserInfo();
     }
     render() {
+      const {classes,pageLoading} = this.props
         return (
             <div>
                 <ThemeProvider theme={theme}>
@@ -91,6 +91,6 @@ class App extends Component {
 export default connect(
     null,
     (dispatch) => ({
-        UserActions: bindActionCreators(userActions, dispatch)
+        UserActions: bindActionCreators(userActions, dispatch),
     })
 )(App);

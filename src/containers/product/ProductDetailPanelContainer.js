@@ -32,7 +32,7 @@ class ProductDetailPanelContainer extends Component
     handleEdit = () => {
         const { HomeActions, ProductFormActions, showProduct} = this.props;
         ProductFormActions.selectProduct(showProduct.id)
-        //HomeActions.changeThirdStatus(SHOW_PFORM,3)
+        HomeActions.changeThirdStatus(SHOW_PFORM,3)
     }
     render()
     {

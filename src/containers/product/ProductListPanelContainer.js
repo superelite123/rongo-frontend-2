@@ -5,6 +5,7 @@ import ProductListPanel from 'components/product/ProductListPanel'
 import * as homeActions from 'redux/modules/homePage';
 import * as productListActions from 'redux/modules/product/productList';
 import storage from 'lib/storage'
+import * as ProductApi from 'lib/api/product';
 
 class ProductListPanelContainer extends Component {
 
@@ -19,7 +20,7 @@ class ProductListPanelContainer extends Component {
 
     getProductList = async ({ type }) => {
         this.props.ProductActions.toggleLoadingState(true)
-        const { ProductActions, productList } = this.props;
+        const { ProductActions } = this.props;
 
         try {
             const token = storage.get('token');
@@ -33,18 +34,35 @@ class ProductListPanelContainer extends Component {
         this.setState({searchMode:!this.state.searchMode})
     }
     toggleDeleteMode = () => {
-        const {deleteMode} = this.state
-        this.setState({deleteMode:!deleteMode})
+        const { selectedProducts, deleteMode} = this.state
+        const {ProductActions} = this.props
+        if(selectedProducts.length === 0)
+        {
+            this.setState({deleteMode:!deleteMode})
+        }
+        else
+        {
+            ProductActions.deleteProducts({IDs:selectedProducts}).then(
+                (res) => {
+                    this.setState({selectedProducts:[]})
+                },
+                (e) => {
+
+                }
+            )
+        }
     }
     handleDelete = () => {
-
+    }
+    handleStageProduct = (productID) => {
+        console.log(productID)
     }
     handleSelectProduct = (e) => {
         e.stopPropagation();
         const {checked} = e.target
         const id = e.target.value
         const {selectedProducts} = this.state
-        if(!checked)
+        if(checked)
         {
             this.setState({selectedProducts:selectedProducts.concat(id)})
         }
@@ -54,7 +72,6 @@ class ProductListPanelContainer extends Component {
                 selectedProducts:selectedProducts.filter(productID => productID !== id)
             })
         }
-        console.log(this.state.selectedProducts)
     }
     componentDidMount() {
         this.getProductList({ type: 0 })
@@ -98,6 +115,7 @@ class ProductListPanelContainer extends Component {
                 deleteMode={deleteMode}
                 handleSelectProduct={this.handleSelectProduct}
                 toggleDeleteMode={this.toggleDeleteMode}
+                handleStageProduct={this.handleStageProduct}
             />
         )
     }

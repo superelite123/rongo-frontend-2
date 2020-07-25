@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => {
             margin:'auto',
             position:'absolute',
             bottom:'0px',
-            left:'15px'
+            left:isMobile?'0px':'15px'
         },
         control: {
             padding: theme.spacing(2),
@@ -47,7 +47,7 @@ const BasePanel = ({ children,mode, handleAction,bgColor }) => {
             <Grid item xs={12}>
                 <Box className={classes.Parent}>
                     <Box className={classes.PanelWrapper} style={{background:PanelWrapperColor}}>
-                            {children}
+                        {children}
                     </Box>
                 </Box>
             </Grid>
