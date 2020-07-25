@@ -1,6 +1,5 @@
 import React,{ useEffect } from 'react'
 import {makeStyles,withStyles } from '@material-ui/styles'
-import SectionHeader from '../typo/SectionHeader'
 import BasePanel from 'components/base/BasePanel';
 import DefaultButton from '../base/DefaultButton'
 import PanelHeader from 'components/base/PanelHeader';
@@ -167,8 +166,6 @@ const ProductFormPanel = (props) => {
         console.log(mode)
         handleSave(data,mode)
     }
-    
-    console.log(deleteDisable)
     //End Product Form making
     return (
         <BasePanel mode={mode}>
