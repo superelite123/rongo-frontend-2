@@ -58,26 +58,28 @@ class ProductListPanel extends Component {
   render() {
     const { classes, productList, handleClick, 
             switchingType, type,mode,isLoading, deleteMode, 
-            handleSelectProduct, toggleDeleteMode } = this.props;
+            handleSelectProduct, toggleDeleteMode, handleStageProduct } = this.props;
 
     let productListItems = []
-      for (const key in productList){
-        let product = productList[key]
-        productListItems.push(<ProductListItem 
-                                deleteMode={deleteMode} 
-                                product={product} 
-                                handleClick={handleClick}
-                                handleSelectProduct={handleSelectProduct} />)
-      }
-    const headerButtonLabel = deleteMode?'削除':'編集'
+    for (const key in productList){
+      const product = productList[key]
+      productListItems.push(<ProductListItem 
+                              deleteMode={deleteMode} 
+                              product={product} 
+                              key={key}
+                              handleClick={handleClick}
+                              handleSelectProduct={handleSelectProduct}
+                              handleStageProduct={handleStageProduct} />)
+    }
     return (
       <BasePanel mode={mode}>
         <Grid xs={12} item>
             <PanelHeader 
               title="商品管理"
               deleteMode={deleteMode}
-              headerButtonLabel={headerButtonLabel}
-              toggleDeleteMode={toggleDeleteMode}
+              handleLeftButton={toggleDeleteMode}
+              leftButtonType={1}
+              rightButtonType={1}
             />
         </Grid>
         <Grid xs={12} item>

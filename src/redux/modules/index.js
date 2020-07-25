@@ -7,6 +7,7 @@ import homePage from './homePage';
 import livePage from './livePage';
 import follow from './follow/follow';
 import productList from './product/productList';
+import productForm from './product/productForm'
 import transaction from './transaction/transaction';
 import sellHistory from './sellHistory/sellHistory'
 import liveStream from './live/liveStream'
@@ -27,5 +28,6 @@ export default combineReducers({
     productList,
     transaction,
     notification,
+    productForm,
     pender: penderReducer
 });

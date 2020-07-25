@@ -115,7 +115,6 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(0),
     },
 }));
-
 const SaveButton = withStyles({
     root: {
       background: 'linear-gradient(45deg, #BBA884 30%, #BBA884 90%)',
@@ -130,14 +129,14 @@ const SaveButton = withStyles({
       textTransform: 'capitalize',
     },
 })(Button);
-const ProductFormPanel = (props) => {
+const ProductFormPanelBlank = (props) => {
     const classes = useStyles();
     const { handleChangePortfolio,handleSave,handleDelete,
-            handleTagChange,handleSuggestTagChange,deleteDisable,
+            handleTagChange,handleSuggestTagChange,
             initData,mode} = props
     const { portfolios,label,number,tags,suggestTags,
-            description,qty,shipDay,shipDays,shipper,shippers,price,dFee,portfolioError,tagError} = initData
-    
+            description,qty,shipDay,shipDays,shipper,shippers,price,dFee} = initData
+    const takePhotos = [];
     const tagInputProps = {
         className: 'react-tagsinput-input',
         placeholder: ''
@@ -150,9 +149,13 @@ const ProductFormPanel = (props) => {
         fontSize: '12px',
         padding: '7px 12px'
     }
+    for(let i = 0; i < 8; i ++)
+    {
+        takePhotos[i] = <TakePhoto handleChangePortfolio={handleChangePortfolio} key={i} index={i} image={null}/>
+    }
 
     //make Product Form
-    const { register, control, handleSubmit,errors } = useForm({
+    const { register, control, handleSubmit,errors,reset } = useForm({
         defaultValues: {
             label:label,
             number:number,
@@ -163,12 +166,9 @@ const ProductFormPanel = (props) => {
             dFee:dFee
         },
     });
-    const onSubmit = (data,mode) => {
-        console.log(mode)
-        handleSave(data,mode)
+    const onSubmit = data => {
+        handleSave(data)
     }
-    
-    console.log(deleteDisable)
     //End Product Form making
     return (
         <BasePanel mode={mode}>
@@ -188,24 +188,19 @@ const ProductFormPanel = (props) => {
                     <Paper variant="outlined" square className={classes.takePhotoWrapper}>
                         <Grid container spacing={1}>
                             {
-                                portfolios.map((portfolio,index) =>  (
-                                            <Grid item key={index} md={3} xs={6}>
+                                portfolios.map((portfolio,index) => {
+                                    return <Grid item key={index} md={3} xs={6}>
                                                 <TakePhoto 
-                                                    handleChangePortfolio={handleChangePortfolio} 
+                                                    handleChangePortfolio={(e) => handleChangePortfolio(e,index)} 
                                                     key={index} 
                                                     index={index} 
                                                     image={portfolio}
                                                 />
-                                            </Grid>)
-                                )
+                                            </Grid>
+                                })
                             }
                         </Grid>
                     </Paper>
-                    {portfolioError && 
-                        <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *This Field is required
-                        </Typography>
-                    }
                 </Grid>
                 <Grid item xs={12}>
                     <div className={classes.labelPanel}>
@@ -252,11 +247,6 @@ const ProductFormPanel = (props) => {
                         />
                     </Paper>
 
-                    {tagError && 
-                        <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *This Field is required
-                        </Typography>
-                    }
                 </Grid>
                 {/**Suggested Tags */}
                 <Grid item xs={12}>
@@ -436,19 +426,19 @@ const ProductFormPanel = (props) => {
                     <Grid item xs={12}>
                         <Grid container spacing={3} style={{marginTop:'30px',textAlign:"center"}}>
                             <Grid item xs={12}>
-                                <SaveButton onClick={handleSubmit((data) => onSubmit(data,1))}>登録する</SaveButton>
+                                <SaveButton onClick={handleSubmit(onSubmit)}>登録する</SaveButton>
                             </Grid>
                             <Grid item xs={12}>
                                 <SaveButton
                                     style={{background: 'linear-gradient(45deg, #FFFFFF 30%, #FFFFFF 90%)',color:'#BDBDBD'}}
-                                    onClick={handleSubmit((data) => onSubmit(data,2))}>
+                                    onClick={handleSubmit(onSubmit)}>
                                     登録する
                                 </SaveButton>
                             </Grid>
                             <Grid item xs={12}>
                                 <SaveButton
                                     style={{background: 'linear-gradient(45deg, #D74936 30%, #D74936 90%)'}}
-                                    onClick={handleDelete} disabled={deleteDisable}>
+                                    onClick={handleDelete}>
                                     登録する
                                 </SaveButton>
                             </Grid>
@@ -460,4 +450,4 @@ const ProductFormPanel = (props) => {
       )
 }
 
-export default ProductFormPanel
+export default ProductFormPanelBlank

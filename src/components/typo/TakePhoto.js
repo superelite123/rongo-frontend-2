@@ -24,11 +24,13 @@ const TakePhoto = ({handleChangePortfolio,index,image}) => {
     }
   }));
     const classes = useStyles();
-
+    const iamgeID = 'imgFile' + index
     return (
       <div className={classes.root}>
-          <input type="file" name="imgFile" id="imgFile" hidden={true} onChange={(e) => handleChangePortfolio(e, index)} accept="image/*" />
-          <label htmlFor="imgFile" className={classes.cameraIcon}>
+          <input type="file" name={iamgeID} id={iamgeID}
+                hidden={true} onChange={(event) => handleChangePortfolio(event, index)} 
+                accept="image/*" />
+          <label htmlFor={iamgeID} className={classes.cameraIcon}>
               <IconButton className={classes.cameraIcon} aria-label="upload picture" component="span">
                 <PhotoCameraIcon />
               </IconButton>

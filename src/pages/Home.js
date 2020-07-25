@@ -23,6 +23,10 @@ import {isMobile} from "react-device-detect";
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
+import * as baseActions from 'redux/modules/base';
+import withStyles from "@material-ui/styles/withStyles";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {
     SHOW_HOMEPANEL,
     SHOW_FOLLOWPANEL,
@@ -46,10 +50,16 @@ import {
     SHOW_STOREMANAGEMENT
 } from 'lib/constant'
 
+const styles = theme => ({
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff',
+    },
+  })
 class Home extends Component {
     render() {
         const gridColumn = isMobile?12:4
-        const { HomeActions, firstPanelVisible, secondPanelVisible, thirdPanelVisible,history } = this.props
+        const { HomeActions, firstPanelVisible, secondPanelVisible, thirdPanelVisible,history, classes, pageLoading } = this.props
         let firstPanel = null
         console.log(firstPanelVisible)
         let secondPanel = null
@@ -63,6 +73,9 @@ class Home extends Component {
                 break
             case FIRST_PANEL_NOTI:
                 firstPanel = <NotificationListPanelContainer mode='1' />
+                break;
+            case 0:
+                firstPanel = null;
                 break;
             default:
                 firstPanel = <HomePanelContainer mode='1' />
@@ -152,6 +165,9 @@ class Home extends Component {
                 <Grid item xs={gridColumn} key={1}>{firstPanel}</Grid>
                 <Grid item xs={gridColumn} key={2}>{secondPanel}</Grid>
                 <Grid item xs={gridColumn} key={3}>{thirdPanel}</Grid>
+                <Backdrop className={classes.backdrop} open={pageLoading}>
+                    <CircularProgress color="inherit" />
+                </Backdrop>
             </Grid>
         )
     }
@@ -161,8 +177,10 @@ export default connect(
         firstPanelVisible: state.homePage.get('firstPanel'),
         secondPanelVisible: state.homePage.get('seconPanel'),
         thirdPanelVisible: state.homePage.get('thirdPanel'),
+        pageLoading:state.base.get('pageLoading')
     }),
     (dispatch) => ({
         HomeActions: bindActionCreators(homeActions, dispatch),
+        BaseActions: bindActionCreators(baseActions, dispatch)
     })
-)(Home);
+)(withStyles(styles)(Home));

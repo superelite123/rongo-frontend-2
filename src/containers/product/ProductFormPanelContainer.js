@@ -2,105 +2,62 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import ProductFormPanel from 'components/product/ProductFormPanel'
+import ProductFormPanelBlank from 'components/product/ProductFormPanelBlank'
 import * as homeActions from 'redux/modules/homePage';
 import * as productListActions from 'redux/modules/product/productList';
+import * as productFormActions from 'redux/modules/product/productForm';
+import * as baseActions from 'redux/modules/base';
 import * as ProductApi from 'lib/api/product';
 
 class ProductFormPanelContainer extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             id:-1,
             portfolios:[null,null,null,null,null,null,null,null],
-            label: 'wewewq',
-            number:'1',
+            label: '',
+            number:'',
             tags: [],
-            suggestTags:['sadsasadas'],
-            description:'1',
+            description:'',
             qty:0,
-            shipDays:2,
-            shipper:3,
-            price:30,
-            dFee:10,
-            formErrors:{
-                label:'',
-                number:'',
-                description:'',
-                qty:'',
-                ship_days:'',
-                shipper:'',
-                price:'',
-                dFee:'',
-                tags:'',
-                portfolios:''
-            },
-            currencies:[
-                {
-                  value: '1',
-                  label: '1',
-                },
-                {
-                  value: '2',
-                  label: '2',
-                },
-                {
-                  value: '3',
-                  label: '3',
-                },
-                {
-                  value: '4',
-                  label: '4',
-                },
+            shipDay:1,
+            shipper:1,
+            price:0,
+            dFee:0,
+            suggestTags:[],
+            shipDays:[
+                
             ],
             shippers:[
-                {
-                  value: '1',
-                  label: 'sdsad',
-                },
-                {
-                  value: '2',
-                  label: 'dsadas',
-                },
-                {
-                  value: '3',
-                  label: 'asdd',
-                },
-                {
-                  value: '4',
-                  label: '4',
-                },
+                
             ],
+            portfolioError:false,
+            tagError:false,
+            hasFetched: false
         }
     }
-    componentDidMount() {
-        this.getProductDetail()
-    }
-
-    getProductDetail = () => {
-        const {product, ProductActions} = this.props
+    async componentDidMount() {
+        const {selectedProduct, ProductFormActions,BaseActions} = this.props
         
-        if(product != null)
-        {
-            console.log('entered')
-            ProductActions.getProductDetail({id:1}).then(
-                (res) => {
-                    console.log('success')
-                },
-                (e) => {
-
-                }
-            )
-        }
-        else
-        {
-
-        }
+        BaseActions.setPageLoading(true)
+        ProductFormActions.getProduct({id:selectedProduct}).then(
+            (res) => {
+                const response = res.data
+                this.setState(response)
+                this.setState({hasFetched:true})
+            },
+            (e) => {
+                BaseActions.setPageLoading(false)
+            }
+        )
+        BaseActions.setPageLoading(false)
     }
-
     handleChangePortfolio = (event,index) => {
         event.preventDefault();
         let reader = new FileReader();
         let file = event.target.files[0];
+        console.log(index)
+        
         reader.onloadend = () => {
             this.setState(
                 state => {
@@ -140,12 +97,13 @@ class ProductFormPanelContainer extends Component {
         })
         //remove from suggest tags
     }
-    handleSubmit = () => {
-        //check portfolio validation
+    handleSave = (data,mode) => {
+        const {BaseActions} = this.props
+        //check portfolios
         let isError = false
         let portfolioError = true
-        let formErrors = { ...this.state.formErrors }
-        this.state.portfolios.map((porfolio) => {
+        const {portfolios, tags} = this.state
+        portfolios.map((porfolio) => {
             if(porfolio !== null)
             {
                 portfolioError = false
@@ -153,140 +111,101 @@ class ProductFormPanelContainer extends Component {
         })
         if(portfolioError)
         {
-            formErrors.portfolios = 'aaa'
-            isError = true
+            this.setState({portfolioError:portfolioError})
+            return 
         }
-        else
+        const tagError = tags.length === 0?true:false
+        if(tagError)
         {
-            formErrors.portfolios = ''
-        }
-        
-        //label
-        if(this.state.label.length < 1)
-        {
-            formErrors.label = 'aaa'
-            isError = true
-        }
-        else
-        {
-            formErrors.label = ''
-        }
-        //number
-        if(this.state.number.length < 1)
-        {
-            formErrors.number = 'aaa'
-            isError = true
-        }
-        else
-        {
-            formErrors.number = ''
-        }
-
-        //tags
-        if(this.state.tags.length < 1)
-        {
-            formErrors.tags = 'aaa'
-            isError = true
-        }
-        else
-        {
-            formErrors.tags = ''
-        }
-        //description
-        if(this.state.description.length < 1)
-        {
-            formErrors.description = 'aaa'
-            isError = true
-        }
-        else
-        {
-            formErrors.description = ''
-        }
-        //qty
-        if(this.state.qty < 1)
-        {
-            formErrors.qty = 'aaa'
-            isError = true
-        }
-        else
-        {
-            formErrors.qty = ''
-        }
-        //shippDays
-        if(this.state.shipDays < 1)
-        {
-            formErrors.shippDays = 'aaa'
-            isError = true
-        }
-        else
-        {
-            formErrors.shippDays = ''
-        }
-        //shipper
-        if(this.state.shipper < 1)
-        {
-            formErrors.shipper = 'aaa'
-            isError = true
-        }
-        else
-        {
-            formErrors.shipper = ''
-        }
-        //price
-        if(parseFloat(this.state.price) <= 0)
-        {
-            formErrors.price = 'aaa'
-            isError = true
-        }
-        else
-        {
-            formErrors.price = ''
-        }
-        //dFee
-        if(parseFloat(this.state.dFee) <= 0)
-        {
-            formErrors.dFee = 'aaa'
-            isError = true
-        }
-        else
-        {
-            formErrors.dFee = ''
-        }
-        if(isError)
-        {
-            this.setState({formErrors})
+            this.setState({tagError:tagError})
             return
         }
+        BaseActions.setPageLoading(true)
+        let postData = data
+        postData.portfolios = portfolios.map((portfolio) => {
+                if(portfolio !== null)
+                {
+                    if(portfolio.length > 100)
+                    portfolio = portfolio.replace(/^data:image\/(png|jpg|jpeg);base64,/, "")
+                }
+                return portfolio
+            } 
+        ) ;
+        postData.id = this.state.id
+        postData.tags = tags
+        postData.mode = mode
         
-        ProductApi.saveProduct({formData:this.state}).then((res) => {
-            
-        })
+        ProductApi.saveProduct({formData:postData}).then(
+            (res) => {
+                BaseActions.setPageLoading(false)
+            },
+            (e) => {
+                BaseActions.setPageLoading(false)
+            }
+        )
+    }
+    handleDelete = () => {
+        const {BaseActions, ProductListActions} = this.props
+        
+        BaseActions.setPageLoading(true)
+        ProductListActions.deleteProducts({IDs:[this.state.id]}).then(
+            (res) => {
+                BaseActions.setPageLoading(false)
+            },
+            (e) => {
+                BaseActions.setPageLoading(false)
+            }
+        )
+    }
+    updateDefaultValue = (value) => {
+        this.setState({defaultValuePrepared:false})
     }
     render() {
-        return (
-            <ProductFormPanel
-                handleChangePortfolio={this.handleChangePortfolio}
-                handleTagChange={this.handleTagChange}
-                handleSuggestTagChange={this.handleSuggestTagChange}
-                portfolios={this.state.portfolios}
-                tags={this.state.tags}
-                suggestTags={this.state.suggestTags}
-                formErrors={this.state.formErrors}
-                initData={this.state}
-                currencies={this.state.currencies}
-                handleSubmit={this.handleSubmit}
-                mode={this.props.mode}
-            />
-        )
+        console.log('render state,' + this.state.label)
+        const {hasFetched} = this.state
+        const deleteDisable = this.state.id === -1
+        if(hasFetched)
+        {
+            return (
+                <ProductFormPanel
+                    handleChangePortfolio={this.handleChangePortfolio}
+                    handleTagChange={this.handleTagChange}
+                    handleSuggestTagChange={this.handleSuggestTagChange}
+                    initData={this.state}
+                    handleSave={this.handleSave}
+                    handleDelete={this.handleDelete}
+                    mode={this.props.mode}
+                    deleteDisable={deleteDisable}
+                />
+            )
+        }
+        else
+        {
+            return (
+                <ProductFormPanelBlank
+                    handleChangePortfolio={this.handleChangePortfolio}
+                    handleTagChange={this.handleTagChange}
+                    handleSuggestTagChange={this.handleSuggestTagChange}
+                    initData={this.state}
+                    handleSave={this.handleSave}
+                    handleDelete={this.handleDelete}
+                    mode={this.props.mode}
+                    deleteDisable={deleteDisable}
+                />
+            )
+        }
+        
     }
 }
 
 export default connect(
     (state) => ({
-        showProduct: state.productList.get('showProduct'),
+        selectedProduct:state.productForm.get('productID')
     }),
     (dispatch) => ({
         HomeActions: bindActionCreators(homeActions, dispatch),
-        ProductActions: bindActionCreators(productListActions, dispatch),
+        ProductFormActions: bindActionCreators(productFormActions, dispatch),
+        ProductListActions: bindActionCreators(productListActions, dispatch),
+        BaseActions: bindActionCreators(baseActions, dispatch)
     })
 )((ProductFormPanelContainer));

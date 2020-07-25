@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import * as productActions from 'redux/modules/product/productList'
 import ProductDetailPanel from 'components/product/ProductDetailPanel'
 import * as homeActions from 'redux/modules/homePage';
+import * as productFormActions from 'redux/modules/product/productForm';
 import {SHOW_PFORM,} from 'lib/constant'
 class ProductDetailPanelContainer extends Component
 {
@@ -29,7 +30,8 @@ class ProductDetailPanelContainer extends Component
     }
 
     handleEdit = () => {
-        const { HomeActions,} = this.props;
+        const { HomeActions, ProductFormActions, showProduct} = this.props;
+        ProductFormActions.selectProduct(showProduct.id)
         HomeActions.changeThirdStatus(SHOW_PFORM,3)
     }
     render()
@@ -56,5 +58,6 @@ export default connect(
     (dispatch) => ({
         HomeActions: bindActionCreators(homeActions, dispatch),
         ProductActions: bindActionCreators(productActions, dispatch),
+        ProductFormActions: bindActionCreators(productFormActions, dispatch),
     })
 )((ProductDetailPanelContainer));
