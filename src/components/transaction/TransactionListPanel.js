@@ -9,6 +9,9 @@ import { bindActionCreators } from 'redux'
 import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
 import TransactionListItem from '../transaction/TransactionListItem'
 import { SHOW_TRANSACTIONDETAIL } from 'lib/constant'
+import PanelHeader from 'components/base/PanelHeader';
+import BasePanel from 'components/base/BasePanel';
+import {isMobile} from "react-device-detect";
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -50,32 +53,15 @@ const TransactionListPanel = ({ handleClick, transactionList }) => {
     }
 
     return (
-        <PanelTemplate>
+        <BasePanel mode={0}>
             <Grid xs={12} item>
                 <Grid container>
                     <Grid item xs={12}>
-                        <Paper variant="outlined" square className={classes.header}>
-                            <Grid container className={classes.card}>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-                                    <Button style={{ color: '#BBA884', paddingBottom: '3px' }}>
-                                        削除
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={8}>
-                                    <p variant='h5' component="h5" className={classes.headerLabel}>
-                                        取引管理
-                                    </p>
-                                </Grid>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-                                    <Typography variant='h5' component="h5">
-                                        <SearchIcon className={classes.searchButton} />
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    </Grid>
-                    <Grid xs={12} item>
-                        <hr className={classes.topSeperate} />
+                        <PanelHeader               
+                            title="商品登録"
+                            leftButtonType={isMobile?2:0}
+                            rightButtonType={0}
+                        />
                     </Grid>
                 </Grid>
             </Grid>
@@ -85,7 +71,7 @@ const TransactionListPanel = ({ handleClick, transactionList }) => {
                     {transactionListItems}
                 </GridList>
             </Grid>
-        </PanelTemplate>
+        </BasePanel>
     )
 }
 

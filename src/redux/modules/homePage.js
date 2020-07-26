@@ -13,7 +13,8 @@ import {
     SHOW_TRANSACTIONDETAIL,
     SHOW_FOLLOWPANEL,
     FIRST_PANEL_HOME,
-    SHOW_STOREMANAGEMENT
+    SHOW_STOREMANAGEMENT,
+    SHOW_SELLHISTORYLISTPANEL
 } from 'lib/constant'
 const CHANGE_FIRST_STATUS = 'homePage/CHANGE_FIRST_STATUS';
 const CHANGE_SECOND_STATUS = 'homePage/CHANGE_SECOND_STATUS';
@@ -25,7 +26,7 @@ export const changeThirdStatus = createAction(CHANGE_THIRD_STATUS);
 
 const initialState = Map({
     firstPanel:isMobile? 11:FIRST_PANEL_HOME,
-    seconPanel:isMobile? 0:SHOW_PPROUCTSPANEL,
+    seconPanel:isMobile? 0:SHOW_SELLHISTORYLISTPANEL,
     thirdPanel:isMobile? 0:SHOW_PADDLINK
 })
 

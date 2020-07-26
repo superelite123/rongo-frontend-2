@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => {
 const BasePanel = ({ children,mode, handleAction,bgColor }) => {
     const classes = useStyles();
     const PanelWrapperColor = bgColor === '1'?'#DEDCD4':'#F5F5F5'
+    const footerMode = isMobile?1:mode
     return (
         <Grid container className={classes.root} spacing={0}>
             {
@@ -55,7 +56,7 @@ const BasePanel = ({ children,mode, handleAction,bgColor }) => {
                 </Box>
             </Grid>
             <Grid item xs={12} style={{background: '#333333'}}>
-                <HomeFooter mode={mode} handleAction={handleAction}/>
+                <HomeFooter mode={footerMode} handleAction={handleAction}/>
             </Grid>
         </Grid>
     )

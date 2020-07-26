@@ -5,6 +5,8 @@ import * as accountActions from 'redux/modules/account/account';
 import ChangeEmailAddressPanel from 'components/account/ChangeEmailAddressPanel'
 import * as AccountAPI from 'lib/api/account';
 import { SHOW_HOMEPANEL } from 'lib/constant'
+import * as homeActions from 'redux/modules/homePage';
+
 class ChangeEmailAddressContainer extends Component
 {
     constructor() {
@@ -51,6 +53,7 @@ export default connect(
         liveStreamList: state.account.get('showFollow'),
     }),
     (dispatch) => ({
+        HomeActions: bindActionCreators(homeActions, dispatch),
         AccountActions: bindActionCreators(accountActions, dispatch)
     })
 )((ChangeEmailAddressContainer));

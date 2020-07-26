@@ -8,7 +8,8 @@ import * as productListActions from 'redux/modules/product/productList';
 import * as productFormActions from 'redux/modules/product/productForm';
 import * as baseActions from 'redux/modules/base';
 import * as ProductApi from 'lib/api/product';
-
+import {SHOW_PFORM,SHOW_PPROUCTSPANEL,} from 'lib/constant'
+import {isMobile} from "react-device-detect";
 class ProductFormPanelContainer extends Component {
     constructor(props) {
         super(props)
@@ -160,6 +161,13 @@ class ProductFormPanelContainer extends Component {
     updateDefaultValue = (value) => {
         this.setState({defaultValuePrepared:false})
     }
+    handleGoBack = () => {
+        if(isMobile)
+        {
+            const {HomeActions} = this.props
+            HomeActions.changeSecondStatus(SHOW_PPROUCTSPANEL)
+        }
+    }
     render() {
         console.log('render state,' + this.state.label)
         const {hasFetched} = this.state
@@ -176,6 +184,7 @@ class ProductFormPanelContainer extends Component {
                     handleDelete={this.handleDelete}
                     mode={this.props.mode}
                     deleteDisable={deleteDisable}
+                    handleGoBack={this.handleGoBack}
                 />
             )
         }

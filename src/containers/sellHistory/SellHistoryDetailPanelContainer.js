@@ -5,15 +5,26 @@ import { bindActionCreators } from 'redux'
 import SellHistoryDetailPanel from 'components/sellHistory/SellHistoryDetailPanel'
 import * as homeActions from 'redux/modules/homePage';
 import * as sellActions from 'redux/modules/sellHistory/sellHistory';
+import {SHOW_SELLHISTORYLISTPANEL,} from 'lib/constant'
 
 class SellHistoryListPanelContainer extends Component {
 
-    
+    handleItemClick = (index) => {
+        const {SellActions} = this.props
+        SellActions.toggleExpand(index)
+    }
+    handleGoBack = () => {
+        const {HomeActions} = this.props
+        HomeActions.changeSecondStatus(SHOW_SELLHISTORYLISTPANEL)
+    }
     render () {
-        const { HomeActions, SellActions,  sellHistoryList} = this.props;
-
+        const { liveData } = this.props;
         return (
-            <SellHistoryDetailPanel />
+            <SellHistoryDetailPanel 
+                liveData={liveData}
+                handleItemClick={this.handleItemClick}
+                handleGoBack={this.handleGoBack}
+            />
         )
     }
 
@@ -22,7 +33,8 @@ class SellHistoryListPanelContainer extends Component {
 
 export default connect(
     (state) => ({
-        showSellHistory:state.sellHistory.get('showSellHistory')
+        showSellHistory:state.sellHistory.get('showSellHistory'),
+        liveData:state.sellHistory.get('detail'),
     }),
     (dispatch) => ({
         HomeActions: bindActionCreators(homeActions, dispatch),

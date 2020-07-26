@@ -1,10 +1,7 @@
 // @flow
 import React, { useState } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import {
-    Grid, Paper, CardMedia, Checkbox, Typography,
-    Box,Button
-} from '@material-ui/core';
+import { Grid, Paper, Checkbox, Box, Button} from '@material-ui/core';
 import TextTruncate from 'react-text-truncate';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import StarRateIcon from '@material-ui/icons/StarRate';
@@ -16,14 +13,14 @@ import {isMobile} from "react-device-detect";
 const useStyles = makeStyles((theme) => ({
     root: {
         backgrodund: 'red',
-        height: '80px',
+        height: '83px',
         width: '100%',
         display: 'flex',
         position: 'relative'
     },
     thumbnail: {
-        width: '80px',
-        height: '80px',
+        width: '83px',
+        height: '83px',
         alignContent: 'center',
         position: 'relative'
     },
@@ -262,12 +259,12 @@ const ProductListItem = ({ product, deleteMode, handleClick, handleSelectProduct
                                         <span className={classes.productNumberTitle}>品番：</span>
                                         <span className={classes.productNumberContent}>{product.number}</span>
                                     </Grid>
-                                    <Grid item xs={7} md={4} sm={4} className={classes.centering}>
+                                    <Grid item xs={5} md={4} sm={4} className={classes.centering}>
                                         <span className={classes.productPrice}>
                                             ¥{product.price}
                                         </span>
                                     </Grid>
-                                    <Grid item xs={2} md={3} sm={4} className={classes.remainProduct}>
+                                    <Grid item xs={3} md={3} sm={4} className={classes.remainProduct}>
                                         <span className={classes.remainProductTitle}>在庫</span>
                                         <span className={classes.remainProductCount}>{product.quantity}</span>
                                     </Grid>

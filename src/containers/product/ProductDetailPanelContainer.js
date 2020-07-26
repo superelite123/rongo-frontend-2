@@ -5,7 +5,9 @@ import * as productActions from 'redux/modules/product/productList'
 import ProductDetailPanel from 'components/product/ProductDetailPanel'
 import * as homeActions from 'redux/modules/homePage';
 import * as productFormActions from 'redux/modules/product/productForm';
-import {SHOW_PFORM,} from 'lib/constant'
+import {SHOW_PFORM,SHOW_PPROUCTSPANEL,} from 'lib/constant'
+import {isMobile} from "react-device-detect";
+
 class ProductDetailPanelContainer extends Component
 {
 
@@ -34,6 +36,13 @@ class ProductDetailPanelContainer extends Component
         ProductFormActions.selectProduct(showProduct.id)
         HomeActions.changeThirdStatus(SHOW_PFORM,3)
     }
+    handleGoBack = () => {
+        if(isMobile)
+        {
+            const {HomeActions} = this.props
+            HomeActions.changeSecondStatus(SHOW_PPROUCTSPANEL)
+        }
+    }
     render()
     {
         const { showProduct, userInfo, productDetail } = this.props
@@ -44,6 +53,7 @@ class ProductDetailPanelContainer extends Component
             title={ userInfo.username } 
             goBack={this.goBack}
             handleEdit={this.handleEdit}
+            handleGoBack={this.handleGoBack}
             />
         )
     }

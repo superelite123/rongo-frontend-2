@@ -131,7 +131,7 @@ const SaveButton = withStyles({
 })(Button);
 const ProductFormPanel = (props) => {
     const classes = useStyles();
-    const { handleChangePortfolio,handleSave,handleDelete,
+    const { handleChangePortfolio,handleSave,handleDelete,handleGoBack,
             handleTagChange,handleSuggestTagChange,deleteDisable,
             initData,mode} = props
     const { portfolios,label,number,tags,suggestTags,
@@ -173,6 +173,7 @@ const ProductFormPanel = (props) => {
               title="商品登録"
               leftButtonType={2}
               rightButtonType={0}
+              handleLeftButton={handleGoBack}
             />
             <form>
                 <Grid container className={classes.root}>
