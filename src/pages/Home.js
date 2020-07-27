@@ -61,7 +61,6 @@ class Home extends Component {
         const gridColumn = isMobile?12:4
         const { HomeActions, firstPanelVisible, secondPanelVisible, thirdPanelVisible,history, classes, pageLoading } = this.props
         let firstPanel = null
-        console.log(firstPanelVisible)
         let secondPanel = null
         let thirdPanel = null
         switch (firstPanelVisible) {

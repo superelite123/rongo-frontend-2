@@ -1,15 +1,10 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
 import BasePanel from 'components/base/BasePanel';
-import SearchIcon from '@material-ui/icons/Search';
 import FollowListItem from '../follow/FollowListItem'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
-import * as followAction from 'redux/modules/follow/follow';
-import * as homeActions from 'redux/modules/homePage';
+import { Grid, GridList } from "@material-ui/core"
 import { SHOW_FOLLOWPANEL } from 'lib/constant'
-
+import PanelHeader from 'components/base/PanelHeader';
 const useStyles = makeStyles((theme) => ({
     header: {
         paddingTop: 'px',
@@ -44,45 +39,23 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const FollowListPanel = ({ handleClick, followList,mode }) => {
+const FollowListPanel = ({ handleClick, onBack, followList,mode }) => {
     const classes = useStyles();
-    let count = 0
     let followListItems = []
     for (const key in followList) {
         let followItem = followList[key]
         followListItems.push(<FollowListItem key={key} follow={followItem} handleClick={handleClick} panelNumber={SHOW_FOLLOWPANEL} panelLocation={3} />)
     }
-    
+    const title = 'フォロワー(' + followListItems.length + ')'
     return (
-        <BasePanel mode={mode}>
-            <Grid xs={12} item>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <Paper variant="outlined" square className={classes.header}>
-                            <Grid container className={classes.card}>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-                                    <Button style={{ color: '#BBA884', paddingBottom: '3px' }}>
-                                        
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={8}>
-                                    <p variant='h5' component="h5" className={classes.headerLabel}>
-                                        フォロワー（{followListItems.length}）
-                                    </p>
-                                </Grid>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-                                    <Typography variant='h5' component="h5">
-                                        <SearchIcon className={classes.searchButton} />
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    </Grid>
-                    <Grid xs={12} item>
-                        <hr className={classes.topSeperate} />
-                    </Grid>
-                </Grid>
-            </Grid>
+        <BasePanel mode={0}>
+            <PanelHeader               
+                title={title}
+                leftButtonType={0}
+                handleLeftButton={onBack}
+                rightButtonType={1}
+            />
+            
 
             <Grid xs={12} item>
                 <GridList style={{marginTop: '20px'}} className={classes.gridList} cols={followListItems.length}>

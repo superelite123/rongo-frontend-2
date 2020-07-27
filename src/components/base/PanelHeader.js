@@ -76,6 +76,12 @@ const PanelTemplate = ({ children,title,deleteMode,handleLeftButton,leftButtonTy
             leftButton = null
         break;
     }
+    if(isMobile)
+    {
+        leftButton = <Button className={classes.controlButton} onClick={handleLeftButton}>
+                        <KeyboardBackspaceIcon/>
+                    </Button>
+    }
     let rightButton = null
     switch(rightButtonType)
     {

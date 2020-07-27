@@ -8,7 +8,7 @@ import * as productListActions from 'redux/modules/product/productList';
 import * as productFormActions from 'redux/modules/product/productForm';
 import * as baseActions from 'redux/modules/base';
 import * as ProductApi from 'lib/api/product';
-import {SHOW_PFORM,SHOW_PPROUCTSPANEL,} from 'lib/constant'
+import {SHOW_PADDLINK,SHOW_PPROUCTSPANEL,} from 'lib/constant'
 import {isMobile} from "react-device-detect";
 class ProductFormPanelContainer extends Component {
     constructor(props) {
@@ -34,7 +34,8 @@ class ProductFormPanelContainer extends Component {
             ],
             portfolioError:false,
             tagError:false,
-            hasFetched: false
+            hasFetched: false,
+            confirmDelete:false
         }
     }
     async componentDidMount() {
@@ -101,7 +102,6 @@ class ProductFormPanelContainer extends Component {
     handleSave = (data,mode) => {
         const {BaseActions} = this.props
         //check portfolios
-        let isError = false
         let portfolioError = true
         const {portfolios, tags} = this.state
         portfolios.map((porfolio) => {
@@ -146,28 +146,37 @@ class ProductFormPanelContainer extends Component {
         )
     }
     handleDelete = () => {
+        this.setState({confirmDelete:false})
         const {BaseActions, ProductListActions} = this.props
         
         BaseActions.setPageLoading(true)
         ProductListActions.deleteProducts({IDs:[this.state.id]}).then(
             (res) => {
                 BaseActions.setPageLoading(false)
+                const {HomeActions} = this.props
+                HomeActions.changeThirdStatus(SHOW_PADDLINK)
             },
             (e) => {
                 BaseActions.setPageLoading(false)
             }
         )
     }
+    hanleOnDelete = () => this.setState({confirmDelete:true})
     updateDefaultValue = (value) => {
         this.setState({defaultValuePrepared:false})
     }
     handleGoBack = () => {
+        const {HomeActions} = this.props
         if(isMobile)
         {
-            const {HomeActions} = this.props
             HomeActions.changeSecondStatus(SHOW_PPROUCTSPANEL)
         }
+        if(!isMobile)
+        {
+            HomeActions.changeThirdStatus(SHOW_PADDLINK)
+        }
     }
+    handleCloseConfirmDialog = () => this.setState({confirmDelete:false})
     render() {
         console.log('render state,' + this.state.label)
         const {hasFetched} = this.state
@@ -182,9 +191,12 @@ class ProductFormPanelContainer extends Component {
                     initData={this.state}
                     handleSave={this.handleSave}
                     handleDelete={this.handleDelete}
+                    hanleOnDelete={this.hanleOnDelete}
                     mode={this.props.mode}
                     deleteDisable={deleteDisable}
                     handleGoBack={this.handleGoBack}
+                    confirmDelete={this.state.confirmDelete}
+                    handleCloseConfirmDialog={this.handleCloseConfirmDialog}
                 />
             )
         }

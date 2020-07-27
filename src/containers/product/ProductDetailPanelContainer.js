@@ -5,28 +5,23 @@ import * as productActions from 'redux/modules/product/productList'
 import ProductDetailPanel from 'components/product/ProductDetailPanel'
 import * as homeActions from 'redux/modules/homePage';
 import * as productFormActions from 'redux/modules/product/productForm';
-import {SHOW_PFORM,SHOW_PPROUCTSPANEL,} from 'lib/constant'
+import {SHOW_PFORM,SHOW_PPROUCTSPANEL,SHOW_PADDLINK} from 'lib/constant'
 import {isMobile} from "react-device-detect";
-
+import * as baseActions from 'redux/modules/base';
 class ProductDetailPanelContainer extends Component
 {
 
     getProduct = async () => {
-        const { HomeActions, ProductActions, productDetail,  showProduct} = this.props;
+        const { ProductActions, BaseActions, showProduct} = this.props;
 
         try {
+            BaseActions.setPageLoading(true)
             await ProductActions.getProductDetail({id:showProduct.id});
         } catch (e) {
             console.log(e)
         }
+        BaseActions.setPageLoading(false)
     }
-
-    goBack = () => {
-        const { HomeActions, ProductActions, productDetail,  showProduct} = this.props;
-        
-        HomeActions.changeThirdStatus(0)
-    }
-
     componentDidMount() {
         this.getProduct()
     }
@@ -37,21 +32,24 @@ class ProductDetailPanelContainer extends Component
         HomeActions.changeThirdStatus(SHOW_PFORM,3)
     }
     handleGoBack = () => {
+        const {HomeActions} = this.props
         if(isMobile)
         {
-            const {HomeActions} = this.props
             HomeActions.changeSecondStatus(SHOW_PPROUCTSPANEL)
+        }
+        if(!isMobile)
+        {
+            HomeActions.changeThirdStatus(SHOW_PADDLINK)
         }
     }
     render()
     {
-        const { showProduct, userInfo, productDetail } = this.props
+        const { userInfo, productDetail } = this.props
 
         return (
             <ProductDetailPanel 
             product = { productDetail } 
             title={ userInfo.username } 
-            goBack={this.goBack}
             handleEdit={this.handleEdit}
             handleGoBack={this.handleGoBack}
             />
@@ -69,5 +67,6 @@ export default connect(
         HomeActions: bindActionCreators(homeActions, dispatch),
         ProductActions: bindActionCreators(productActions, dispatch),
         ProductFormActions: bindActionCreators(productFormActions, dispatch),
+        BaseActions: bindActionCreators(baseActions, dispatch)
     })
 )((ProductDetailPanelContainer));

@@ -124,6 +124,10 @@ class HomePanel extends Component {
           HomeActions.changeThirdStatus(0)
           break;
         case 2:
+          if(SHOW_PPROUCTSPANEL === panelNumber)
+          {
+            HomeActions.changeThirdStatus(SHOW_PADDLINK)
+          }
           HomeActions.changeSecondStatus(panelNumber)
           break;
         case 3:

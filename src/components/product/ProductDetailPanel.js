@@ -1,8 +1,7 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
 import BasePanel from 'components/base/BasePanel';
-import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import { Box, Grid} from "@material-ui/core"
 import PhotoSlider from '../base/PhotoSlider'
 import FavoriteStarIcon from '../base/icons/FavoriteStarIcon'
 import LiveButton from '../base/LiveButton'
@@ -131,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const ProductDetailPanel = ({ product, title, goBack,handleEdit, mode, handleGoBack }) => {
+const ProductDetailPanel = ({ product, title,handleEdit, mode, handleGoBack }) => {
     const classes = useStyles();
     
     var images = []
@@ -152,15 +151,14 @@ const ProductDetailPanel = ({ product, title, goBack,handleEdit, mode, handleGoB
         description = product.description
         price = product.price
     }
-    const leftButtonType = isMobile?2:0;
     return (
-        <BasePanel mode={mode}>
+        <BasePanel mode={0}>
             <Grid xs={12} item>
                 <Grid container>
                     <Grid item xs={12}>
                         <PanelHeader               
                             title="商品登録"
-                            leftButtonType={leftButtonType}
+                            leftButtonType={2}
                             rightButtonType={0}
                             handleLeftButton={handleGoBack}
                         />

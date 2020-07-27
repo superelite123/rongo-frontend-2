@@ -10,7 +10,7 @@ import {SHOW_HOMEPANEL,SHOW_SELLHISTORYDETAILPANEL,} from 'lib/constant'
 class SellHistoryListPanelContainer extends Component {
 
     getSellHistoryList = async () => {
-        const { SellActions,  sellHistoryList} = this.props;
+        const { SellActions} = this.props;
 
         try {
             const token = storage.get('token');
