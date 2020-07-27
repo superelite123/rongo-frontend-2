@@ -65,15 +65,19 @@ class SellHistoryListItem extends Component {
         const totalPrice = sellHistoryByMonth["totalPrice"]
         
         let historyListItems = []
+        let cnt = 0
         if (isExpand) {
+            
             for (const key in sellHistoryByMonth) {
                 if (key != "totalPrice") {
                     let sellHistory = sellHistoryByMonth[key]
                     let item =
                         <Grid item xs={12} className={classes.subItem}>
-                            <SellHistoryListSubItem handleClick={handleClick} sellHistory={sellHistory} title={key} />
+                            <SellHistoryListSubItem key={cnt} handleClick={handleClick} sellHistory={sellHistory} title={key} />
                         </Grid>
                     historyListItems.push(item)
+                    
+                    cnt ++
                 }
             }
         }
@@ -83,13 +87,13 @@ class SellHistoryListItem extends Component {
                 <Grid style={{ height: 'flex' }} container>
                     <Grid item xs={12} className={classes.mainItem} onClick={() => { SellActions.expandDateHistory(!isExpand) }}>
                         <Grid style={{ height: 'flex' }} container>
-                            <Grid item xs={7} style={{ display: 'flex' }}>
+                            <Grid item xs={6} style={{ display: 'flex' }}>
                                 <span className={classes.monthLabel}>{convertDateStringToMonth(title, "-")}</span>
                             </Grid>
                             <Grid item xs={4} style={{ margin: 'auto', display: 'flex' }}>
                                 <span className={classes.priceLabel}>¥{convertCurrencyString(totalPrice)}</span>
                             </Grid>
-                            <Grid item xs={1} style={{ display: 'flex' }}>
+                            <Grid item xs={2} style={{ display: 'flex' }}>
                                 <Box className={classes.arrrowWrapper} component='div'>
                                     <ArrowDropDownIcon className={classes.forwardArrow} />
                                 </Box>

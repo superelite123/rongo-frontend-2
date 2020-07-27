@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Grid, Paper, Checkbox, Typography, Box, } from '@material-ui/core';
+import { Grid, Paper, Button, Checkbox, Typography, Box, } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import { SHOW_SELLHISTORYDETAILPANEL } from 'lib/constant'
 import { convertDateStringToDay, convertCurrencyString } from 'helper/helper'
 
 const useStyles = makeStyles((theme) => ({
@@ -58,21 +57,21 @@ const SellHistoryListSubItem = ({ sellHistory, title, handleClick }) => {
     const classes = useStyles();
 
     return (
-        <CardActionArea component="a" onClick={() => handleClick(SHOW_SELLHISTORYDETAILPANEL, 3, sellHistory)}>
+        <CardActionArea component="a">
             <Card variant="outlined" square className={classes.card} style={{ background: '#EBE7DE' }}>
                 <CardContent style={{ paddingBottom: 0 }} className={classes.cardContent}>
                     <Box className={classes.root} component='div'>
                         <Grid style={{ height: 'flex', paddingLeft: '16px' }} container>
-                            <Grid item xs={7} style={{ display: 'flex' }}>
+                            <Grid item xs={6} style={{ display: 'flex' }}>
                                 <span className={classes.monthLabel}>{ convertDateStringToDay(title, "-") }</span>
                             </Grid>
                             <Grid item xs={4} style={{ margin: 'auto', display: 'flex' }}>
                                 <span className={classes.priceLabel}>¥{convertCurrencyString(sellHistory.price)}</span>
                             </Grid>
-                            <Grid item xs={1} style={{ display: 'flex' }}>
-                                <Box className={classes.arrrowWrapper} component='div'>
+                            <Grid item xs={2} style={{ display: 'flex' }}>
+                                <Button onClick={() => handleClick(title, sellHistory)} className={classes.arrrowWrapper} component='div'>
                                     <ArrowForwardIosIcon className={classes.forwardArrow} />
-                                </Box>
+                                </Button>
                             </Grid>
                         </Grid>
                     </Box>

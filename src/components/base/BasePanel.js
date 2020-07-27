@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => {
             background:'#DEDCD4',
         },
         Parent:{
-            height:'calc(100vh - 106px)',
+            height:isMobile?'calc(100vh - 56px)':'calc(100vh - 106px)',
             position:'relative'
         },
         PanelWrapper: {
@@ -39,11 +39,15 @@ const useStyles = makeStyles((theme) => {
 const BasePanel = ({ children,mode, handleAction,bgColor }) => {
     const classes = useStyles();
     const PanelWrapperColor = bgColor === '1'?'#DEDCD4':'#F5F5F5'
+    const footerMode = isMobile?1:mode
     return (
         <Grid container className={classes.root} spacing={0}>
-            <Grid item xs={12}>
-                <Header mode={mode} />
-            </Grid>
+            {
+                !isMobile && 
+                <Grid item xs={12}>
+                    <Header mode={mode} />
+                </Grid>
+            }
             <Grid item xs={12}>
                 <Box className={classes.Parent}>
                     <Box className={classes.PanelWrapper} style={{background:PanelWrapperColor}}>
@@ -52,7 +56,7 @@ const BasePanel = ({ children,mode, handleAction,bgColor }) => {
                 </Box>
             </Grid>
             <Grid item xs={12} style={{background: '#333333'}}>
-                <HomeFooter mode={mode} handleAction={handleAction}/>
+                <HomeFooter mode={footerMode} handleAction={handleAction}/>
             </Grid>
         </Grid>
     )

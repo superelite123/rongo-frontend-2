@@ -7,6 +7,8 @@ import PhotoSlider from '../base/PhotoSlider'
 import FavoriteStarIcon from '../base/icons/FavoriteStarIcon'
 import LiveButton from '../base/LiveButton'
 import { convertCurrencyString } from 'helper/helper'
+import PanelHeader from 'components/base/PanelHeader';
+import {isMobile} from "react-device-detect";
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -129,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const ProductDetailPanel = ({ product, title, goBack,handleEdit, mode }) => {
+const ProductDetailPanel = ({ product, title, goBack,handleEdit, mode, handleGoBack }) => {
     const classes = useStyles();
     
     var images = []
@@ -150,29 +152,18 @@ const ProductDetailPanel = ({ product, title, goBack,handleEdit, mode }) => {
         description = product.description
         price = product.price
     }
-
+    const leftButtonType = isMobile?2:0;
     return (
         <BasePanel mode={mode}>
             <Grid xs={12} item>
                 <Grid container>
                     <Grid item xs={12}>
-                        <Paper variant="outlined" square className={classes.header}>
-                            <Grid container className={classes.card}>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-                                    <Typography variant='h5' component="h5">
-                                        <KeyboardBackspaceIcon className={classes.searchButton} onClick={() => goBack()}/>
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={8}>
-                                    <p variant='h5' component="h5" className={classes.headerLabel}>
-                                        {title}
-                                    </p>
-                                </Grid>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-
-                                </Grid>
-                            </Grid>
-                        </Paper>
+                        <PanelHeader               
+                            title="商品登録"
+                            leftButtonType={leftButtonType}
+                            rightButtonType={0}
+                            handleLeftButton={handleGoBack}
+                        />
                     </Grid>
                 </Grid>
             </Grid>

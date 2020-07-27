@@ -1,6 +1,5 @@
 import React,{ useEffect } from 'react'
 import {makeStyles,withStyles } from '@material-ui/styles'
-import SectionHeader from '../typo/SectionHeader'
 import BasePanel from 'components/base/BasePanel';
 import DefaultButton from '../base/DefaultButton'
 import PanelHeader from 'components/base/PanelHeader';
@@ -132,7 +131,7 @@ const SaveButton = withStyles({
 })(Button);
 const ProductFormPanel = (props) => {
     const classes = useStyles();
-    const { handleChangePortfolio,handleSave,handleDelete,
+    const { handleChangePortfolio,handleSave,handleDelete,handleGoBack,
             handleTagChange,handleSuggestTagChange,deleteDisable,
             initData,mode} = props
     const { portfolios,label,number,tags,suggestTags,
@@ -167,8 +166,6 @@ const ProductFormPanel = (props) => {
         console.log(mode)
         handleSave(data,mode)
     }
-    
-    console.log(deleteDisable)
     //End Product Form making
     return (
         <BasePanel mode={mode}>
@@ -176,6 +173,7 @@ const ProductFormPanel = (props) => {
               title="商品登録"
               leftButtonType={2}
               rightButtonType={0}
+              handleLeftButton={handleGoBack}
             />
             <form>
                 <Grid container className={classes.root}>

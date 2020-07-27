@@ -117,7 +117,6 @@ class HomePanel extends Component {
     const { classes, HomeActions, userInfo, mode } = this.props;
 
     const handleClick = (panelNumber, panelType) => {
-      console.log(panelNumber + ',' + panelType)
       switch (panelType) {
         case 1:
           HomeActions.changeFirstStatus(panelNumber)
@@ -250,6 +249,26 @@ class HomePanel extends Component {
             panelLocation={2}
             handleClick={handleClick} />
         </Grid>
+
+        <Grid item style={{ paddingTop: '40px' }} xs={12} >
+          <ListCard text={'利用規約'}
+            panelNumber={SHOW_CHANGEEMAILPANEL}
+            panelLocation={2}
+            handleClick={handleClick} />
+        </Grid>
+        <Grid item xs={12} >
+          <ListCard text={'プライバシポリシー'}
+            panelNumber={SHOW_CHANGEEPASSWORDPANEL}
+            panelLocation={2}
+            handleClick={handleClick} />
+        </Grid>
+        <Grid item xs={12} style={{ paddingBottom: '40px' }} >
+          <ListCard text={'バージョン情報'}
+            panelNumber={SHOW_CHANGEEMAILPANEL}
+            panelLocation={2}
+            handleClick={handleClick} />
+        </Grid>
+
       </BasePanel>
     );
   }
