@@ -162,17 +162,14 @@ const LiveForm = (props) => {
                         </Grid>
                         
                     </Grid>
-                    {
-                        props.status === 0 && 
-                        <Grid xs={12} item style={{ padding: '20px' }}>
-                            <LiveButton onClick={() => {handleAddProduct()}} >
-                                <div style={{ display: 'flex', margin: 'auto' }}>
-                                    <AddIcon style={{ margin: 'auto 0' }} />
-                                    <span style={{ margin: 'auto 0' }}>出品する商品を選択する</span>
-                                </div>
-                            </LiveButton>
-                        </Grid>
-                    }
+                    <Grid xs={12} item style={{ padding: '20px' }}>
+                        <LiveButton onClick={() => {handleAddProduct()}} >
+                            <div style={{ display: 'flex', margin: 'auto' }}>
+                                <AddIcon style={{ margin: 'auto 0' }} />
+                                <span style={{ margin: 'auto 0' }}>出品する商品を選択する</span>
+                            </div>
+                        </LiveButton>
+                    </Grid>
                     {
                         props.status === 0 && 
                         <Grid xs={12} item style={{ padding: '20px' }}>

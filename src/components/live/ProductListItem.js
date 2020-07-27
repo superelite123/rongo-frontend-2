@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Button, Box,} from '@material-ui/core';
 import TextTruncate from 'react-text-truncate';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import FavoriteStarIcon from '../base/icons/FavoriteStarIcon'
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -183,11 +182,6 @@ const useStyles = makeStyles((theme) => ({
 const ProductListItem = ({ product,index, handleAddProduct }) => {
     const classes = useStyles();
 
-    let linkArrow =
-            <Box className={classes.arrrowWrapper} component='div'>
-                <ArrowForwardIosIcon className={classes.forwardArrow} />
-            </Box>
-
     return (
         <Paper square className={classes.root}>
             <Box className={classes.thumbnail} component='div'>
@@ -236,7 +230,6 @@ const ProductListItem = ({ product,index, handleAddProduct }) => {
                     </Grid>
                 </Grid>
             </Box>
-            {linkArrow}
         </Paper>
     );
 };

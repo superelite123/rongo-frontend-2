@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+import React,{ Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import LiveChatPanel from '../../components/live/LiveChatPanel'
@@ -17,43 +17,72 @@ class LiveChatPanelContainer extends Component {
             typingMessage:'',
             channel:null,
             connectionError:false,
-            errorMessage:'Error'
+            errorMessage:'Error',
+            timer:0,
+            timerLoop:null
         }
     }
     async componentDidMount()
     {
         const {channelID,chatUserID,BaseActions, LiveActions} = this.props
-        BaseActions.setPageLoading(true)
-        const {nickname} = storage.get('userInfo')
-        try {    
-            //create Chat Client Object
-            const client = new StreamChat(CHAT_STREAM_KEY,);
-            //generate token
-            const token = jwt.encode({user_id:chatUserID}, CHAT_SECERT_KEY);
-            await client.setUser(
-                {
-                    id: chatUserID,
-                    name: nickname,
-                },
-                token,
-            );
-            
-            const channel = client.channel('livestream', channelID);
-            this.setState({channel:channel})
-            //subscribe channel
-            await channel.watch();
-            channel.on('message.new', event => this.receivedMessage(event));
-            LiveActions.setChannel({channel})
-            BaseActions.setPageLoading(false)
-          } catch (error) {
-            this.setState({connectionError:true,errorMessage:'お疲れ様でしたこのライブは終了しています'})
+        const presentChannel = this.props.channel
+        if(!presentChannel)
+        {
+            BaseActions.setPageLoading(true)
+            const {nickname} = storage.get('userInfo')
+            try {    
+                //create Chat Client Object
+                const client = new StreamChat(CHAT_STREAM_KEY,);
+                //generate token
+                const token = jwt.encode({user_id:chatUserID}, CHAT_SECERT_KEY);
+                await client.setUser(
+                    {
+                        id: chatUserID,
+                        name: nickname,
+                    },
+                    token,
+                );
+                
+                const channel = client.channel('livestream', channelID);
+                this.setState({channel:channel})
+                //subscribe channel
+                await channel.watch();
+                channel.on('message.new', event => this.receivedMessage(event));
+                LiveActions.setChannel({channel})
+                BaseActions.setPageLoading(false)
+            } catch (error) {
+                this.setState({connectionError:true,errorMessage:'お疲れ様でしたこのライブは終了しています'})
+            }
+        }
+        
+        const {liveStatus, startTime, endTime} = this.props
+        if(liveStatus === 2)
+        {
+            //this.setState({timer:endTime - startTime})
+            console.log('hi')
+            clearTimeout(this.state.timerLoop);
+        }
+        else
+        {
+            const timerLoop = setInterval(() => {
+                this.setState({timer:Date.now() - startTime})
+            }, 1000)
+            this.setState({timerLoop:timerLoop})
         }
     }
-    
+    componentDidUpdate(){
+        const {liveStatus} = this.props
+        if(liveStatus === 2)
+        {
+            //this.setState({timer:endTime - startTime})
+            console.log('hi')
+            clearTimeout(this.state.timerLoop);
+        }
+    }
     handleQuit = async () => {
         const {LiveActions,liveID} = this.props
-
-        
+        LiveActions.updateStatus(2)
+        return
         const token = storage.get('token');
         LiveApi.quitLive({id: liveID, token: token}).then(
             (res) => {
@@ -115,10 +144,14 @@ class LiveChatPanelContainer extends Component {
         this.setState({connectionError:false})
     }
     render() {
-        const {messages} = this.props
+        const {messages, liveStatus} = this.props
+        const {timer} = this.state
+        const minutes = Math.floor(timer / 60000);
+        const seconds = ((timer % 60000) / 1000).toFixed(0);
+        const liveTime = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
         return (
             <LiveChatPanel 
-                handleClick={this.handleQuit}
+                onQuit={this.handleQuit}
                 messages={messages}
                 typingMessage={this.state.typingMessage}
                 messagesEnd={this.state.messagesEnd}
@@ -127,6 +160,8 @@ class LiveChatPanelContainer extends Component {
                 connectionError={this.state.connectionError}
                 onCloseDialog={this.handleCloseDialog}
                 errorMessage={this.state.errorMessage}
+                liveTime={liveTime}
+                liveStatus={liveStatus}
             />
         )
     }
@@ -140,7 +175,9 @@ export default connect(
         chatUserID:state.livePage.get('chatUserID'),
         messages:state.livePage.get('messages').toJS(),
         nickname:state.user.getIn(['userInfo','nickname']),
-        channel:state.livePage.get('channel')
+        channel:state.livePage.get('channel'),
+        startTime:state.livePage.get('startTime'),
+        liveStatus:state.livePage.get('status')
     }),
     (dispatch) => ({
         LiveActions: bindActionCreators(liveActions, dispatch),

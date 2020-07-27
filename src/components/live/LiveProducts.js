@@ -1,23 +1,18 @@
 import React from 'react'
-import {isMobile} from "react-device-detect"
-import {Grid,Paper,Typography} from "@material-ui/core";
-import LivePanelTemplete from '../base/LivePanelTemplete'
-import SectionHeader from '../typo/SectionHeader'
+import {Grid} from "@material-ui/core";
+import BasePanel from 'components/base/BasePanel';
+import PanelHeader from 'components/base/PanelHeader';
 import ProductListItem from './ProductListItem'
-const LiveProducts = ({ handleReturn,handleAddProduct,products }) => {
-    const widthValue = isMobile?'100%':'100%'
-    const rootStyle = {
-        top:0,
-        width:widthValue,
-        height:'100%',
-        background:'#DEDCD4'
-    }
+const LiveProducts = ({ handleReturn, handleAddProduct, products, handleGoBack }) => {
     return (
-        <LivePanelTemplete mode={0}>
+        <BasePanel mode={0}>
+            <PanelHeader 
+              title="商品管理"
+              leftButtonType={2}
+              rightButtonType={0}
+              handleLeftButton={handleGoBack}
+            />
             <Grid container>
-                <Grid xs={12} item>
-                    <SectionHeader title={'ストア管理'} />
-                </Grid>
                 <Grid xs={12} item>
                     {
                         products.map(
@@ -32,7 +27,7 @@ const LiveProducts = ({ handleReturn,handleAddProduct,products }) => {
                     }
                 </Grid>
             </Grid>
-        </LivePanelTemplete>
+        </BasePanel>
     )
 }
 

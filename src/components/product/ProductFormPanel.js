@@ -1,10 +1,9 @@
-import React,{ useEffect } from 'react'
+import React from 'react'
 import {makeStyles,withStyles } from '@material-ui/styles'
 import BasePanel from 'components/base/BasePanel';
-import DefaultButton from '../base/DefaultButton'
 import PanelHeader from 'components/base/PanelHeader';
-import { Grid,Typography, Box, Paper, TextField, MenuItem, Button} from "@material-ui/core"
-import { TakePhoto, CustomTextField, TagButton} from '../typo'
+import { Grid,Typography, Paper, TextField, MenuItem, Button} from "@material-ui/core"
+import { TakePhoto, TagButton} from '../typo'
 import TagsInput from 'react-tagsinput'
 import { useForm, Controller  } from 'react-hook-form';
 import '../store/tagInput.css'

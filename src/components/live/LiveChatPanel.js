@@ -1,4 +1,4 @@
-import React, {useRef,Component} from 'react'
+import React, {Component} from 'react'
 import {withStyles} from '@material-ui/styles'
 import { IconButton, Button, TextField } from "@material-ui/core"
 import CloseIcon from '@material-ui/icons/Close';
@@ -36,10 +36,19 @@ const useStyles = (theme) => ({
     },
     quitButtonWrapper:{
         display:'flex',
-        height:'50px'
+        height:'50px',
+        border:'1px solid #333333',
+        width:'100px',
+        borderRadius:'30px',
+        marginTop:'10px',
+        marginBottom:'10px',
+        marginLeft:'70%'
     },
     quitTimeWrapper:{
-
+        color:'#333333',
+        fontSize:'12px',
+        display:'block',
+        margin:'auto'
     },
     quitButton:{
         borderRadius:'12px',
@@ -55,7 +64,7 @@ const useStyles = (theme) => ({
         top:'20px'
     },
     chatPanel:{
-        height:'calc(100% - 110px)',
+        height:'calc(100% - 130px)',
         width:'95%',
         margin:'auto',
         overflowY:'scroll',
@@ -101,6 +110,8 @@ class LiveChatPanel extends Component {
     constructor() {
         super()
         this.chatPanelRef = React.createRef();
+        this.state = {
+        }
     }
     componentDidMount() {
     }
@@ -122,16 +133,20 @@ class LiveChatPanel extends Component {
         this.chatPanelRef.current.scrollTo(0, scroll);
     }
     render() {
-        const { handleClick, classes, messages, errorMessage, typingMessage, handleChange, connectionError,onCloseDialog } = this.props;
-        
+        const { onQuit, classes, messages, errorMessage, typingMessage,liveTime,
+                handleChange, connectionError,onCloseDialog } = this.props;
         return (
             <LivePanelTemplete mode={0}>
                 <div className={classes.root}>
                     <div className={classes.container}>
                         <div className={classes.quitButtonWrapper}>
-                            <IconButton color="primary" onClick={handleClick} aria-label="upload picture" component="span">
+                            <IconButton color="primary" onClick={onQuit} aria-label="upload picture" component="span">
                                 <CloseIcon />
                             </IconButton>
+                            <div className={classes.quitTimeWrapper}>
+                                <div>dsfdsffs</div>
+                                <div>{liveTime}</div>
+                            </div>
                         </div>
                         {/**Chat Panel*/}
                         <div ref={this.chatPanelRef} className={classes.chatPanel}>
@@ -152,7 +167,7 @@ class LiveChatPanel extends Component {
                             <TextField id="outlined-basic" variant="outlined" 
                                         value={typingMessage} 
                                         onChange={handleChange}
-                                        style={{width:'90%',marginTop:'5px'}} 
+                                        style={{width:'90%',marginTop:'2px'}} 
                                         onKeyPress={this.handleKeyPress}
                             />
                             <Button style={{width:'10%'}} onClick={this.handleSendMessage}><SendIcon /></Button>

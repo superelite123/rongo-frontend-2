@@ -30,6 +30,8 @@ class LiveFormContainer extends Component {
         this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVEPRODUCTLIST,panelIndex:2})
     }
     componentDidMount(){
+        const {LiveActions} = this.props
+        LiveActions.setStartTime({startTime:Date.now()})
     }
     handleChangeInput = (e) => {
         this.setState({
@@ -64,12 +66,12 @@ class LiveFormContainer extends Component {
         LiveApi.saveLive(postData).then(
             (res) => {
                 this.setState({backDrop:false})
-                const {application_name,sdp_url,stream_name} = res.data.liveData
                 const {id,channel_id,cadmin_id,chat_user_id} = res.data
                 this.props.LiveActions.updateLiveID(id)
                 this.props.LiveActions.updateStatus(1)
                 this.props.LiveActions.setChatInfo({channelID:channel_id,chatAdminID:cadmin_id,chatUserID:chat_user_id})
                 this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVECHATPANEL,panelIndex:2})
+                // const {application_name,sdp_url,stream_name} = res.data.liveData
                 // window.open(
                 //             BASE_LIVE_URL + 'webrtc-examples/src/dev-view-publish.html?url=' + sdp_url + 
                 //             '&appname=' + application_name + 
@@ -87,6 +89,7 @@ class LiveFormContainer extends Component {
         //     this.setState({error:true})
         //     return
         // }
+        this.setState({backDrop:true})
         this.setState({confirmOpen:true})
     }
     handleClose = () => {

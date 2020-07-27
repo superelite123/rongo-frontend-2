@@ -22,6 +22,8 @@ const ADD_STAMP = 'livePage/ADD_STAMP'
 const INVISIBLE_STAMP = 'livePage/INVISIBLE_STAMP'
 const ADD_MESSAGE = 'livePage/ADD_MESSAGE'
 const SET_CHANNEL = 'livePage/SET_CHANNEL'
+const SET_STARTTIME = 'livePage/SET_STARTTIME'
+
 export const changePanelStatus = createAction(CHANGE_PANEL);
 export const addProduct = createAction(ADD_PRODUCT);
 export const updateForm = createAction(UPDATE_FORM);
@@ -33,11 +35,12 @@ export const addStamp = createAction(ADD_STAMP)
 export const invisibleStamp = createAction(INVISIBLE_STAMP)
 export const addMessage = createAction(ADD_MESSAGE)
 export const setChannel = createAction(SET_CHANNEL)
+export const setStartTime = createAction(SET_STARTTIME)
 const initialState = Map({
     panels:List([
         SHOW_LIVEFORM,
         SHOW_LIVEPLAYER,
-        SHOW_LIVESTANDBYPANEL,
+        SHOW_LIVECHATPANEL,
     ]),
     products:List([]),
     messages:List([]),
@@ -118,13 +121,15 @@ const initialState = Map({
     title:'',
     tag:'',
     thumbnail:null,
-    status:0,
-    id:61,
+    status:1,
+    id:90,
     channelID:'5f1e2f3db646c',
     chatAdminID:null,
     chatUserID:'5ee3b276df99b',
     client:null,
-    channel:null
+    channel:null,
+    startTime:null,
+    endTime:null
 })
 export default handleActions({
     [CHANGE_PANEL]: (state, action) => {
@@ -135,6 +140,7 @@ export default handleActions({
         return state;
     },
     [SET_CHANNEL]: (state,action) => state.set('channel',action.payload.channel),
+    [SET_STARTTIME]: (state,action) => state.set('startTime',action.payload.startTime),
     [SET_CHAT_INFO]: (state, action) => {
         state = state.set('channelID',action.payload.channelID)
         state = state.set('chatAdminID',action.payload.chatAdminID)
