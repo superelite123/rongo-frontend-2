@@ -72,31 +72,27 @@ class LiveProductsContainer extends Component {
             <div>
                 <LiveProducts products={this.state.products} handleAddProduct={this.handleAddProduct} />
                 <Dialog open={open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">出品数を入力してください</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                在庫数： { product != null?product.quantity:0}
-                                { error && <Alert severity="error">This is an error alert — check it out!</Alert>} 
-                            </DialogContentText>
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                id="name"
-                                type="number"
-                                fullWidth
-                                defaultValue={0}
-                                onChange={this.handleQtyChange}
-                            />
-                            </DialogContent>
-                        <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
-                        キャンセル
-                        </Button>
-                        <Button onClick={this.handleAdd} color="primary">
-                        出品する
-                        </Button>
-                        </DialogActions>
-                    </Dialog> 
+                    <DialogTitle id="form-dialog-title">出品数を入力してください</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            在庫数： { product != null?product.quantity:0}
+                            { error && <Alert severity="error">This is an error alert — check it out!</Alert>} 
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            type="number"
+                            fullWidth
+                            defaultValue={0}
+                            onChange={this.handleQtyChange}
+                        />
+                        </DialogContent>
+                    <DialogActions>
+                    <Button onClick={this.handleClose} color="primary">キャンセル</Button>
+                    <Button onClick={this.handleAdd} color="primary">出品する</Button>
+                    </DialogActions>
+                </Dialog> 
             </div>
         )
     }

@@ -23,9 +23,9 @@ const NavigationWrapper = withStyles({
       color: 'white',
     },
   })(BottomNavigationAction);
-const HomeFooter = ({handleAction,mode}) => {
+const HomeFooter = ({mode}) => {
     const classes = useStyles();
-    const navigationMode = mode != 0
+    const navigationMode = mode !== 0
     return (
         <NavigationWrapper style={{width: "100%"}} showLabels={true} >
             {

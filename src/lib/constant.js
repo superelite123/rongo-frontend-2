@@ -30,3 +30,5 @@ export const SHOW_LIVECHATPANEL=233
 export const BASE_URL = 'http://192.168.0.102:8000/' // 'http://192.168.0.100:8000/'
 
 export const BASE_LIVE_URL = 'http://192.168.0.102:8000/'
+export const CHAT_STREAM_KEY = 'at5dhjq8gtxz'
+export const CHAT_SECERT_KEY = 'vu4bs8rrj7mztycujf2tknda7xwdv2gjdptesrybz76h9qkprn6qandu7hpd3scg'

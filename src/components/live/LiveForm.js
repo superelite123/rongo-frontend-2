@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LiveForm = (props) => {
     const classes = useStyles();
-    const { handleChangeInput,handleTakePhoto,handleAddProduct,handleSubmit,thumbnail,products,backDrop,handleBottomTab } = props
+    const { handleChangeInput,handleTakePhoto,handleAddProduct,handleSubmit,thumbnail,products,backDrop } = props
     
     const thumbnailWrapperStyle = {
         border: '2px solid white',
@@ -96,7 +96,7 @@ const LiveForm = (props) => {
         color: 'white'
     }
     return (
-        <LivePanelTemplete mode={1}  handleAction={handleBottomTab}>
+        <LivePanelTemplete mode={1}>
             <Box component="div" className={classes.root}>
                 <Grid container>
                     
