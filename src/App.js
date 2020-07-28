@@ -75,11 +75,11 @@ class App extends Component {
             <div>
                 <ThemeProvider theme={theme}>
                     <Route exact path="/" component={LoginContainer}/>
-                    <Route path="/loginconfirm" component={ConfirmContainer}/>
-                    <Route path="/home" component={Home}/>
-                    <Route path="/live" component={Live}/>
-                    <Route path="/notify" component={Notify}/>
-                    <Route path='/live/broadcast' component={() => {
+                    <Route exact path="/loginconfirm" component={ConfirmContainer}/>
+                    <Route exact path="/home" component={Home}/>
+                    <Route exact path="/live" component={Live}/>
+                    <Route exact path="/notify" component={Notify}/>
+                    <Route exact path='/live/broadcast' component={() => {
                       window.location.href="http://localhost:5000/src/dev-view-publish";
                       return null
                     }}/>

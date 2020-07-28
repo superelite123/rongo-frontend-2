@@ -38,9 +38,9 @@ class ConfirmContainer extends Component
                 case 0:
                     storage.set('userInfo',userInfo)
                     storage.set('token',token)
-                    //history.push('/home');
-                    window.location.href="/home"
-                    //store user info and token to storage
+                    history.push('/home');
+                    // window.location.href="/home"
+                    // store user info and token to storage
                     break;
                 //expired
                 case 409:

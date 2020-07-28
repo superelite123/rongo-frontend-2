@@ -203,7 +203,7 @@ const ProductFormPanel = (props) => {
                     </Paper>
                     {portfolioError && 
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *This Field is required
+                            商品写真を追加してください。
                         </Typography>
                     }
                 </Grid>
@@ -217,7 +217,7 @@ const ProductFormPanel = (props) => {
                     <input type="text" className={classes.inputField} name="label" ref={register({required:true})}/>
                     {errors.label && 
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *This Field is required
+                            商品名を入力してください。
                         </Typography>
                     }
                 </Grid>
@@ -231,7 +231,7 @@ const ProductFormPanel = (props) => {
                     <input type="text" className={classes.inputField} name="number" ref={register({required:true})}/>
                     {errors.number && 
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *This Field is required
+                            品番を入力してください。
                         </Typography>
                     }
                 </Grid>
@@ -254,7 +254,7 @@ const ProductFormPanel = (props) => {
 
                     {tagError && 
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *This Field is required
+                        商品タグを追加してください。
                         </Typography>
                     }
                 </Grid>
@@ -292,7 +292,7 @@ const ProductFormPanel = (props) => {
                     />
                     {errors.description&& (
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *This field is required
+                        商品説明を入力してください。
                         </Typography>
                     )}
                 </Grid>
@@ -314,7 +314,7 @@ const ProductFormPanel = (props) => {
 
                     {errors.qty && 
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *This Field is required
+                        在庫数を入力してください。
                         </Typography>
                     }
                 </Grid>
@@ -350,7 +350,7 @@ const ProductFormPanel = (props) => {
                     </Paper>
                     {errors.shipDay&& (
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *This field is required
+                        発送までの日数を入力してください。
                         </Typography>
                     )}
                 </Grid>
@@ -385,7 +385,7 @@ const ProductFormPanel = (props) => {
                     </Paper>
                     {errors.shipper&& (
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *This field is required
+                        発送業者を入力してください。
                         </Typography>
                     )}
                 </Grid>
@@ -407,7 +407,7 @@ const ProductFormPanel = (props) => {
 
                     {errors.price && 
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *This Field is required
+                        商品代金（税込)を入力してください。
                         </Typography>
                     }
                 </Grid>
@@ -429,27 +429,27 @@ const ProductFormPanel = (props) => {
 
                     {errors.dFee     && 
                         <Typography className={classes.errorMessage} variant="subtitle1" gutterBottom>
-                        *This Field is required
+                        配送料を入力してください。
                         </Typography>
                     }
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container spacing={3} style={{marginTop:'30px',textAlign:"center"}}>
                         <Grid item xs={12}>
-                            <SaveButton onClick={handleSubmit((data) => onSubmit(data,1))}>登録する</SaveButton>
+                            <SaveButton onClick={handleSubmit((data) => onSubmit(data,1))}>保存する</SaveButton>
                         </Grid>
                         <Grid item xs={12}>
                             <SaveButton
                                 style={{background: 'linear-gradient(45deg, #FFFFFF 30%, #FFFFFF 90%)',color:'#BDBDBD'}}
                                 onClick={handleSubmit((data) => onSubmit(data,2))}>
-                                登録する
+                                下書きで保存する
                             </SaveButton>
                         </Grid>
                         <Grid item xs={12}>
                             <SaveButton
                                 style={{background: 'linear-gradient(45deg, #D74936 30%, #D74936 90%)'}}
                                 onClick={hanleOnDelete} disabled={deleteDisable}>
-                                登録する
+                                削除
                             </SaveButton>
                         </Grid>
                     </Grid>
