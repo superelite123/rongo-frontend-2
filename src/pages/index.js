@@ -1,3 +1,4 @@
 export { default as Home } from './Home';
 export { default as Auth } from './Auth';
 export { default as Live } from './Live';
+export { default as Notify } from './Notify';

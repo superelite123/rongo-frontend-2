@@ -31,7 +31,7 @@ const HomeFooter = ({mode}) => {
             }
             {
               navigationMode && 
-              <NavigationAction label="お知らせ" value="notification" icon={<NotificationsIcon />} />
+              <NavigationAction href='/notify' label="お知らせ" value="notification" icon={<NotificationsIcon />} />
             }
         </NavigationWrapper>
     )

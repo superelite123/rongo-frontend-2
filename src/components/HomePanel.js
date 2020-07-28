@@ -14,19 +14,17 @@ import * as homeActions from 'redux/modules/homePage';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
-  SHOW_HOMEPANEL,
   SHOW_FOLLOWPANEL,
   SHOW_PPROUCTSPANEL,
   SHOW_TRANSACTIONSPANEL,
   SHOW_LIVELISTPANEL,
   SHOW_PADDLINK,
-  SHOW_PFORM,
-  SHOW_PDETAIL,
-  SHOW_TRANSACTIONDETAIL,
   SHOW_SELLHISTORYLISTPANEL,
   SHOW_CHANGEEMAILPANEL,
   SHOW_CHANGEEPASSWORDPANEL,
-  SHOW_STOREMANAGEMENT
+  SHOW_STOREMANAGEMENT,
+  SHOW_PRIVACY,
+  SHOW_POLICY
 } from 'lib/constant'
 
 const styles = theme => ({
@@ -248,21 +246,18 @@ class HomePanel extends Component {
 
         <Grid item style={{ paddingTop: '40px' }} xs={12} >
           <ListCard text={'利用規約'}
-            panelNumber={SHOW_CHANGEEMAILPANEL}
+            panelNumber={SHOW_PRIVACY}
             panelLocation={2}
             handleClick={handleClick} />
         </Grid>
         <Grid item xs={12} >
           <ListCard text={'プライバシポリシー'}
-            panelNumber={SHOW_CHANGEEPASSWORDPANEL}
+            panelNumber={SHOW_POLICY}
             panelLocation={2}
             handleClick={handleClick} />
         </Grid>
         <Grid item xs={12} style={{ paddingBottom: '40px' }} >
-          <ListCard text={'バージョン情報'}
-            panelNumber={SHOW_CHANGEEMAILPANEL}
-            panelLocation={2}
-            handleClick={handleClick} />
+          <ListCard text={'バージョン情報'} />
         </Grid>
 
       </BasePanel>

@@ -19,6 +19,8 @@ import NotificationDetailPanelContainer from '../containers/notification/Notific
 import LiveChatPanelContainer from '../containers/live/LiveChatPanelContainer'
 import StorePanelContainer from '../containers/store/StorePanelContainer'
 import ProductDetailPanelContainer from '../containers/product/ProductDetailPanelContainer'
+import PrivacyPanel from 'components/PrivacyPanel'
+import PolicyPanel from 'components/PolicyPanel'
 import {isMobile} from "react-device-detect";
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -47,6 +49,8 @@ import {
     FIRST_PANEL_HOME,
     FIRST_PANEL_LIVE,
     FIRST_PANEL_NOTI,
+    SHOW_PRIVACY,
+    SHOW_POLICY,
     SHOW_STOREMANAGEMENT
 } from 'lib/constant'
 
@@ -111,6 +115,12 @@ class Home extends Component {
                 break;
             case SHOW_STOREMANAGEMENT:
                 secondPanel = <StorePanelContainer mode='0' />
+                break;
+            case SHOW_PRIVACY:
+                secondPanel = <PrivacyPanel mode='0' />
+                break;
+            case SHOW_POLICY:
+                secondPanel = <PolicyPanel mode='0' />
                 break;
             default:
                 secondPanel = null;

@@ -5,6 +5,7 @@ import login from './login';
 import user from './user';
 import homePage from './homePage';
 import livePage from './livePage';
+import notifyPage from './notifyPage'
 import follow from './follow/follow';
 import productList from './product/productList';
 import productForm from './product/productForm'
@@ -22,6 +23,7 @@ export default combineReducers({
     follow,
     homePage,
     livePage,
+    notifyPage,
     account,
     liveStream,
     sellHistory,

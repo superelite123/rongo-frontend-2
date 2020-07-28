@@ -1,9 +1,9 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
-import PanelTemplate from '../base/PanelTemplate'
-import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
-
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import BasePanel from 'components/base/BasePanel';
+import PanelHeader from 'components/base/PanelHeader';
+import { Grid } from "@material-ui/core"
+import {isMobile} from "react-device-detect";
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -69,36 +69,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const NotificationDetailPanel = ({ notification }) => {
+const NotificationDetailPanel = ({ notification,handleGoBack }) => {
     const classes = useStyles();
 
     return (
-        <PanelTemplate>
+        <BasePanel mode={0}>
             <Grid xs={12} item>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <Paper variant="outlined" square className={classes.header}>
-                            <Grid container className={classes.card}>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-                                    <Typography variant='h5' component="h5">
-                                        <KeyboardBackspaceIcon className={classes.searchButton} />
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={8}>
-                                    <p variant='h5' component="h5" className={classes.headerLabel}>
-                                        ニュース
-                                    </p>
-                                </Grid>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    </Grid>
-                    <Grid xs={12} item>
-                        <hr className={classes.topSeperate} />
-                    </Grid>
-                </Grid>
+                <PanelHeader               
+                    title="ニュース"
+                    leftButtonType={isMobile?2:0}
+                    rightButtonType={0} 
+                    handleGoBack={this.handleGoBack}
+                />
             </Grid>
             <Grid xs={12} item>
                 <Grid className={classes.descriptionContent} container>
@@ -113,7 +95,7 @@ const NotificationDetailPanel = ({ notification }) => {
                     </Grid>
                 </Grid>
             </Grid>
-        </PanelTemplate>
+        </BasePanel>
     )
 }
 

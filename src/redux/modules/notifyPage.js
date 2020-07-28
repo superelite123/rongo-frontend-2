@@ -3,26 +3,36 @@ import { Map, List } from 'immutable';
 import { pender } from 'redux-pender';
 import {isMobile} from "react-device-detect";
 import {
-    SHOW_LIVEFORM,
-    SHOW_LIVEPLAYER,
-    SHOW_LIVESTANDBYPANEL,
-    SHOW_LIVEPRODUCTLIST,
-    SHOW_LIVECHATPANEL
+    SHOW_HOMEPANEL,
+    FIRST_PANEL_NOTI,
+    SHOW_NOTIFICATION_DETAIL
 } from 'lib/constant'
-const CHANGE_PANEL = 'livePage/CHANGE_PANEL';
+const CHANGE_PANEL = 'notifyPage/CHANGE_PANEL';
+export const changePanel = createAction(CHANGE_PANEL);
+
 const initialState = Map({
-    panels:List([
-        SHOW_LIVEFORM,
-        SHOW_LIVEPLAYER,
-        SHOW_LIVECHATPANEL,
-    ]),
+    panels:[
+        isMobile?FIRST_PANEL_NOTI:SHOW_HOMEPANEL,
+        isMobile?0:FIRST_PANEL_NOTI,
+        isMobile?0:SHOW_NOTIFICATION_DETAIL
+    ],
 })
 export default handleActions({
     [CHANGE_PANEL]: (state, action) => {
-        state = state.set('panels', 
-            state.get('panels').update(
-                action.payload.panelIndex, item=>item=action.payload.panelNumber)
-        )
+        const {panelNumber,panelIndex} = action.payload
+        if(isMobile)
+        {
+            state = state.set('panels', 
+                state.get('panels').map((panel,index)=> panel=panelIndex === index?panelNumber:0)
+            )
+        }
+        else
+        {
+            state = state.set('panels', 
+                state.get('panels').map((panel,index)=> panel=panelIndex === index?panelNumber:panel)
+            )
+        }
+        
         return state;
     },
-})
+}, initialState)

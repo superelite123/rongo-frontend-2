@@ -15,6 +15,9 @@ export const SHOW_NOTIFICATION_DETAIL = 92
 export const SHOW_BROADCAST_LIVE = 221
 export const SHOW_LIVE_CHAT = 222
 
+export const SHOW_PRIVACY = 291
+export const SHOW_POLICY  = 292
+
 export const FIRST_PANEL_HOME = 1
 export const FIRST_PANEL_LIVE = 2
 export const FIRST_PANEL_NOTI = 3

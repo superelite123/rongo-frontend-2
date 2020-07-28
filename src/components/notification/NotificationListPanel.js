@@ -1,9 +1,10 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
-import PanelTemplate from '../base/PanelTemplate'
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
+import { Grid } from "@material-ui/core"
 import NotificationListItem from '../notification/NotificationListItem'
+import BasePanel from 'components/base/BasePanel';
+import PanelHeader from 'components/base/PanelHeader';
+import {isMobile} from "react-device-detect";
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -38,8 +39,6 @@ const useStyles = makeStyles((theme) => ({
 
 const NotificationListPanel = ({ handleClick, notificationList }) => {
 
-    const classes = useStyles();
-
     let notificationListItems = []
     for (const key in notificationList) {
       let notification = notificationList[key]
@@ -47,33 +46,16 @@ const NotificationListPanel = ({ handleClick, notificationList }) => {
     }
 
     return (
-        <PanelTemplate>
+        <BasePanel mode={0}>
             <Grid xs={12} item>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <Paper variant="outlined" square className={classes.header}>
-                            <Grid container className={classes.card}>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-                                    
-                                </Grid>
-                                <Grid item xs={8}>
-                                    <p variant='h5' component="h5" className={classes.headerLabel}>
-                                        ニュース
-                                    </p>
-                                </Grid>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    </Grid>
-                    <Grid xs={12} item>
-                        <hr className={classes.topSeperate} />
-                    </Grid>
-                </Grid>
+                <PanelHeader               
+                    title="ニュース"
+                    leftButtonType={0}
+                    rightButtonType={0}
+                />
             </Grid>
             {notificationListItems}
-        </PanelTemplate>
+        </BasePanel>
     )
 }
 
