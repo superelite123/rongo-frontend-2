@@ -21,21 +21,10 @@ class Live extends Component {
     render() {
         const { LiveActions, panelsInfo, } = this.props
         let panels = [null,null,null]
-        
-        const handleBottomTab = (event, newValue) => {
-            console.log(newValue)
-            if (newValue == "home") {
-                window.location.href='/home'
-            } else if (newValue == "live") {
-                window.location.href='/live'
-            } else {
-            }
-            
-        }
         panelsInfo.map((panelNumber,index) => {
             switch (panelNumber) {
                 case SHOW_LIVEFORM:
-                    panels[index] = <LiveFormContainer handleBottomTab={handleBottomTab} />
+                    panels[index] = <LiveFormContainer/>
                 break;
                 case SHOW_LIVEPLAYER:
                     panels[index] = <LivePlayerContainer />

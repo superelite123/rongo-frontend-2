@@ -35,7 +35,7 @@ const ProductAddLinkPanel = ({HomeActions,ProductFormActions}) => {
     }
     const classes = useStyles();
     return (
-            <BasePanel mode='0' bgColor='1'>
+            <BasePanel mode={0} bgColor='1'>
                 <Box borderColor="primary.white" border={2} className={classes.root}>
                     <Button className={classes.addButton} onClick={handleClick}>
                         <LocalMallIcon />

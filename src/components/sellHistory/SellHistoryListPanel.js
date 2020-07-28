@@ -1,9 +1,6 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
-import SectionHeader from '../typo/SectionHeader'
-import PanelTemplate from '../base/PanelTemplate'
-import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
-import SearchIcon from '@material-ui/icons/Search';
+import { Grid, GridList } from "@material-ui/core"
 import SellHistoryListItem from '../sellHistory/SellHistoryListItem'
 import PanelHeader from 'components/base/PanelHeader';
 import BasePanel from 'components/base/BasePanel';

@@ -1,9 +1,9 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
-import PanelTemplate from '../base/PanelTemplate'
-import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import { Box, Grid, Typography, Paper} from "@material-ui/core"
 import BlockButton from '../base/BlockButton'
+import BasePanel from 'components/base/BasePanel'
+import PanelHeader from 'components/base/PanelHeader'
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -110,37 +110,17 @@ const FollowDetailPanel = ({ showFollow, goBack }) => {
     }
 
     return (
-        <PanelTemplate>
-            <Grid xs={12} item>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <Paper variant="outlined" square className={classes.header}>
-                            <Grid container className={classes.card}>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-                                    <Typography variant='h5' component="h5">
-                                        <KeyboardBackspaceIcon className={classes.searchButton} onClick={() => goBack()}/>
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={8}>
-                                    <p variant='h5' component="h5" className={classes.headerLabel}>
-                                        ユーザー情報
-                                    </p>
-                                </Grid>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    </Grid>
-                    <Grid xs={12} item>
-                        <hr className={classes.topSeperate} />
-                    </Grid>
-                </Grid>
-            </Grid>
+        <BasePanel mode={0}>
+            <PanelHeader               
+                title='ユーザー情報'
+                leftButtonType={2}
+                rightButtonType={0}
+                handleLeftButton={goBack}
+            />
             <Grid xs={12} item>
                 <Paper className={classes.root}>
                     <Box className={classes.thumbnail} component='div'>
-                        <img className={classes.thumbnail} src={showFollow.thumbnail} />
+                        <img alt="" className={classes.thumbnail} src={showFollow.thumbnail} />
                     </Box>
                     <Box className={classes.descriptionWrapper} component='div'>
                         <Grid className={classes.descriptionContent} container>
@@ -187,7 +167,7 @@ const FollowDetailPanel = ({ showFollow, goBack }) => {
                     </Paper>
                 </Grid>
             </Grid>
-        </PanelTemplate>
+        </BasePanel>
     )
 }
 

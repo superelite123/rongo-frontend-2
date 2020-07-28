@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles'
 import { blue, indigo } from '@material-ui/core/colors'
-import { Home, Auth,Live } from 'pages';
+import { Home,Live, Notify } from 'pages';
 import { LoginContainer, ConfirmContainer } from 'containers/auth'
 import storage from 'lib/storage';
 import { connect } from 'react-redux';
@@ -78,6 +78,7 @@ class App extends Component {
                     <Route path="/loginconfirm" component={ConfirmContainer}/>
                     <Route path="/home" component={Home}/>
                     <Route path="/live" component={Live}/>
+                    <Route path="/notify" component={Notify}/>
                     <Route path='/live/broadcast' component={() => {
                       window.location.href="http://localhost:5000/src/dev-view-publish";
                       return null

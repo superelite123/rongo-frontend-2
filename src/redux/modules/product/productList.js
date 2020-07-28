@@ -10,12 +10,14 @@ const SHOW_PRODUCT_DETAIL = 'product/SHOW_PRODUCT_DETAIL'
 const SHOW_PRODUCT_TYPE = 'product/SHOW_PRODUCT_TYPE'
 const TOGGEL_LOADING_STATE = 'product/TOGGEL_LOADING_STATE'
 const DELETE_PRODUCTS = 'product/DELETE_PRODUCTS'
+const STAGE_PROUCT = 'product/STAGE_PROUCT'
 export const getProducts = createAction(GET_PRODUCTS, ProductAPI.getProducts);
 export const showProduct = createAction(SHOW_PRODUCT_DETAIL);
 export const getProductDetail = createAction(GET_PRODUCT_DETAIL, ProductAPI.getProductDetail); // { email, password }
 export const changeCurrentType = createAction(SHOW_PRODUCT_TYPE);
 export const toggleLoadingState = createAction(TOGGEL_LOADING_STATE)
 export const deleteProducts = createAction(DELETE_PRODUCTS,ProductAPI.deleteProducts)
+export const stageProduct = createAction(STAGE_PROUCT,ProductAPI.stageProduct)
 const initialState = Map({
     productList: null,
     showProduct: null,
@@ -81,6 +83,13 @@ export default handleActions({
             console.log(product)
             return state.set('productDetail', product)            
         }
+    }),
+    ...pender({
+        type: STAGE_PROUCT,
+        onSuccess: (state, action) => state.set('productList',state.get('productList').map(
+            product => 
+                product.id == action.payload.data.id?{...product,status:action.payload.data.status}:product
+        ))
     })
 
 }, initialState)

@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import SearchIcon from '@material-ui/icons/Search';
-import Typography from '@material-ui/core/Typography';
 import GridList from '@material-ui/core/GridList';
 import ProductListItem from './ProductListItem'
-
 import BasePanel from 'components/base/BasePanel';
 import PanelHeader from 'components/base/PanelHeader';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 const styles = theme => ({
   root: {
     height: '100%',
@@ -57,8 +58,9 @@ class ProductListPanel extends Component {
 
   render() {
     const { classes, productList, handleClick, 
-            switchingType, type,mode,isLoading, deleteMode, 
-            handleSelectProduct, toggleDeleteMode, handleStageProduct } = this.props;
+            switchingType, type,isLoading, deleteMode, 
+            handleSelectProduct, toggleDeleteMode, handleStageProduct,
+            handleDelete,confirmDelete,handleCloseConfirmDialog } = this.props;
 
     let productListItems = []
     for (const key in productList){
@@ -72,7 +74,7 @@ class ProductListPanel extends Component {
                               handleStageProduct={handleStageProduct} />)
     }
     return (
-      <BasePanel mode={mode}>
+      <BasePanel mode={0}>
         <Grid xs={12} item>
             <PanelHeader 
               title="商品管理"
@@ -98,6 +100,27 @@ class ProductListPanel extends Component {
         <Backdrop className={classes.backdrop} open={isLoading}>
           <CircularProgress color="inherit" />
         </Backdrop>
+            <Dialog
+                open={confirmDelete}
+                onClose={handleCloseConfirmDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"放送を開始しますか？"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    放送を開始しますか？
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleCloseConfirmDialog} color="primary">
+                    キャンセル
+                </Button>
+                <Button onClick={handleDelete} color="primary" autoFocus>
+                    はい
+                </Button>
+                </DialogActions>
+            </Dialog>
       </BasePanel>
     );
   }

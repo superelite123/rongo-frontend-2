@@ -30,6 +30,8 @@ class LiveFormContainer extends Component {
         this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVEPRODUCTLIST,panelIndex:2})
     }
     componentDidMount(){
+        const {LiveActions} = this.props
+        LiveActions.setStartTime({startTime:Date.now()})
     }
     handleChangeInput = (e) => {
         this.setState({
@@ -52,29 +54,28 @@ class LiveFormContainer extends Component {
     saveLive = async () => {
         const token = storage.get('token');
         
-        const postData = {
-            title:this.state.title,
-            tag:this.state.tag,
-            thumbnail:this.state.thumbnail.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
-            //products:[this.props.products]
-            token: token,
-            products:[]
-        }
-
+        // const postData = {
+        //     title:this.state.title,
+        //     tag:this.state.tag,
+        //     thumbnail:this.state.thumbnail.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
+        //     //products:[this.props.products]
+        //     token: token,
+        //     products:[]
+        // }
+        const postData = {id:1}
         LiveApi.saveLive(postData).then(
             (res) => {
                 this.setState({backDrop:false})
-                const {application_name,sdp_url,stream_name} = res.data.liveData
-                const id = res.data.id;
-                console.log(id)
+                const {id,channel_id,cadmin_id,chat_user_id} = res.data
                 this.props.LiveActions.updateLiveID(id)
                 this.props.LiveActions.updateStatus(1)
+                this.props.LiveActions.setChatInfo({channelID:channel_id,chatAdminID:cadmin_id,chatUserID:chat_user_id})
                 this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVECHATPANEL,panelIndex:2})
-                console.log('hi')
-                window.open(
-                            BASE_LIVE_URL + 'webrtc-examples/src/dev-view-publish.html?url=' + sdp_url + 
-                            '&appname=' + application_name + 
-                            '&streamname=' + stream_name, '_blank');
+                // const {application_name,sdp_url,stream_name} = res.data.liveData
+                // window.open(
+                //             BASE_LIVE_URL + 'webrtc-examples/src/dev-view-publish.html?url=' + sdp_url + 
+                //             '&appname=' + application_name + 
+                //             '&streamname=' + stream_name, '_blank');
             },
             (e) => {
                 this.setState({backDrop:false})
@@ -83,11 +84,12 @@ class LiveFormContainer extends Component {
     }
     handleSubmit = () => {
         const {title,tag,thumbnail} = this.state
-        if(title === '' || tag === '' || thumbnail === null)
-        {
-            this.setState({error:true})
-            return
-        }
+        // if(title === '' || tag === '' || thumbnail === null)
+        // {
+        //     this.setState({error:true})
+        //     return
+        // }
+        this.setState({backDrop:true})
         this.setState({confirmOpen:true})
     }
     handleClose = () => {

@@ -5,7 +5,6 @@ import ProductListPanel from 'components/product/ProductListPanel'
 import * as homeActions from 'redux/modules/homePage';
 import * as productListActions from 'redux/modules/product/productList';
 import storage from 'lib/storage'
-import * as ProductApi from 'lib/api/product';
 
 class ProductListPanelContainer extends Component {
 
@@ -14,7 +13,8 @@ class ProductListPanelContainer extends Component {
         this.state = {
             deleteMode:false,
             searchMode:false,
-            selectedProducts:[]
+            selectedProducts:[],
+            confirmDelete:false
         }
     }
 
@@ -35,27 +35,33 @@ class ProductListPanelContainer extends Component {
     }
     toggleDeleteMode = () => {
         const { selectedProducts, deleteMode} = this.state
-        const {ProductActions} = this.props
         if(selectedProducts.length === 0)
         {
             this.setState({deleteMode:!deleteMode})
         }
         else
         {
-            ProductActions.deleteProducts({IDs:selectedProducts}).then(
-                (res) => {
-                    this.setState({selectedProducts:[]})
-                },
-                (e) => {
-
-                }
-            )
+            this.setState({confirmDelete:true})
         }
     }
     handleDelete = () => {
+        this.setState({confirmDelete:false})
+        const { selectedProducts } = this.state
+        const {ProductActions} = this.props
+        ProductActions.deleteProducts({IDs:selectedProducts}).then(
+            (res) => {
+                this.setState({selectedProducts:[]})
+            },
+            (e) => {
+
+            }
+        )
     }
     handleStageProduct = (productID) => {
-        console.log(productID)
+        const {ProductActions} = this.props
+        this.props.ProductActions.toggleLoadingState(true)
+        ProductActions.stageProduct({id:productID})
+        this.props.ProductActions.toggleLoadingState(false)
     }
     handleSelectProduct = (e) => {
         e.stopPropagation();
@@ -116,6 +122,9 @@ class ProductListPanelContainer extends Component {
                 handleSelectProduct={this.handleSelectProduct}
                 toggleDeleteMode={this.toggleDeleteMode}
                 handleStageProduct={this.handleStageProduct}
+                confirmDelete={this.state.confirmDelete}
+                handleCloseConfirmDialog={this.handleCloseConfirmDialog}
+                handleDelete={this.handleDelete}
             />
         )
     }

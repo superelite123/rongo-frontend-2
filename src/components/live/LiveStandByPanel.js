@@ -1,6 +1,7 @@
 import React from 'react'
 import {isMobile} from "react-device-detect"
 import LivePanelTemplete from '../base/LivePanelTemplete'
+
 const LiveStandByPanel = () => {
     const widthValue = isMobile?'100%':'100%'
     const rootStyle = {

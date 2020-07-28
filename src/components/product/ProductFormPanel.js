@@ -1,14 +1,17 @@
-import React,{ useEffect } from 'react'
+import React from 'react'
 import {makeStyles,withStyles } from '@material-ui/styles'
 import BasePanel from 'components/base/BasePanel';
-import DefaultButton from '../base/DefaultButton'
 import PanelHeader from 'components/base/PanelHeader';
-import { Grid,Typography, Box, Paper, TextField, MenuItem, Button} from "@material-ui/core"
-import { TakePhoto, CustomTextField, TagButton} from '../typo'
+import { Grid,Typography, Paper, TextField, MenuItem, Button} from "@material-ui/core"
+import { TakePhoto, TagButton} from '../typo'
 import TagsInput from 'react-tagsinput'
 import { useForm, Controller  } from 'react-hook-form';
 import '../store/tagInput.css'
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 const useStyles = makeStyles((theme) => ({
     root:{
         '& .MuiTextField-root': {
@@ -132,8 +135,8 @@ const SaveButton = withStyles({
 const ProductFormPanel = (props) => {
     const classes = useStyles();
     const { handleChangePortfolio,handleSave,handleDelete,handleGoBack,
-            handleTagChange,handleSuggestTagChange,deleteDisable,
-            initData,mode} = props
+            handleTagChange,handleSuggestTagChange,deleteDisable,initData,
+            confirmDelete, handleCloseConfirmDialog, hanleOnDelete} = props
     const { portfolios,label,number,tags,suggestTags,
             description,qty,shipDay,shipDays,shipper,shippers,price,dFee,portfolioError,tagError} = initData
     
@@ -163,12 +166,11 @@ const ProductFormPanel = (props) => {
         },
     });
     const onSubmit = (data,mode) => {
-        console.log(mode)
         handleSave(data,mode)
     }
     //End Product Form making
     return (
-        <BasePanel mode={mode}>
+        <BasePanel mode={0}>
             <PanelHeader 
               title="商品登録"
               leftButtonType={2}
@@ -431,29 +433,50 @@ const ProductFormPanel = (props) => {
                         </Typography>
                     }
                 </Grid>
-                    <Grid item xs={12}>
-                        <Grid container spacing={3} style={{marginTop:'30px',textAlign:"center"}}>
-                            <Grid item xs={12}>
-                                <SaveButton onClick={handleSubmit((data) => onSubmit(data,1))}>登録する</SaveButton>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <SaveButton
-                                    style={{background: 'linear-gradient(45deg, #FFFFFF 30%, #FFFFFF 90%)',color:'#BDBDBD'}}
-                                    onClick={handleSubmit((data) => onSubmit(data,2))}>
-                                    登録する
-                                </SaveButton>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <SaveButton
-                                    style={{background: 'linear-gradient(45deg, #D74936 30%, #D74936 90%)'}}
-                                    onClick={handleDelete} disabled={deleteDisable}>
-                                    登録する
-                                </SaveButton>
-                            </Grid>
+                <Grid item xs={12}>
+                    <Grid container spacing={3} style={{marginTop:'30px',textAlign:"center"}}>
+                        <Grid item xs={12}>
+                            <SaveButton onClick={handleSubmit((data) => onSubmit(data,1))}>登録する</SaveButton>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <SaveButton
+                                style={{background: 'linear-gradient(45deg, #FFFFFF 30%, #FFFFFF 90%)',color:'#BDBDBD'}}
+                                onClick={handleSubmit((data) => onSubmit(data,2))}>
+                                登録する
+                            </SaveButton>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <SaveButton
+                                style={{background: 'linear-gradient(45deg, #D74936 30%, #D74936 90%)'}}
+                                onClick={hanleOnDelete} disabled={deleteDisable}>
+                                登録する
+                            </SaveButton>
                         </Grid>
                     </Grid>
+                </Grid>
             </Grid>
             </form>
+            <Dialog
+                open={confirmDelete}
+                onClose={handleCloseConfirmDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"放送を開始しますか？"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    放送を開始しますか？
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleCloseConfirmDialog} color="primary">
+                    キャンセル
+                </Button>
+                <Button onClick={handleDelete} color="primary" autoFocus>
+                    はい
+                </Button>
+                </DialogActions>
+            </Dialog>
         </BasePanel>
       )
 }

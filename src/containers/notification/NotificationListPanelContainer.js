@@ -2,9 +2,9 @@ import React,{Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as notiActions from 'redux/modules/notification/notification';
+import * as notifyActions from 'redux/modules/notifyPage';
 import NotificationListPanel from 'components/notification/NotificationListPanel'
-import * as homeActions from 'redux/modules/homePage';
-import {SHOW_NOTIFICATION_DETAIL} from 'lib/constant' 
+import {SHOW_HOMEPANEL,SHOW_NOTIFICATION_DETAIL} from 'lib/constant' 
 import storage from 'lib/storage'
 
 class NotificationListPanelContainer extends Component
@@ -25,20 +25,23 @@ class NotificationListPanelContainer extends Component
         this.getNotifications()
     }
     
+    handleGoBack = () => {
+        const {NotifyActions} = this.props
+        NotifyActions.changePanel({panelNumber:SHOW_HOMEPANEL,panelIndex:1})
+    }
     render()
     {
-        const { NotiActions, HomeActions, notificationList } = this.props;
-
-        console.log(notificationList)
+        const { NotiActions, notificationList } = this.props;
 
         const handleClick = (notification) => {
             console.log(notification)
             NotiActions.showNotificationDetail(notification)
-            HomeActions.changeSecondStatus(SHOW_NOTIFICATION_DETAIL)
         }
 
         return (
-            <NotificationListPanel notificationList= { notificationList } handleClick={ handleClick } />
+            <NotificationListPanel 
+                notificationList= { notificationList } 
+                handleLeftButton={ handleClick } />
         )
     }
 }
@@ -49,6 +52,6 @@ export default connect(
     }),
     (dispatch) => ({
         NotiActions: bindActionCreators(notiActions, dispatch),
-        HomeActions: bindActionCreators(homeActions, dispatch),
+        NotifyActions: bindActionCreators(notifyActions, dispatch),
     })
 )((NotificationListPanelContainer));

@@ -5,29 +5,36 @@ import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
 import * as liveActions from 'redux/modules/live/liveStream';
 import storage from 'lib/storage'
+import * as baseActions from 'redux/modules/base';
+import {SHOW_HOMEPANEL,} from 'lib/constant'
 
 class LiveListPanelContainer extends Component
 {
 
     getLiveList = async () => {
-        const { LiveActions,  liveStreamList} = this.props;
+        const { LiveActions,  liveStreamList,BaseActions} = this.props;
 
         try {
+            BaseActions.setPageLoading(true)
             const token = storage.get('token');
             await LiveActions.getLiveStreams(token);
-            console.log(liveStreamList)
+            BaseActions.setPageLoading(false)
         } catch (e) {
-            console.log(e)
+            BaseActions.setPageLoading(false)
         }
     }
 
+    handleGoBack = () => {
+        const {HomeActions} = this.props
+        HomeActions.changeFirstStatus(SHOW_HOMEPANEL)
+    }
     componentDidMount() {
         this.getLiveList()
     }
 
     render() {
 
-        const { HomeActions, LiveActions, liveStreamList } = this.props;
+        const { HomeActions, liveStreamList } = this.props;
 
         const handleClick = (panelNumber, panelType) => {
             console.log(panelNumber + ',' + panelType)
@@ -50,7 +57,8 @@ class LiveListPanelContainer extends Component
         }
 
         return (
-            <LiveListPanel handleClick={handleClick} liveStreamList={ liveStreamList } />
+            <LiveListPanel handleClick={handleClick} liveStreamList={ liveStreamList }
+            handleGoBack={this.handleGoBack} />
         )
     }
 }
@@ -62,5 +70,6 @@ export default connect(
     (dispatch) => ({
         HomeActions: bindActionCreators(homeActions, dispatch),
         LiveActions: bindActionCreators(liveActions, dispatch),
+        BaseActions: bindActionCreators(baseActions, dispatch),
     })
 )((LiveListPanelContainer));

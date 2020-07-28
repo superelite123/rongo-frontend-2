@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { makeStyles, withStyles } from '@material-ui/styles'
-import SectionHeader from '../typo/SectionHeader'
-import PanelTemplate from '../base/PanelTemplate'
 import {
     Grid, Avatar, IconButton, Paper,
     Badge, Typography, Button, Box,
@@ -14,6 +12,11 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import AddIcon from '@material-ui/icons/Add';
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
 import './tagInput.css'
+import PanelHeader from 'components/base/PanelHeader';
+import BasePanel from 'components/base/BasePanel';
+import {isMobile} from "react-device-detect";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     listPaper: {
@@ -74,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#BDBDBD',
         height: 48,
         padding: '0 60px',
+        marginLeft:isMobile?'9%':'18%',
         marginTop: '30px',
     },
     listDescImage: {
@@ -95,6 +99,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'white',
         height: 48,
         padding: '0 60px',
+        marginLeft:isMobile?'25%':'30%'
     },
     nameField: {
         border: '0 solid black',
@@ -126,18 +131,9 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '12px',
     }
 }));
-
-const useTextStyle = makeStyles((theme) => ({
-    underline: {
-        "&&&:before": {
-            borderBottom: "none"
-        },
-        "&&:after": {
-            borderBottom: "none"
-        }
-    }
-}))
-
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const SmallAvatar = withStyles((theme) => ({
     root: {
         width: 42,
@@ -149,12 +145,14 @@ const SmallAvatar = withStyles((theme) => ({
     },
 }))(Avatar);
 
-const BackgroundWrapper = ({ onMouseEnter, onMouseLeave, handleChange, handleRemove, url, isHovering, index }) => {
+const BackgroundWrapper = ({ onMouseEnter, onMouseLeave, handleChange, handleRemove, url, isHovering, index,attrName }) => {
     const sectionStyle = {
         width: "100%",
         height: "200px",
         backgroundColor: 'rgb(0,0,0,0.2)',
         background: `url(${url})`,
+        backgroundSize: '100% 100%',
+        backgroundRepeat: 'no-repeat',
         position: 'relative',
         borderBottom: '2px solid white'
     };
@@ -168,11 +166,6 @@ const BackgroundWrapper = ({ onMouseEnter, onMouseLeave, handleChange, handleRem
         display: 'flex',
         justifyContent: 'center'
     }
-    const cameraBtnStyle = {
-        color: 'white',
-        fontSize: '12px',
-        height: '50px'
-    }
     const deleteBtnStyle = {
         color: '#D74936',
         fontSize: '12px',
@@ -185,21 +178,23 @@ const BackgroundWrapper = ({ onMouseEnter, onMouseLeave, handleChange, handleRem
         fontWeight: '500',
         fontSize: '12px',
     }
-
+    const attr = attrName + index
     return (
         <div style={sectionStyle} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
             {
                 isHovering &&
                 <div style={layerStyle}>
-                    <input  accept="image/*" hidden={true} id="fileImage" type="file"
+                    <input  accept="image/*" hidden={true} id={attr} type="file"
                             onChange={(e) => handleChange(e, index)} />
                     <div style={{ margin: 'auto' }} >
+                    <label htmlFor={attr}>
                         <IconButton aria-label="upload picture" component="span" style={{ color: 'white' }}>
                             <div col>
                                 <PhotoCamera row />
                                 <div col style={buttonTitleStyle}>変更</div>
                             </div>
                         </IconButton>
+                    </label>
 
                         <IconButton aria-label="takePhoto" component="span" style={deleteBtnStyle} onClick={() => handleRemove(index)}>
                             <div col>
@@ -225,17 +220,18 @@ const StorePanel = ({ nickname, avatar, description, tags, explantions, handleTa
     handleChangeExplantion, handleRemoveExplantion,
     selectedExplantion,
     handleAddBackground, handleChangeBackground, handleRemoveBackground,
-    handleSubmit
+    handleSubmit,onGoBack,
+    handleCloseSnackbar,saveSuccess
 }) => {
     const classes = useStyles()
-    const styles = useTextStyle()
     const explantionStyle = selectedExplantion != null ? `url(${selectedExplantion})` : '#DEDCD4'
 
     const selectedExplantionStyle = {
         width: '93%',
+        margin:'auto',
         padding: '170px 0px',
         background: explantionStyle,
-        backgroundRepeat: 'no-repeat',
+        backgroundRepeat: '100% 100%',
         backgroundSize: 'auto',
     };
 
@@ -252,10 +248,14 @@ const StorePanel = ({ nickname, avatar, description, tags, explantions, handleTa
         fontSize: '12px',
         padding: '7px 12px'
     }
-
     return (
-        <PanelTemplate>
-            <SectionHeader title={'ストア管理'} />
+        <BasePanel mode={0}>
+            <PanelHeader 
+              title="ストア管理"
+              leftButtonType={isMobile?2:0}
+              rightButtonType={0}
+              handleLeftButton={onGoBack}
+            />
             <Grid container>
                 <Grid item xs={12}>
                     <Paper className={classes.listPaper} variant="outlined" square>
@@ -282,6 +282,7 @@ const StorePanel = ({ nickname, avatar, description, tags, explantions, handleTa
                                         fontSize={16}
                                         fontStyle="normal"
                                         fontFamily="Noto Sans JP"
+                                        textAlign="center"
                                     >{nickname}</Box>
                                 </Typography>
                             </Grid>
@@ -315,14 +316,16 @@ const StorePanel = ({ nickname, avatar, description, tags, explantions, handleTa
                         <div style={selectedExplantionStyle}>
                             <input accept="image/*" hidden={true} id="fileDescriptionImage" type="file"
                                 onChange={handleAddExplantion} />
-                            <label htmlFor="fileDescriptionImage">
-                                <IconButton style={{ color: 'white' }} aria-label="upload picture" component="span">
-                                    <div col>
-                                        <PhotoCamera row />
-                                        <div col className={classes.buttonTitleStyle}>追加</div>
-                                    </div>
-                                </IconButton>
-                            </label>
+                            <div style={{width:'100%',marginLeft:'42%'}}>
+                                <label htmlFor="fileDescriptionImage">
+                                    <IconButton style={{ color: 'white' }} aria-label="upload picture" component="span">
+                                        <div col>
+                                            <PhotoCamera row />
+                                            <div col className={classes.buttonTitleStyle}>追加</div>
+                                        </div>
+                                    </IconButton>
+                                </label>
+                            </div>
                         </div>
 
                         <Button className={classes.addBtn} onClick={handleAdd1Explantion} variant="outlined" size="large">
@@ -337,12 +340,13 @@ const StorePanel = ({ nickname, avatar, description, tags, explantions, handleTa
                             onMouseEnter={() => handleEMouseEnter(index)}
                             onMouseLeave={() => handleEMouseLeave(index)}
                             url={el}
-                            isHovering={true}
-                            // isHovering={isEHovered[index]}
+                            //isHovering={true}
+                            isHovering={isEHovered[index]}
                             handleChange={handleChangeExplantion}
                             handleRemove={handleRemoveExplantion}
                             index={index}
                             key={index}
+                            attrName='explantion'
                         />
                     ))}
                 </Grid>
@@ -370,18 +374,21 @@ const StorePanel = ({ nickname, avatar, description, tags, explantions, handleTa
                             index={index}
                             isHovering={isBGHovered[index]}
                             key={index}
+                            attrName='background'
                         />
                     ))}
                     <div className={classes.BGTakePhoto}>
                         <input accept="image/*" hidden={true} onChange={handleAddBackground} id="fileBGImage" type="file" />
-                        <label htmlFor="fileBGImage">
-                            <IconButton style={{ color: 'white' }} aria-label="upload picture" component="span">
-                                <div col>
-                                    <PhotoCamera row />
-                                    <div col className={classes.buttonTitleStyle}>追加</div>
-                                </div>
-                            </IconButton>
-                        </label>
+                        <div style={{marginLeft:'42%'}}>
+                            <label htmlFor="fileBGImage">
+                                <IconButton style={{ color: 'white' }} aria-label="upload picture" component="span">
+                                    <div col>
+                                        <PhotoCamera row />
+                                        <div col className={classes.buttonTitleStyle}>追加</div>
+                                    </div>
+                                </IconButton>
+                            </label>
+                        </div>
                     </div>
                 </Grid>
 
@@ -390,9 +397,13 @@ const StorePanel = ({ nickname, avatar, description, tags, explantions, handleTa
                         <Button onClick={handleSubmit} className={classes.confirmBtn} variant="outlined">変更する</Button>
                     </Paper>
                 </Grid>
-
+                <Snackbar anchorOrigin={{ vertical:'top', horizontal:'center' }} style={{marginTop:'50px'}} open={saveSuccess} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                    <Alert onClose={handleCloseSnackbar} severity="success">
+                        This is a success message!
+                    </Alert>
+                </Snackbar>
             </Grid>
-        </PanelTemplate>
+        </BasePanel>
     )
 }
 

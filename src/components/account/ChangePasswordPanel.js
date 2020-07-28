@@ -6,6 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 import BasePanel from 'components/base/BasePanel';
 import PanelHeader from 'components/base/PanelHeader';
 import { useForm  } from 'react-hook-form';
+import {isMobile} from "react-device-detect"
 const useStyles = makeStyles((theme) => ({
     header: {
         paddingTop: 'px',
@@ -90,10 +91,10 @@ const ChangePasswordPanel = ({ showFollow,onSubmit, onReturn, onCloseAlert, hasU
     //generate form
     const { register, handleSubmit, watch,errors } = useForm();
     return (
-        <BasePanel>
+        <BasePanel mode={0}>
             <PanelHeader 
               title="メールアドレス変更"
-              leftButtonType={2}
+              leftButtonType={isMobile?2:0}
               rightButtonType={0}
               handleLeftButton={onReturn}
             />

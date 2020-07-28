@@ -5,14 +5,19 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
 import * as followActions from 'redux/modules/follow/follow';
+import * as baseActions from 'redux/modules/base';
+import {isMobile} from "react-device-detect";
+import {SHOW_HOMEPANEL,} from 'lib/constant'
 
 class FollowListPanelContainer extends Component
 {
     getFollowList = async () => {
-        const { HomeActions, FollowActions } = this.props;
+        const { FollowActions, BaseActions } = this.props;
+        BaseActions.setPageLoading(true)
         try {
             const token = storage.get('token');
             await FollowActions.getFollows(token);
+            BaseActions.setPageLoading(false)
         } catch (e) {
             console.log(e)
         }
@@ -22,7 +27,13 @@ class FollowListPanelContainer extends Component
     componentDidMount() {
         this.getFollowList();
     }
-
+    handleGoBack = () => {
+        if(isMobile)
+        {
+            const {HomeActions} = this.props
+            HomeActions.changeFirstStatus(SHOW_HOMEPANEL)
+        }
+    }
     render() {
 
         const { HomeActions, FollowActions, followList, mode } = this.props;
@@ -47,7 +58,11 @@ class FollowListPanelContainer extends Component
         }
 
         return (
-            <FollowListPanel mode={mode} handleClick={handleClick} followList={followList} />
+            <FollowListPanel 
+                    mode={mode} 
+                    handleClick={handleClick} 
+                    onBack={this.handleGoBack} 
+                    followList={followList} />
         )
     }
 }
@@ -62,6 +77,7 @@ export default connect(
     }),
     (dispatch) => ({
         HomeActions: bindActionCreators(homeActions, dispatch),
-        FollowActions: bindActionCreators(followActions, dispatch)
+        FollowActions: bindActionCreators(followActions, dispatch),
+        BaseActions: bindActionCreators(baseActions, dispatch)
     })
 )((FollowListPanelContainer));

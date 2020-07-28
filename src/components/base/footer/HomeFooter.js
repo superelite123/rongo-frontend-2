@@ -5,12 +5,6 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import HomeIcon from '@material-ui/icons/Home';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-const useStyles = makeStyles((theme) => ({
-    root: {
-        background: '#333333',
-        height:'100%'
-    },
-}))
 const NavigationWrapper = withStyles({
     root: {
       backgroundColor: '#333333',
@@ -22,10 +16,9 @@ const NavigationWrapper = withStyles({
     root: {
       color: 'white',
     },
-  })(BottomNavigationAction);
-const HomeFooter = ({handleAction,mode}) => {
-    const classes = useStyles();
-    const navigationMode = mode != 0
+})(BottomNavigationAction);
+const HomeFooter = ({mode}) => {
+    const navigationMode = mode !== 0
     return (
         <NavigationWrapper style={{width: "100%"}} showLabels={true} >
             {
@@ -38,7 +31,7 @@ const HomeFooter = ({handleAction,mode}) => {
             }
             {
               navigationMode && 
-              <NavigationAction label="お知らせ" value="notification" icon={<NotificationsIcon />} />
+              <NavigationAction href='/notify' label="お知らせ" value="notification" icon={<NotificationsIcon />} />
             }
         </NavigationWrapper>
     )

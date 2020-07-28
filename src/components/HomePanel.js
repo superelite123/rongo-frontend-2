@@ -14,19 +14,17 @@ import * as homeActions from 'redux/modules/homePage';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
-  SHOW_HOMEPANEL,
   SHOW_FOLLOWPANEL,
   SHOW_PPROUCTSPANEL,
   SHOW_TRANSACTIONSPANEL,
   SHOW_LIVELISTPANEL,
   SHOW_PADDLINK,
-  SHOW_PFORM,
-  SHOW_PDETAIL,
-  SHOW_TRANSACTIONDETAIL,
   SHOW_SELLHISTORYLISTPANEL,
   SHOW_CHANGEEMAILPANEL,
   SHOW_CHANGEEPASSWORDPANEL,
-  SHOW_STOREMANAGEMENT
+  SHOW_STOREMANAGEMENT,
+  SHOW_PRIVACY,
+  SHOW_POLICY
 } from 'lib/constant'
 
 const styles = theme => ({
@@ -124,6 +122,10 @@ class HomePanel extends Component {
           HomeActions.changeThirdStatus(0)
           break;
         case 2:
+          if(SHOW_PPROUCTSPANEL === panelNumber)
+          {
+            HomeActions.changeThirdStatus(SHOW_PADDLINK)
+          }
           HomeActions.changeSecondStatus(panelNumber)
           break;
         case 3:
@@ -134,13 +136,6 @@ class HomePanel extends Component {
       }
 
     }
-
-    let avatar
-    if (userInfo.thumbnail == null) {
-      avatar = <Avatar className={classes.avatar}></Avatar>
-    } else {
-      avatar = <img className={classes.avatar} src={userInfo.thumbnail} />
-    }
     
     let like =  0, dislike = 0, notBad = 0
     if (userInfo.evaluation != null) {
@@ -148,13 +143,12 @@ class HomePanel extends Component {
         dislike = userInfo.evaluation.dislike;
         notBad = userInfo.evaluation.notBad;
     }
-
     return (
       <BasePanel mode={mode}>
 
         <Grid xs={12} item>
           <Paper variant="outlined" square elevation={1} className={classes.avatarWrapper}>
-            {avatar}
+            <Avatar className={classes.avatar} src={userInfo.thumbnail}></Avatar>
             <Typography component="h1" variant="h5" className={classes.userName}>
               {userInfo.nickname}
             </Typography>
@@ -252,21 +246,18 @@ class HomePanel extends Component {
 
         <Grid item style={{ paddingTop: '40px' }} xs={12} >
           <ListCard text={'利用規約'}
-            panelNumber={SHOW_CHANGEEMAILPANEL}
+            panelNumber={SHOW_PRIVACY}
             panelLocation={2}
             handleClick={handleClick} />
         </Grid>
         <Grid item xs={12} >
           <ListCard text={'プライバシポリシー'}
-            panelNumber={SHOW_CHANGEEPASSWORDPANEL}
+            panelNumber={SHOW_POLICY}
             panelLocation={2}
             handleClick={handleClick} />
         </Grid>
         <Grid item xs={12} style={{ paddingBottom: '40px' }} >
-          <ListCard text={'バージョン情報'}
-            panelNumber={SHOW_CHANGEEMAILPANEL}
-            panelLocation={2}
-            handleClick={handleClick} />
+          <ListCard text={'バージョン情報'} />
         </Grid>
 
       </BasePanel>
@@ -278,7 +269,7 @@ export default connect(
     firstPanelVisible: state.homePage.get('firstPanel'),
     secondPanelVisible: state.homePage.get('seconPanel'),
     thirdPanelVisible: state.homePage.get('thirdPanel'),
-    userInfo: state.user.get('userInfo')
+    userInfo: state.user.get('userInfo').toJS()
   }),
   (dispatch) => ({
     HomeActions: bindActionCreators(homeActions, dispatch),
