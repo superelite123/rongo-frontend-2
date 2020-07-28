@@ -26,7 +26,7 @@ export const changeThirdStatus = createAction(CHANGE_THIRD_STATUS);
 
 const initialState = Map({
     firstPanel:isMobile? 11:FIRST_PANEL_HOME,
-    seconPanel:isMobile? 0:SHOW_SELLHISTORYLISTPANEL,
+    seconPanel:isMobile? 0:SHOW_STOREMANAGEMENT,
     thirdPanel:isMobile? 0:SHOW_PADDLINK
 })
 

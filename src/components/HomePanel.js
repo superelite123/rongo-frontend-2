@@ -138,13 +138,6 @@ class HomePanel extends Component {
       }
 
     }
-
-    let avatar
-    if (userInfo.thumbnail == null) {
-      avatar = <Avatar className={classes.avatar}></Avatar>
-    } else {
-      avatar = <img className={classes.avatar} src={userInfo.thumbnail} />
-    }
     
     let like =  0, dislike = 0, notBad = 0
     if (userInfo.evaluation != null) {
@@ -152,13 +145,12 @@ class HomePanel extends Component {
         dislike = userInfo.evaluation.dislike;
         notBad = userInfo.evaluation.notBad;
     }
-
     return (
       <BasePanel mode={mode}>
 
         <Grid xs={12} item>
           <Paper variant="outlined" square elevation={1} className={classes.avatarWrapper}>
-            {avatar}
+            <Avatar className={classes.avatar} src={userInfo.thumbnail}></Avatar>
             <Typography component="h1" variant="h5" className={classes.userName}>
               {userInfo.nickname}
             </Typography>
@@ -282,7 +274,7 @@ export default connect(
     firstPanelVisible: state.homePage.get('firstPanel'),
     secondPanelVisible: state.homePage.get('seconPanel'),
     thirdPanelVisible: state.homePage.get('thirdPanel'),
-    userInfo: state.user.get('userInfo')
+    userInfo: state.user.get('userInfo').toJS()
   }),
   (dispatch) => ({
     HomeActions: bindActionCreators(homeActions, dispatch),

@@ -1,14 +1,12 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
-import PanelTemplate from '../base/PanelTemplate'
 import Alert from '@material-ui/lab/Alert';
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
-import { TakePhoto, CustomTextField, TagButton, CustomTextArea } from '../typo'
+import { Grid, Typography } from "@material-ui/core"
 import ConfirmButton from 'components/base/ConfirmButton';
 import BasePanel from 'components/base/BasePanel';
 import PanelHeader from 'components/base/PanelHeader';
 import { useForm  } from 'react-hook-form';
+import {isMobile} from "react-device-detect"
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -101,10 +99,10 @@ const ChangeEmailAddressPanel = ({ onSubmit, onReturn, onCloseAlert, hasUpdated 
     const classes = useStyles();
     const { register, handleSubmit,errors } = useForm();
     return (
-        <BasePanel>
+        <BasePanel mode={0}>
             <PanelHeader 
               title="メールアドレス変更"
-              leftButtonType={2}
+              leftButtonType={isMobile?2:0}
               rightButtonType={0}
               handleLeftButton={onReturn}
             />

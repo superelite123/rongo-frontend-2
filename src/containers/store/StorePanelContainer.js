@@ -3,9 +3,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import StorePanel from 'components/store/StorePanel'
 import * as userActions from 'redux/modules/user';
+import * as homeActions from 'redux/modules/homePage';
 import storage from 'lib/storage'
 import * as StoreApi from 'lib/api/store';
-
+import * as baseActions from 'redux/modules/base';
+import {SHOW_HOMEPANEL,} from 'lib/constant'
+import {isMobile} from "react-device-detect";
 class StorePanelContainer extends Component {
     constructor() {
         super()
@@ -16,12 +19,13 @@ class StorePanelContainer extends Component {
             isBGHovered: {},
             explantions:[],
             selectedExplantion:null,
-            description:''
+            description:'',
+            saveSuccess:false
         }
     }
     initialize = async () => {
         const token = storage.get('token');
-        StoreApi.getMyStore().then((res) => {
+        StoreApi.getMyStore(token).then((res) => {
             //set description
             this.setState({description:res.data.description})
             //set explantion
@@ -159,6 +163,8 @@ class StorePanelContainer extends Component {
         })
     }
     handleSubmit = async () => {
+        const {BaseActions} = this.props
+        BaseActions.setPageLoading(true)
         const avatar = this.props.userInfo.toJS().thumbnail.replace(/^data:image\/(png|jpg|jpeg);base64,/, "")
         const explantions = this.state.explantions.map((explantion) => (explantion.replace(/^data:image\/(png|jpg|jpeg);base64,/, "") ) ) 
         const backgrounds = this.state.backgrounds.map((background) => (background.replace(/^data:image\/(png|jpg|jpeg);base64,/, "") ) ) 
@@ -172,8 +178,19 @@ class StorePanelContainer extends Component {
 
         const token = storage.get('token');
         StoreApi.setMyStore(store, token).then((res) => {
-            
+            BaseActions.setPageLoading(false)
+            this.setState({saveSuccess:true})
         })
+    }
+    handleGoBack = () => {
+        const {HomeActions} = this.props
+        if(isMobile)
+        {
+            HomeActions.changeFirstStatus(SHOW_HOMEPANEL)
+        }
+    }
+    handleCloseSnackbar = () => {
+        this.setState({saveSuccess:false})
     }
     render () {
         const {nickname,thumbnail} = this.props.userInfo.toJS()
@@ -207,7 +224,9 @@ class StorePanelContainer extends Component {
                         handleDescChange={this.handleDescChange}
                         selectedExplantion={this.state.selectedExplantion}
                         handleSubmit={this.handleSubmit}
-                        handle
+                        onGoBack={this.handleGoBack}
+                        saveSuccess={this.state.saveSuccess}
+                        handleCloseSnackbar={this.handleCloseSnackbar}
                         />
         )
     }
@@ -220,6 +239,8 @@ export default connect(
         userInfo:state.user.get('userInfo'),
     }),
     (dispatch) => ({
-        UserActions: bindActionCreators(userActions, dispatch)
+        UserActions: bindActionCreators(userActions, dispatch),
+        BaseActions: bindActionCreators(baseActions, dispatch),
+        HomeActions: bindActionCreators(homeActions, dispatch),
     })
 )((StorePanelContainer));

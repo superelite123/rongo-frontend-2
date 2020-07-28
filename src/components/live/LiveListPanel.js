@@ -1,14 +1,12 @@
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
-import PanelTemplate from '../base/PanelTemplate'
-import SearchIcon from '@material-ui/icons/Search';
-import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
+import { Grid } from "@material-ui/core"
 import LiveListItem from '../live/LiveListItem'
 import { SwipeableList } from '@sandstreamdev/react-swipeable-list';
 import '@sandstreamdev/react-swipeable-list/dist/styles.css';
-
-import { SHOW_TRANSACTIONDETAIL } from 'lib/constant'
-
+import PanelHeader from 'components/base/PanelHeader';
+import BasePanel from 'components/base/BasePanel';
+import {isMobile} from "react-device-detect"
 const useStyles = makeStyles((theme) => ({
     header: {
         paddingTop: 'px',
@@ -42,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const LiveListPanel = ({ handleClick, liveStreamList }) => {
+const LiveListPanel = ({ handleClick, liveStreamList, handleGoBack }) => {
     const classes = useStyles();
 
     let liveListItems = []
@@ -52,41 +50,20 @@ const LiveListPanel = ({ handleClick, liveStreamList }) => {
     }
 
     return (
-        <PanelTemplate>
-            <Grid xs={12} item>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <Paper variant="outlined" square className={classes.header}>
-                            <Grid container className={classes.card}>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-                                    
-                                </Grid>
-                                <Grid item xs={8}>
-                                    <p variant='h5' component="h5" className={classes.headerLabel}>
-                                        配信管理
-                                    </p>
-                                </Grid>
-                                <Grid item xs={2} className={classes.leftTopButton}>
-                                    <Typography variant='h5' component="h5">
-                                        <SearchIcon className={classes.searchButton} />
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    </Grid>
-                    <Grid xs={12} item>
-                        <hr className={classes.topSeperate} />
-                    </Grid>
-                </Grid>
-            </Grid>
-
+        <BasePanel mode={0}>
+            <PanelHeader 
+              title="配信管理"
+              leftButtonType={isMobile?2:0}
+              rightButtonType={0}
+              handleLeftButton={handleGoBack}
+            />
             <Grid xs={12} className={ classes.listContainer } item>
                 <SwipeableList>
                     {liveListItems}
                 </SwipeableList>
             </Grid>
 
-        </PanelTemplate>
+        </BasePanel>
     )
 }
 
