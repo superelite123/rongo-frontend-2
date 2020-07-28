@@ -4,11 +4,13 @@ import { bindActionCreators } from 'redux'
 import { Grid } from "@material-ui/core";
 import * as notifyActions from 'redux/modules/notifyPage'
 import HomePanelContainer from 'containers/HomePanelContainer'
+import BlankPanel from 'components/BlankPanel'
 import NotificationListPanelContainer from 'containers/notification/NotificationListPanelContainer'
 import {
     SHOW_HOMEPANEL,
     FIRST_PANEL_NOTI,
     SHOW_NOTIFICATION_DETAIL,
+    SHOW_NOTIFY_BLANK
 } from 'lib/constant'
 import {isMobile} from "react-device-detect";
 
@@ -25,6 +27,9 @@ class Notify extends Component {
                 case FIRST_PANEL_NOTI:
                     panels[index] = <NotificationListPanelContainer mode='1' />
                 break;
+                case SHOW_NOTIFY_BLANK:
+                    panels[index] = <BlankPanel mode='1' />
+                    break;
                 case 0:
                     panels[index] = null;
                 break;
