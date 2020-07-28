@@ -8,15 +8,22 @@ import * as productFormActions from 'redux/modules/product/productForm';
 import {SHOW_PFORM,SHOW_PPROUCTSPANEL,SHOW_PADDLINK} from 'lib/constant'
 import {isMobile} from "react-device-detect";
 import * as baseActions from 'redux/modules/base';
+import storage from 'lib/storage'
 class ProductDetailPanelContainer extends Component
 {
-
+    constructor(props) {
+        super(props)
+        this.state = {
+            token:null,
+        }
+    }
     getProduct = async () => {
         const { ProductActions, BaseActions, showProduct} = this.props;
-
+        const token = storage.get('token');
+        this.setState({token:token})
         try {
             BaseActions.setPageLoading(true)
-            await ProductActions.getProductDetail({id:showProduct.id});
+            await ProductActions.getProductDetail({id:showProduct.id,token:token});
         } catch (e) {
             console.log(e)
         }

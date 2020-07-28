@@ -14,7 +14,8 @@ class ProductListPanelContainer extends Component {
             deleteMode:false,
             searchMode:false,
             selectedProducts:[],
-            confirmDelete:false
+            confirmDelete:false,
+            token:null
         }
     }
 
@@ -24,6 +25,7 @@ class ProductListPanelContainer extends Component {
 
         try {
             const token = storage.get('token');
+            this.setState({token:token})
             await ProductActions.getProducts({ type: type, token: token });
         } catch (e) {
             console.log(e)
@@ -48,7 +50,7 @@ class ProductListPanelContainer extends Component {
         this.setState({confirmDelete:false})
         const { selectedProducts } = this.state
         const {ProductActions} = this.props
-        ProductActions.deleteProducts({IDs:selectedProducts}).then(
+        ProductActions.deleteProducts({IDs:selectedProducts,token:this.state.token}).then(
             (res) => {
                 this.setState({selectedProducts:[]})
             },

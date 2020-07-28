@@ -10,6 +10,7 @@ import * as baseActions from 'redux/modules/base';
 import * as ProductApi from 'lib/api/product';
 import {SHOW_PADDLINK,SHOW_PPROUCTSPANEL,} from 'lib/constant'
 import {isMobile} from "react-device-detect";
+import storage from 'lib/storage'
 class ProductFormPanelContainer extends Component {
     constructor(props) {
         super(props)
@@ -35,14 +36,17 @@ class ProductFormPanelContainer extends Component {
             portfolioError:false,
             tagError:false,
             hasFetched: false,
+            token:null,
             confirmDelete:false
         }
     }
     async componentDidMount() {
         const {selectedProduct, ProductFormActions,BaseActions} = this.props
         
+        const token = storage.get('token');
+        this.setState({token:token})
         BaseActions.setPageLoading(true)
-        ProductFormActions.getProduct({id:selectedProduct}).then(
+        ProductFormActions.getProduct({id:selectedProduct,token:token}).then(
             (res) => {
                 const response = res.data
                 this.setState(response)
@@ -136,7 +140,7 @@ class ProductFormPanelContainer extends Component {
         postData.tags = tags
         postData.mode = mode
         
-        ProductApi.saveProduct({formData:postData}).then(
+        ProductApi.saveProduct({formData:postData,token:this.state.token}).then(
             (res) => {
                 BaseActions.setPageLoading(false)
             },
@@ -150,7 +154,7 @@ class ProductFormPanelContainer extends Component {
         const {BaseActions, ProductListActions} = this.props
         
         BaseActions.setPageLoading(true)
-        ProductListActions.deleteProducts({IDs:[this.state.id]}).then(
+        ProductListActions.deleteProducts({IDs:[this.state.id],token:this.state.token}).then(
             (res) => {
                 BaseActions.setPageLoading(false)
                 const {HomeActions} = this.props
