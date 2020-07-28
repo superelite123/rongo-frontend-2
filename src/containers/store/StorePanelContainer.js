@@ -193,7 +193,16 @@ class StorePanelContainer extends Component {
         this.setState({saveSuccess:false})
     }
     render () {
-        const {nickname,thumbnail} = this.props.userInfo.toJS()
+        let nickname="",thumbnail=""
+        if(this.props.userInfo != null)
+        {
+            nickname = this.props.userInfo.toJS().nickname
+            thumbnail = this.props.userInfo.toJS().thumbnail
+        }
+        else{
+            nickname=""
+            thumbnail=""
+        }
         const {description} = this.state
         const handleTagChange = (tags) => {
             this.setState({tags})

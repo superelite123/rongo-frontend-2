@@ -112,8 +112,9 @@ const styles = theme => ({
 
 class HomePanel extends Component {
   render() {
-    const { classes, HomeActions, userInfo, mode } = this.props;
-
+    const { classes, HomeActions, mode } = this.props;
+    let userInfo = this.props.userInfo
+    if(userInfo != null && userInfo != undefined) userInfo = userInfo.toJS()
     const handleClick = (panelNumber, panelType) => {
       switch (panelType) {
         case 1:
@@ -138,10 +139,13 @@ class HomePanel extends Component {
     }
     
     let like =  0, dislike = 0, notBad = 0
-    if (userInfo.evaluation != null) {
+    if(userInfo != null)
+    {
+      if (userInfo.evaluation != null) {
         like = userInfo.evaluation.like;
         dislike = userInfo.evaluation.dislike;
         notBad = userInfo.evaluation.notBad;
+      }
     }
     return (
       <BasePanel mode={mode}>
@@ -270,7 +274,7 @@ export default connect(
     firstPanelVisible: state.homePage.get('firstPanel'),
     secondPanelVisible: state.homePage.get('seconPanel'),
     thirdPanelVisible: state.homePage.get('thirdPanel'),
-    userInfo: state.user.get('userInfo').toJS()
+    userInfo: state.user.get('userInfo')
   }),
   (dispatch) => ({
     HomeActions: bindActionCreators(homeActions, dispatch),
