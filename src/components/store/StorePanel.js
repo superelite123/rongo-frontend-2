@@ -399,7 +399,7 @@ const StorePanel = ({ nickname, avatar, description, tags, explantions, handleTa
                 </Grid>
                 <Snackbar anchorOrigin={{ vertical:'top', horizontal:'center' }} style={{marginTop:'50px'}} open={saveSuccess} autoHideDuration={6000} onClose={handleCloseSnackbar}>
                     <Alert onClose={handleCloseSnackbar} severity="success">
-                        This is a success message!
+                    ストア－情報が正常に保存されました。
                     </Alert>
                 </Snackbar>
             </Grid>

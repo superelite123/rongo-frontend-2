@@ -1,7 +1,7 @@
-import axios from 'lib/defaultClient'
+import axios from 'lib/clientWithAuth'
 
-export const getProducts =  (token) => axios.get('/api/live/initial_products');
-export const quitLive =  ({id, token}) => axios.post('/api/live/quit',{id});
-//export const saveLive =  ({title,tag,thumbnail,products, token}) => axios(token).post('/api/live/create',{title,tag,thumbnail,products});
-export const saveLive =  ({id}) => axios.post('/api/live/create',{id});
-export const addProduct = ({live_id,product_id,qty}) => axios.post('/api/live/add_product',{live_id,product_id,qty})
+export const getProducts =  (token) => axios(token).get('/api/live/initial_products');
+export const quitLive =  ({id, token}) => axios(token).post('/api/live/quit',{id});
+export const saveLive =  ({title,tag,thumbnail,products, token}) => axios(token).post('/api/live/create',{title,tag,thumbnail,products});
+//export const saveLive =  ({id,token}) => axios(token).post('/api/live/create',{id});
+export const addProduct = ({live_id,product_id,qty,token}) => axios(token).post('/api/live/add_product',{live_id,product_id,qty})

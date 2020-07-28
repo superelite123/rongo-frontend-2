@@ -257,7 +257,8 @@ class HomePanel extends Component {
             handleClick={handleClick} />
         </Grid>
         <Grid item xs={12} style={{ paddingBottom: '40px' }} >
-          <ListCard text={'バージョン情報'} />
+          <ListCard text={'バージョン情報'}
+            handleClick={handleClick} />
         </Grid>
 
       </BasePanel>

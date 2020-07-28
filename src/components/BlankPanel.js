@@ -3,9 +3,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as homeActions from 'redux/modules/homePage';
 import BasePanel from 'components/base/BasePanel';
-import PanelHeader from 'components/base/PanelHeader';
-import { Grid } from "@material-ui/core"
-import {isMobile} from "react-device-detect";
 import {SHOW_HOMEPANEL} from 'lib/constant' 
 
 class BlankPanel extends Component

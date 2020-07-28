@@ -1,12 +1,7 @@
 
 import React from 'react'
 import makeStyles from '@material-ui/styles/makeStyles'
-import SectionHeader from '../typo/SectionHeader'
-import PanelTemplate from '../base/PanelTemplate'
-import SearchIcon from '@material-ui/icons/Search';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { Box, Button, Grid, Typography, Paper, TextField, GridList } from "@material-ui/core"
+import { Grid,GridList } from "@material-ui/core"
 import TransactionListItem from '../transaction/TransactionListItem'
 import { SHOW_TRANSACTIONDETAIL } from 'lib/constant'
 import PanelHeader from 'components/base/PanelHeader';
@@ -58,7 +53,7 @@ const TransactionListPanel = ({ handleClick, transactionList }) => {
                 <Grid container>
                     <Grid item xs={12}>
                         <PanelHeader               
-                            title="商品登録"
+                            title="取引管理"
                             leftButtonType={isMobile?2:0}
                             rightButtonType={0}
                         />

@@ -1,4 +1,4 @@
-import axios from 'lib/defaultClient'
+import axios from 'lib/clientWithAuth'
 
-export const getSellHistory =  () => axios.get('/api/sell_history/');
-export const getDetail =  ({date}) => axios.post('/api/sell_history/getDetail',{date});
+export const getSellHistory =  ({token}) => axios(token).get('/api/sell_history/');
+export const getDetail =  ({date,token}) => axios(token).post('/api/sell_history/getDetail',{date});

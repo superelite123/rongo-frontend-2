@@ -134,7 +134,7 @@ class LiveChatPanel extends Component {
     }
     render() {
         const { onQuit, classes, messages, errorMessage, typingMessage,liveTime,
-                handleChange, connectionError,onCloseDialog } = this.props;
+                handleChange, connectionError,onCloseDialog,isQuit } = this.props;
         return (
             <LivePanelTemplete mode={0}>
                 <div className={classes.root}>
@@ -177,18 +177,36 @@ class LiveChatPanel extends Component {
                 </div>
                 <Dialog
                     open={connectionError }
-                    onClose={() =>  onCloseDialog() }
+                    onClose={() =>  onCloseDialog(1) }
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"ライブ配信後の カメラの変更はできません"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"誤謬り"}</DialogTitle>
                     <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         {errorMessage}
                     </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                    <Button  onClick={() => { onCloseDialog() }} color="primary" autoFocus>
+                    <Button  onClick={() => { onCloseDialog(1) }} color="primary" autoFocus>
+                        はい
+                    </Button>
+                    </DialogActions>
+                </Dialog>
+                
+                <Dialog
+                    open={isQuit }
+                    onClose={() =>  onCloseDialog(2) }
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"誤謬り"}</DialogTitle>
+                    <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button  onClick={() => { onCloseDialog(2) }} color="primary" autoFocus>
                         はい
                     </Button>
                     </DialogActions>

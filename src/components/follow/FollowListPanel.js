@@ -5,6 +5,7 @@ import FollowListItem from '../follow/FollowListItem'
 import { Grid, GridList } from "@material-ui/core"
 import { SHOW_FOLLOWPANEL } from 'lib/constant'
 import PanelHeader from 'components/base/PanelHeader';
+import {isMobile} from "react-device-detect";
 const useStyles = makeStyles((theme) => ({
     header: {
         paddingTop: 'px',
@@ -51,7 +52,7 @@ const FollowListPanel = ({ handleClick, onBack, followList,mode }) => {
         <BasePanel mode={0}>
             <PanelHeader               
                 title={title}
-                leftButtonType={0}
+                leftButtonType={isMobile?2:0}
                 handleLeftButton={onBack}
                 rightButtonType={1}
             />
