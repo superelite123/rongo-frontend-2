@@ -19,7 +19,8 @@ class LiveChatPanelContainer extends Component {
             connectionError:false,
             errorMessage:'Error',
             timer:0,
-            timerLoop:null
+            timerLoop:null,
+            isQuit:false
         }
     }
     async componentDidMount()
@@ -50,6 +51,7 @@ class LiveChatPanelContainer extends Component {
                 channel.on('message.new', event => this.receivedMessage(event));
                 LiveActions.setChannel({channel})
                 BaseActions.setPageLoading(false)
+                LiveActions.setStartTime({startTime:Date.now()})
             } catch (error) {
                 this.setState({connectionError:true,errorMessage:'お疲れ様でしたこのライブは終了しています'})
             }
@@ -59,7 +61,6 @@ class LiveChatPanelContainer extends Component {
         if(liveStatus === 2)
         {
             //this.setState({timer:endTime - startTime})
-            console.log('hi')
             clearTimeout(this.state.timerLoop);
         }
         else
@@ -75,20 +76,20 @@ class LiveChatPanelContainer extends Component {
         if(liveStatus === 2)
         {
             //this.setState({timer:endTime - startTime})
-            console.log('hi')
             clearTimeout(this.state.timerLoop);
         }
     }
     handleQuit = async () => {
         const {LiveActions,liveID} = this.props
-        LiveActions.updateStatus(2)
-        return
         const token = storage.get('token');
         LiveApi.quitLive({id: liveID, token: token}).then(
             (res) => {
                 LiveActions.updateStatus(2)
+                this.setState({isQuit:true})
             },
             (e) => {
+                LiveActions.updateStatus(2)
+                this.setState({isQuit:true})
             }
         )
 
@@ -140,8 +141,11 @@ class LiveChatPanelContainer extends Component {
     handleChange = (e) => {
         this.setState({typingMessage:e.target.value})
     }
-    handleCloseDialog = () => {
-        this.setState({connectionError:false})
+    handleCloseDialog = (mode) => {
+        if(mode === 1)
+            this.setState({connectionError:false})
+        if(mode === 2)
+            this.setState({isQuit:false})
     }
     render() {
         const {messages, liveStatus} = this.props
@@ -162,6 +166,7 @@ class LiveChatPanelContainer extends Component {
                 errorMessage={this.state.errorMessage}
                 liveTime={liveTime}
                 liveStatus={liveStatus}
+                isQuit={this.state.isQuit}
             />
         )
     }

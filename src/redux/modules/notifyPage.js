@@ -5,7 +5,8 @@ import {isMobile} from "react-device-detect";
 import {
     SHOW_HOMEPANEL,
     FIRST_PANEL_NOTI,
-    SHOW_NOTIFICATION_DETAIL
+    SHOW_NOTIFICATION_DETAIL,
+    SHOW_NOTIFY_BLANK
 } from 'lib/constant'
 const CHANGE_PANEL = 'notifyPage/CHANGE_PANEL';
 export const changePanel = createAction(CHANGE_PANEL);
@@ -14,7 +15,7 @@ const initialState = Map({
     panels:[
         isMobile?FIRST_PANEL_NOTI:SHOW_HOMEPANEL,
         isMobile?0:FIRST_PANEL_NOTI,
-        isMobile?0:SHOW_NOTIFICATION_DETAIL
+        isMobile?0:SHOW_NOTIFY_BLANK
     ],
 })
 export default handleActions({

@@ -7,14 +7,22 @@ import * as baseActions from 'redux/modules/base';
 import storage from 'lib/storage'
 import SellHistoryListPanel from '../../components/sellHistory/SellHistoryListPanel';
 import {SHOW_HOMEPANEL,SHOW_SELLHISTORYDETAILPANEL,} from 'lib/constant'
-class SellHistoryListPanelContainer extends Component {
 
+class SellHistoryListPanelContainer extends Component {
+    constructor() {
+        super()
+        this.state = {
+            hasUpdated: false,
+            token:null
+        }
+    }
     getSellHistoryList = async () => {
         const { SellActions} = this.props;
 
+        const token = storage.get('token');
+        this.setState({token:token})
         try {
-            const token = storage.get('token');
-            await SellActions.getSellHistory();
+            await SellActions.getSellHistory({token:token});
         } catch (e) {
             console.log(e)
         }
@@ -30,7 +38,7 @@ class SellHistoryListPanelContainer extends Component {
     handleClick = (date, sellHistory) => {
         const { HomeActions, BaseActions, SellActions,} = this.props;
         BaseActions.setPageLoading(true)
-        SellActions.getDetail({date:date}).then(
+        SellActions.getDetail({date:date,token:this.state.token}).then(
             (res) => {
                 HomeActions.changeThirdStatus(SHOW_SELLHISTORYDETAILPANEL)
                 BaseActions.setPageLoading(false)

@@ -1,8 +1,8 @@
-import axios from 'lib/defaultClient'
+import axios from 'lib/clientWithAuth'
 
-export const getProducts =  ({type,}) => axios.get('/api/product/getAdminList/' + type);
-export const getProductDetail = ({id}) => axios.get('/api/product/' + id);
-export const editProduct = ({id}) => axios.get('/api/product/edit/' + id);
-export const saveProduct = ({formData}) => axios.post('/api/product/store',{formData})
-export const deleteProducts = ({IDs}) => axios.post('/api/product/delete',{IDs})
-export const stageProduct = ({id}) => axios.post('/api/product/stage',{id})
+export const getProducts =  ({type,token}) => axios(token).get('/api/product/getAdminList/' + type);
+export const getProductDetail = ({id,token}) => axios(token).get('/api/product/' + id);
+export const editProduct = ({id,token}) => axios(token).get('/api/product/edit/' + id);
+export const saveProduct = ({formData,token}) => axios(token).post('/api/product/store',{formData})
+export const deleteProducts = ({IDs,token}) => axios(token).post('/api/product/delete',{IDs})
+export const stageProduct = ({id,token}) => axios(token).post('/api/product/stage',{id})

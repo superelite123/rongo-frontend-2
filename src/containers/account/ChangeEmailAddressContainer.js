@@ -6,6 +6,7 @@ import ChangeEmailAddressPanel from 'components/account/ChangeEmailAddressPanel'
 import * as AccountAPI from 'lib/api/account';
 import { SHOW_HOMEPANEL } from 'lib/constant'
 import * as homeActions from 'redux/modules/homePage';
+import storage from 'lib/storage'
 
 class ChangeEmailAddressContainer extends Component
 {
@@ -13,11 +14,16 @@ class ChangeEmailAddressContainer extends Component
         super()
         this.state = {
             hasUpdated: false,
+            token:null
         }
     }
+    async componentDidMount(){
+        const token = storage.get('token');
+        this.setState({token:token})
+    }
     handleSubmit = (data) => {
-        console.log(data)
-        AccountAPI.changeEmailAddress({email:data.email}).then(
+        
+        AccountAPI.changeEmailAddress({email:data.email,token:this.state.token}).then(
             (res) => {
                 this.setState({hasUpdated:true})
             },

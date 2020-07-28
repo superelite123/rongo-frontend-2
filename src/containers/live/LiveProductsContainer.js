@@ -35,13 +35,12 @@ class LiveProductsContainer extends Component {
     handleAddProduct = (index) => {
         this.setState({open:true,selectedProduct:index})
     }
-    handleAdd = () => {
+    handleAdd = async () => {
         const {addQty,selectedProduct} = this.state
         const avaliableQty = this.state.products[selectedProduct].quantity
         if(addQty < 1 || addQty > avaliableQty)
         {
             this.setState({error:true})
-            
         }
         else
         {
@@ -59,15 +58,16 @@ class LiveProductsContainer extends Component {
                     open:false
                 }
             )
-            if(liveStatus)
+            if(liveStatus === 1)
             {
                 const {liveID} = this.props
-                LiveApi.addProduct({live_id:liveID,product_id:product.id,qty:parseInt(addQty)}).then(
+                const token = storage.get('token');
+                LiveApi.addProduct({live_id:liveID,product_id:product.id,qty:parseInt(addQty),token:token}).then(
                     (res) => {
-                        
+                        console.log('product added')
                     },
                     (e) => {
-    
+                        console.log('product adding failed')
                     }
                 )
             }
@@ -104,7 +104,7 @@ class LiveProductsContainer extends Component {
                     <DialogContent>
                         <DialogContentText>
                             在庫数： { product != null?product.quantity:0}
-                            { error && <Alert severity="error">This is an error alert — check it out!</Alert>} 
+                            { error && <Alert severity="error">数量を入力してください。!</Alert>} 
                         </DialogContentText>
                         <TextField
                             autoFocus

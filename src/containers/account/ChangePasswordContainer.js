@@ -6,17 +6,23 @@ import * as homeActions from 'redux/modules/homePage';
 import ChangePasswordPanel from 'components/account/ChangePasswordPanel'
 import * as AccountAPI from 'lib/api/account';
 import { SHOW_HOMEPANEL } from 'lib/constant'
+import storage from 'lib/storage'
 class ChangePasswordContainer extends Component
 {
     constructor() {
         super()
         this.state = {
             hasUpdated: false,
+            token:null
         }
+    }
+    async componentDidMount(){
+        const token = storage.get('token');
+        this.setState({token:token})
     }
     handleSubmit = (data) => {
         console.log(data)
-        AccountAPI.changePassword({password:data.password}).then(
+        AccountAPI.changePassword({password:data.password,token:this.state.token}).then(
             (res) => {
                 this.setState({hasUpdated:true})
             },

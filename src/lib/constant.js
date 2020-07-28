@@ -17,6 +17,7 @@ export const SHOW_LIVE_CHAT = 222
 
 export const SHOW_PRIVACY = 291
 export const SHOW_POLICY  = 292
+export const SHOW_NOTIFY_BLANK=293
 
 export const FIRST_PANEL_HOME = 1
 export const FIRST_PANEL_LIVE = 2

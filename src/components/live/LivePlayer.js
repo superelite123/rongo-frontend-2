@@ -5,7 +5,7 @@ const useStyles = (theme) => ({
   chatPanel:{
     width:'95%',
     height:'90%',
-    border:'1px solid black',
+    border:'0px solid black',
     margin:'auto',
     marginTop:'30px',
     position:'relavitve'
