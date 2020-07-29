@@ -62,7 +62,7 @@ class ProductListPanelContainer extends Component {
     handleStageProduct = (productID) => {
         const {ProductActions} = this.props
         this.props.ProductActions.toggleLoadingState(true)
-        ProductActions.stageProduct({id:productID})
+        ProductActions.stageProduct({id:productID,token:this.state.token})
         this.props.ProductActions.toggleLoadingState(false)
     }
     handleSelectProduct = (e) => {

@@ -144,7 +144,7 @@ class LiveChatPanel extends Component {
                                 <CloseIcon />
                             </IconButton>
                             <div className={classes.quitTimeWrapper}>
-                                <div>dsfdsffs</div>
+                                <div>終了</div>
                                 <div>{liveTime}</div>
                             </div>
                         </div>
