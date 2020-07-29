@@ -53,7 +53,8 @@ class LiveChatPanelContainer extends Component {
                 BaseActions.setPageLoading(false)
                 LiveActions.setStartTime({startTime:Date.now()})
             } catch (error) {
-                this.setState({connectionError:true,errorMessage:'お疲れ様でしたこのライブは終了しています'})
+                console.log(error)
+                this.setState({connectionError:true,errorMessage:'お疲れ様でしたこのライブは終了しています1'})
             }
         }
         

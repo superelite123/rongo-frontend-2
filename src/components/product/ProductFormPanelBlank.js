@@ -432,14 +432,14 @@ const ProductFormPanelBlank = (props) => {
                                 <SaveButton
                                     style={{background: 'linear-gradient(45deg, #FFFFFF 30%, #FFFFFF 90%)',color:'#BDBDBD'}}
                                     onClick={handleSubmit(onSubmit)}>
-                                    登録する
+                                    下書保存
                                 </SaveButton>
                             </Grid>
                             <Grid item xs={12}>
                                 <SaveButton
                                     style={{background: 'linear-gradient(45deg, #D74936 30%, #D74936 90%)'}}
                                     onClick={handleDelete}>
-                                    登録する
+                                    削除する
                                 </SaveButton>
                             </Grid>
                         </Grid>

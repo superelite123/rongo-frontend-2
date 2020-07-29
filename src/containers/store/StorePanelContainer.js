@@ -165,7 +165,7 @@ class StorePanelContainer extends Component {
     handleSubmit = async () => {
         const {BaseActions} = this.props
         BaseActions.setPageLoading(true)
-        const avatar = this.props.userInfo.toJS().thumbnail.replace(/^data:image\/(png|jpg|jpeg);base64,/, "")
+        const avatar = this.props.userInfo.thumbnail.replace(/^data:image\/(png|jpg|jpeg);base64,/, "")
         const explantions = this.state.explantions.map((explantion) => (explantion.replace(/^data:image\/(png|jpg|jpeg);base64,/, "") ) ) 
         const backgrounds = this.state.backgrounds.map((background) => (background.replace(/^data:image\/(png|jpg|jpeg);base64,/, "") ) ) 
         const store = {
@@ -196,8 +196,8 @@ class StorePanelContainer extends Component {
         let nickname="",thumbnail=""
         if(this.props.userInfo != null)
         {
-            nickname = this.props.userInfo.toJS().nickname
-            thumbnail = this.props.userInfo.toJS().thumbnail
+            nickname = this.props.userInfo.nickname
+            thumbnail = this.props.userInfo.thumbnail
         }
         else{
             nickname=""

@@ -61,12 +61,12 @@ class LiveFormContainer extends Component {
             token: token,
         }
         LiveApi.saveLive(postData).then(
-            (res) => {
+            async (res) => {
                 this.setState({backDrop:false})
                 const {id,channel_id,cadmin_id,chat_user_id} = res.data
                 this.props.LiveActions.updateLiveID(id)
                 this.props.LiveActions.updateStatus(1)
-                this.props.LiveActions.setChatInfo({channelID:channel_id,chatAdminID:cadmin_id,chatUserID:chat_user_id})
+                await this.props.LiveActions.setChatInfo({channelID:channel_id,chatAdminID:cadmin_id,chatUserID:chat_user_id})
                 this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVECHATPANEL,panelIndex:2})
                 const {application_name,sdp_url,stream_name} = res.data.liveData
                 window.open(
