@@ -171,7 +171,7 @@ const ProductFormPanelBlank = (props) => {
     }
     //End Product Form making
     return (
-        <BasePanel mode={mode}>
+        <BasePanel mode={0}>
             <PanelHeader 
               title="商品登録"
               leftButtonType={2}

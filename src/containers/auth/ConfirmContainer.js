@@ -27,7 +27,9 @@ class ConfirmContainer extends Component
     handleComplete = async (value,index) => {
         try {
             const { UserActions,userID,history  } = this.props
-            await UserActions.localLoginConfirm({pwd:value,id:userID});
+            await UserActions.localLoginConfirm({pwd:value,id:userID}).then(
+                
+            );
             const {result,userInfo,token} = this.props
             storage.set('userInfo',userInfo)
             storage.set('logged',true)
@@ -39,8 +41,6 @@ class ConfirmContainer extends Component
                     storage.set('userInfo',userInfo)
                     storage.set('token',token)
                     history.push('/home');
-                    // window.location.href="/home"
-                    // store user info and token to storage
                     break;
                 //expired
                 case 409:

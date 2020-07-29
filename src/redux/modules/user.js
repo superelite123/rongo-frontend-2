@@ -51,27 +51,29 @@ export default handleActions({
         {
             //confirm successed
             const { result, userInfo,token} = action.payload.data
-            state.set('result',result)
+            state=state.set('result',result)
             if(result === 0)
             {
-                state.set('userInfo',userInfo)
-                state.set('token',token)
+                state=state.set('userInfo',userInfo)
+                state=state.set('token',token)
             }
             else
             {
                 state.set('userInfo',null)
                 state.set('token',null)
             }
-            return Map(
-                {
-                    ...state,
-                    result:result,
-                    userInfo:userInfo,
-                    token:token,
-                    logged:true
-                }
+            state=state.set('logged',true)
+            return state
+            // return Map(
+            //     {
+            //         ...state,
+            //         result:result,
+            //         userInfo:userInfo,
+            //         token:token,
+            //         logged:true
+            //     }
 
-            )
+            // )
         }
     }),
 }, initialState);
