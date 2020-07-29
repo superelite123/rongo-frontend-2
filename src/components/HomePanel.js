@@ -114,7 +114,8 @@ class HomePanel extends Component {
   render() {
     const { classes, HomeActions, mode } = this.props;
     let userInfo = this.props.userInfo
-    if(userInfo != null && userInfo != undefined) userInfo = userInfo.toJS()
+    console.log(userInfo)
+    //if(userInfo != null && userInfo != undefined) userInfo = userInfo.toJS()
     const handleClick = (panelNumber, panelType) => {
       switch (panelType) {
         case 1:

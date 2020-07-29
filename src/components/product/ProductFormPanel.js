@@ -462,10 +462,10 @@ const ProductFormPanel = (props) => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"放送を開始しますか？"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{"確認"}</DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    放送を開始しますか？
+                商品を削除しますか？
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
