@@ -51,6 +51,7 @@ class LiveFormContainer extends Component {
         reader.readAsDataURL(file)
     }
     saveLive = async () => {
+        this.setState({backDrop:true})
         const token = storage.get('token');
         
         const postData = {
@@ -86,7 +87,6 @@ class LiveFormContainer extends Component {
             this.setState({error:true})
             return
         }
-        this.setState({backDrop:true})
         this.setState({confirmOpen:true})
     }
     handleClose = () => {
