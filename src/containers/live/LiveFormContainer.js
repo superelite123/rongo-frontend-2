@@ -30,7 +30,6 @@ class LiveFormContainer extends Component {
         this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVEPRODUCTLIST,panelIndex:2})
     }
     componentDidMount(){
-        const {LiveActions} = this.props
     }
     handleChangeInput = (e) => {
         this.setState({
@@ -61,6 +60,7 @@ class LiveFormContainer extends Component {
             products:this.props.products,
             token: token,
         }
+        console.log(postData.products)
         LiveApi.saveLive(postData).then(
             async (res) => {
                 this.setState({backDrop:false})

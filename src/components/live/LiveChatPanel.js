@@ -181,7 +181,7 @@ class LiveChatPanel extends Component {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"誤謬り"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"お知らせ"}</DialogTitle>
                     <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         {errorMessage}
@@ -200,9 +200,10 @@ class LiveChatPanel extends Component {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"誤謬り"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"お知らせ"}</DialogTitle>
                     <DialogContent>
                     <DialogContentText id="alert-dialog-description">
+                        {"LIveが終了しました。"}
                     </DialogContentText>
                     </DialogContent>
                     <DialogActions>
