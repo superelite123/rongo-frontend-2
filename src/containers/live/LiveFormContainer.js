@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import LiveForm from 'components/live/LiveForm'
 import * as liveActions from 'redux/modules/livePage'
-import { SHOW_LIVEPRODUCTLIST,SHOW_LIVECHATPANEL,BASE_LIVE_URL } from 'lib/constant'
+import { SHOW_LIVEPRODUCTLIST,SHOW_LIVECHATPANEL,BASE_URL } from 'lib/constant'
 import * as LiveApi from 'lib/api/live';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -30,7 +30,6 @@ class LiveFormContainer extends Component {
         this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVEPRODUCTLIST,panelIndex:2})
     }
     componentDidMount(){
-        const {LiveActions} = this.props
     }
     handleChangeInput = (e) => {
         this.setState({
@@ -51,6 +50,7 @@ class LiveFormContainer extends Component {
         reader.readAsDataURL(file)
     }
     saveLive = async () => {
+        this.setState({backDrop:true})
         const token = storage.get('token');
         
         const postData = {
@@ -60,17 +60,18 @@ class LiveFormContainer extends Component {
             products:this.props.products,
             token: token,
         }
+        console.log(postData.products)
         LiveApi.saveLive(postData).then(
-            (res) => {
+            async (res) => {
                 this.setState({backDrop:false})
                 const {id,channel_id,cadmin_id,chat_user_id} = res.data
                 this.props.LiveActions.updateLiveID(id)
                 this.props.LiveActions.updateStatus(1)
-                this.props.LiveActions.setChatInfo({channelID:channel_id,chatAdminID:cadmin_id,chatUserID:chat_user_id})
+                await this.props.LiveActions.setChatInfo({channelID:channel_id,chatAdminID:cadmin_id,chatUserID:chat_user_id})
                 this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVECHATPANEL,panelIndex:2})
                 const {application_name,sdp_url,stream_name} = res.data.liveData
                 window.open(
-                            BASE_LIVE_URL + 'webrtc-examples/src/dev-view-publish.html?url=' + sdp_url + 
+                            BASE_URL + 'webrtc-examples/src/dev-view-publish.html?url=' + sdp_url + 
                             '&appname=' + application_name + 
                             '&streamname=' + stream_name, '_blank');
             },
@@ -86,7 +87,6 @@ class LiveFormContainer extends Component {
             this.setState({error:true})
             return
         }
-        this.setState({backDrop:true})
         this.setState({confirmOpen:true})
     }
     handleClose = () => {

@@ -36,5 +36,9 @@ export const BASE_URL = 'https://api.live.rongoinc.com/'
 
 // export const BASE_LIVE_URL = 'http://192.168.0.102:8000/'
 export const BASE_LIVE_URL = 'https://api.live.rongoinc.com/'
+
 export const CHAT_STREAM_KEY = 'at5dhjq8gtxz'
 export const CHAT_SECERT_KEY = 'vu4bs8rrj7mztycujf2tknda7xwdv2gjdptesrybz76h9qkprn6qandu7hpd3scg'
+
+export const PUSHER_APP_KEY = '7aa0a8139da1fb6f69e5'
+export const PUSHER_APP_CLUSTER = 'ap3'

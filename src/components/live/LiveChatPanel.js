@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {withStyles} from '@material-ui/styles'
-import { IconButton, Button, TextField } from "@material-ui/core"
+import { IconButton, Grid, Button, TextField } from "@material-ui/core"
 import CloseIcon from '@material-ui/icons/Close';
 import LivePanelTemplete from '../base/LivePanelTemplete'
 import SendIcon from '@material-ui/icons/Send';
@@ -38,11 +38,10 @@ const useStyles = (theme) => ({
         display:'flex',
         height:'50px',
         border:'1px solid #333333',
-        width:'100px',
+        width:'120px',
         borderRadius:'30px',
-        marginTop:'10px',
-        marginBottom:'10px',
-        marginLeft:'70%'
+        position:'absolute',
+        right:'30px'
     },
     quitTimeWrapper:{
         color:'#333333',
@@ -64,9 +63,10 @@ const useStyles = (theme) => ({
         top:'20px'
     },
     chatPanel:{
-        height:'calc(100% - 130px)',
+        height:'calc(100% - 140px)',
         width:'95%',
         margin:'auto',
+        marginTop:'60px',
         overflowY:'scroll',
         position:'relavitve'
     },
@@ -104,6 +104,10 @@ const useStyles = (theme) => ({
         textAlign: 'left',
         width:'80%',
         wordWrap:'break-word'
+    },
+    watcherDisplay:{
+        position:'absolute',
+        left:'10px'
     }
 })
 class LiveChatPanel extends Component {
@@ -134,22 +138,39 @@ class LiveChatPanel extends Component {
     }
     render() {
         const { onQuit, classes, messages, errorMessage, typingMessage,liveTime,
-                handleChange, connectionError,onCloseDialog,isQuit } = this.props;
+                handleChange, connectionError,onCloseDialog,isQuit,nWatchers } = this.props;
         return (
             <LivePanelTemplete mode={0}>
                 <div className={classes.root}>
                     <div className={classes.container}>
-                        <div className={classes.quitButtonWrapper}>
-                            <IconButton color="primary" onClick={onQuit} aria-label="upload picture" component="span">
-                                <CloseIcon />
-                            </IconButton>
-                            <div className={classes.quitTimeWrapper}>
-                                <div>終了</div>
-                                <div>{liveTime}</div>
-                            </div>
-                        </div>
+                        <Grid container style={{marginTop:"10px",marginBottom:'10px'}}>
+                            <Grid item xs={6}>
+                                <p className={classes.watcherDisplay}>
+                                    視聴者数：{nWatchers}
+                                </p>
+                            </Grid>
+                            <Grid item xs={6} style={{position:'relative'}}>
+                                <div className={classes.quitButtonWrapper}>
+                                    <IconButton color="primary" onClick={onQuit} aria-label="upload picture" component="span">
+                                        <CloseIcon />
+                                    </IconButton>
+                                    <div className={classes.quitTimeWrapper}>
+                                        <div></div>
+                                        <div>{liveTime}</div>
+                                    </div>
+                                </div>
+                            </Grid>
+                        </Grid>
                         {/**Chat Panel*/}
                         <div ref={this.chatPanelRef} className={classes.chatPanel}>
+                        <div key={0} className={classes.message}>
+                                        <div className={classes.messageName}>
+                                            eere
+                                        </div>
+                                        <div className={classes.messageBody}>
+                                            werwer
+                                        </div>
+                                    </div>
                             {
                                 messages.map((message,index) => 
                                     <div key={index} className={classes.message}>
@@ -181,7 +202,7 @@ class LiveChatPanel extends Component {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"誤謬り"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"お知らせ"}</DialogTitle>
                     <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         {errorMessage}
@@ -200,9 +221,10 @@ class LiveChatPanel extends Component {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"誤謬り"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{""}</DialogTitle>
                     <DialogContent>
                     <DialogContentText id="alert-dialog-description">
+                        {"Liveが終了しました。"}
                     </DialogContentText>
                     </DialogContent>
                     <DialogActions>
