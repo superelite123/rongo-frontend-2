@@ -6,10 +6,10 @@ import * as liveActions from 'redux/modules/livePage'
 import * as LiveApi from 'lib/api/live';
 import storage from 'lib/storage'
 import { StreamChat } from 'stream-chat';
-import {CHAT_STREAM_KEY, CHAT_SECERT_KEY} from 'lib/constant'
+import {CHAT_STREAM_KEY, CHAT_SECERT_KEY, PUSHER_APP_KEY, PUSHER_APP_CLUSTER} from 'lib/constant'
 import jwt from 'jwt-simple'
 import * as baseActions from 'redux/modules/base';
-
+import Pusher from 'pusher-js';
 class LiveChatPanelContainer extends Component {
     constructor() {
         super()
@@ -20,12 +20,13 @@ class LiveChatPanelContainer extends Component {
             errorMessage:'Error',
             timer:0,
             timerLoop:null,
-            isQuit:false
+            isQuit:false,
+            nWatchers:0
         }
     }
     async componentDidMount()
     {
-        const {channelID,chatUserID,BaseActions, LiveActions} = this.props
+        const {channelID,chatUserID, liveID,BaseActions, LiveActions} = this.props
         const presentChannel = this.props.channel
         if(!presentChannel)
         {
@@ -54,11 +55,11 @@ class LiveChatPanelContainer extends Component {
                 LiveActions.setStartTime({startTime:Date.now()})
             } catch (error) {
                 console.log(error)
-                this.setState({connectionError:true,errorMessage:'お疲れ様でしたこのライブは終了しています1'})
+                //this.setState({connectionError:true,errorMessage:'お疲れ様でしたこのライブは終了しています1'})
             }
         }
         
-        const {liveStatus, startTime, endTime} = this.props
+        const {liveStatus, startTime} = this.props
         if(liveStatus === 2)
         {
             //this.setState({timer:endTime - startTime})
@@ -71,6 +72,16 @@ class LiveChatPanelContainer extends Component {
             }, 1000)
             this.setState({timerLoop:timerLoop})
         }
+        //create Pusher
+        const pusher = new Pusher(PUSHER_APP_KEY, {
+            cluster: PUSHER_APP_CLUSTER,
+            encrypted: true
+        });
+        
+        const channel = pusher.subscribe('user-connect-live');
+        channel.bind('userConnectLive', data => {
+            LiveActions.setNWatchers({nWatchers:data.nWatchers})
+        });
     }
     componentDidUpdate(){
         const {liveStatus} = this.props
@@ -168,6 +179,7 @@ class LiveChatPanelContainer extends Component {
                 liveTime={liveTime}
                 liveStatus={liveStatus}
                 isQuit={this.state.isQuit}
+                nWatchers={this.props.nWatchers}
             />
         )
     }
@@ -183,7 +195,8 @@ export default connect(
         nickname:state.user.getIn(['userInfo','nickname']),
         channel:state.livePage.get('channel'),
         startTime:state.livePage.get('startTime'),
-        liveStatus:state.livePage.get('status')
+        liveStatus:state.livePage.get('status'),
+        nWatchers:state.livePage.get('nWatchers'),
     }),
     (dispatch) => ({
         LiveActions: bindActionCreators(liveActions, dispatch),

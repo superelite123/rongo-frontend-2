@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import LiveForm from 'components/live/LiveForm'
 import * as liveActions from 'redux/modules/livePage'
-import { SHOW_LIVEPRODUCTLIST,SHOW_LIVECHATPANEL,BASE_LIVE_URL } from 'lib/constant'
+import { SHOW_LIVEPRODUCTLIST,SHOW_LIVECHATPANEL,BASE_URL } from 'lib/constant'
 import * as LiveApi from 'lib/api/live';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -71,7 +71,7 @@ class LiveFormContainer extends Component {
                 this.props.LiveActions.changePanelStatus({panelNumber:SHOW_LIVECHATPANEL,panelIndex:2})
                 const {application_name,sdp_url,stream_name} = res.data.liveData
                 window.open(
-                            BASE_LIVE_URL + 'webrtc-examples/src/dev-view-publish.html?url=' + sdp_url + 
+                            BASE_URL + 'webrtc-examples/src/dev-view-publish.html?url=' + sdp_url + 
                             '&appname=' + application_name + 
                             '&streamname=' + stream_name, '_blank');
             },
