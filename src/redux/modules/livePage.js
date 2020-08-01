@@ -41,7 +41,7 @@ const initialState = Map({
     panels:List([
         SHOW_LIVEFORM,
         SHOW_LIVEPLAYER,
-        SHOW_LIVECHATPANEL,
+        SHOW_LIVESTANDBYPANEL,
     ]),
     products:List([]),
     messages:List([]),
